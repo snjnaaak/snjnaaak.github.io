@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday, Appa!</title>
     <style>
-        /* --- ARCADE ENGINE GRAPHICS --- */
+        /* --- GLOBAL ENVIRONMENT --- */
         body {
             font-family: 'Courier New', Courier, monospace;
             background-color: #000c14;
@@ -18,21 +18,25 @@
             position: relative;
         }
 
-        /* Retro Glowing Title Scanlines */
-        h1 {
-            color: #00ffcc;
-            font-size: 3rem;
+        /* Large Bubble Gold Lettering */
+        .bubble-heading {
+            font-size: 4.5rem;
+            font-family: 'Arial Black', Impact, sans-serif;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 3px 3px 0px #01415e, 6px 6px 0px #000;
-            margin-bottom: 5px;
-            animation: textFlicker 2s infinite alternate;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin: 15px 0;
+            display: inline-block;
+            background: linear-gradient(to bottom, #ffe066 0%, #f39c12 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(5px 5px 0px #000) drop-shadow(-1px -1px 1px #fff);
+            animation: floatBubble 3s ease-in-out infinite alternate;
         }
 
-        @keyframes textFlicker {
-            0%, 100% { opacity: 1; }
-            95% { opacity: 0.95; }
-            98% { opacity: 0.8; }
+        @keyframes floatBubble {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-8px) scale(1.03); }
         }
 
         .subtitle {
@@ -44,7 +48,41 @@
             letter-spacing: 2px;
         }
 
-        /* --- CHARACTER SELECT / LEVEL GRID --- */
+        /* --- FLOATING BALLOON BACKGROUND --- */
+        .balloon-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 50px;
+            height: 65px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            opacity: 0.35;
+            animation: floatUp 12s linear infinite;
+        }
+
+        /* Small string at the bottom of each balloon */
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -12px; left: 24px;
+            width: 2px; height: 12px;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50vh) translateX(25px); }
+            100% { transform: translateY(-120vh) translateX(-10px); }
+        }
+
+        /* --- MENU LEVEL GRID --- */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -62,616 +100,8 @@
             cursor: pointer;
             box-shadow: 6px 6px 0px #000;
             transition: all 0.1s ease;
-            position: relative;
         }
 
         .menu-card:hover {
             background-color: #01415e;
             border-color: #ffe066;
-            transform: translate(-4px, -4px);
-            box-shadow: 10px 10px 0px #000;
-        }
-
-        .menu-card:active {
-            transform: translate(6px, 6px);
-            box-shadow: 0px 0px 0px #000;
-        }
-
-        .card-icon {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #fff;
-        }
-
-        .level-tag {
-            font-size: 0.8rem;
-            color: #00ffcc;
-            margin-top: 8px;
-            display: block;
-        }
-
-        /* --- ARCADE STAGE MONITOR PANEL --- */
-        .stage-panel {
-            display: none;
-            max-width: 750px;
-            margin: 40px auto;
-            background-color: #00121c;
-            border: 4px solid #fff;
-            box-shadow: 12px 12px 0px #000;
-            padding: 40px;
-            position: relative;
-            min-height: 440px;
-            overflow: hidden;
-            z-index: 10;
-        }
-
-        .animate-pop {
-            animation: pixelPop 0.25s steps(3) forwards;
-        }
-
-        @keyframes pixelPop {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* --- LEVEL 1: PEACOCK LOOTBOX --- */
-        .gift-box-wrapper {
-            position: relative;
-            height: 320px;
-            margin-top: 30px;
-        }
-
-        .gift-box-closed {
-            font-size: 6rem;
-            cursor: pointer;
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            transition: transform 0.15s steps(4);
-        }
-
-        .gift-box-closed:hover {
-            transform: translateX(-50%) scale(1.1) rotate(5deg);
-        }
-
-        .pixel-peacock {
-            display: none;
-            position: absolute;
-            bottom: -300px;
-            left: 50%;
-            transform: translateX(-50%) scale(3.5);
-            width: 10px;
-            height: 10px;
-            background: transparent;
-            box-shadow:
-                0px -70px #00ffcc, -10px -70px #d4af37, 10px -70px #d4af37, 0px -60px #016795,
-                0px -50px #016795, -10px -50px #016795, 10px -50px #016795, 0px -40px #016795,
-                -10px -20px #016795, 0px -20px #00ffcc, 10px -20px #016795,
-                -20px -10px #01415e, -10px -10px #016795, 0px -10px #016795, 10px -10px #016795, 20px -10px #01415e,
-                -50px -40px #d4af37, -30px -50px #00ffcc, 30px -50px #00ffcc, 50px -40px #d4af37,
-                -60px -20px #016795, -40px -30px #d4af37, 40px -30px #d4af37, 60px -20px #016795,
-                -70px 0px #00ffcc, -50px -10px #016795, 50px -10px #016795, 70px 0px #00ffcc;
-        }
-
-        .peacock-launch {
-            display: block;
-            animation: arcadeJump 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
-        }
-
-        @keyframes arcadeJump {
-            0% { bottom: -300px; }
-            100% { bottom: 100px; }
-        }
-
-        .speech-bubble {
-            display: none;
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ffffff;
-            color: #000;
-            padding: 12px 24px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            border: 4px solid #000;
-            box-shadow: 4px 4px 0px #00ffcc;
-            text-transform: uppercase;
-        }
-
-        .speech-bubble::after {
-            content: ''; position: absolute; bottom: -16px; left: 50%;
-            transform: translateX(-50%); border-width: 8px; border-style: solid;
-            border-color: #ffffff transparent transparent transparent;
-        }
-
-        /* --- LEVEL 2: INTERACTIVE CAKE MISSION --- */
-        .cake-container {
-            margin: 20px auto;
-            position: relative;
-            height: 230px;
-            width: 200px;
-        }
-
-        .cake-layer {
-            margin: 0 auto;
-            border: 3px solid #fff;
-            box-shadow: 4px 4px 0px #000;
-        }
-        .layer-top { width: 100px; height: 40px; background: #ffe066; }
-        .layer-mid { width: 140px; height: 40px; background: #00ffcc; }
-        .layer-base { width: 180px; height: 50px; background: #ff4d4d; }
-
-        .candle {
-            width: 10px; height: 30px; background: #ffffff;
-            margin: 0 auto; border: 2px solid #000;
-        }
-
-        .flame {
-            width: 12px; height: 18px; background: #ff9900;
-            border-radius: 50% 50% 20% 20%; margin: -20px auto 0 auto;
-            box-shadow: 0 0 8px #ffcc00;
-            animation: flicker 0.1s infinite alternate steps(2);
-        }
-
-        @keyframes flicker {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.15); }
-        }
-
-        .smoke-cloud {
-            display: none;
-            position: absolute;
-            top: 20px; left: 50%; transform: translateX(-50%);
-            font-size: 2rem; opacity: 0;
-            animation: riseSmoke 1s ease-out forwards;
-        }
-
-        @keyframes riseSmoke {
-            0% { transform: translateX(-50%) translateY(0); opacity: 0; }
-            30% { opacity: 0.8; }
-            100% { transform: translateX(-50%) translateY(-50px) scale(1.4); opacity: 0; }
-        }
-
-        .countdown-overlay {
-            display: none;
-            font-size: 4rem;
-            color: #ffe066;
-            font-weight: bold;
-            text-shadow: 4px 4px 0px #000;
-            margin-bottom: 10px;
-        }
-
-        .action-btn {
-            background: #00ffcc; color: #000; border: 3px solid #fff;
-            padding: 12px 24px; font-family: 'Courier New', monospace;
-            font-weight: bold; font-size: 1.1rem; cursor: pointer;
-            box-shadow: 4px 4px 0px #000; margin-top: 15px;
-        }
-        .action-btn:hover { background: #ffe066; }
-
-        /* --- LEVEL 3: MEDIA UNLOCK PLATFORM --- */
-        .canva-placeholder {
-            width: 100%; max-width: 560px; height: 315px;
-            background: #000c14; border: 3px dashed #00ffcc;
-            margin: 20px auto; display: flex; align-items: center;
-            justify-content: center; font-size: 1rem; color: #808080;
-            padding: 10px; box-sizing: border-box;
-        }
-
-        /* --- LEVEL 4: CANDY CATCHER SCREEN --- */
-        .game-canvas-area {
-            width: 100%;
-            max-width: 400px;
-            height: 300px;
-            background-color: #000c14;
-            border: 3px solid #00ffcc;
-            margin: 15px auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #game-score {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 1.1rem;
-            color: #ffe066;
-            font-weight: bold;
-            z-index: 5;
-        }
-
-        #game-timer {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.1rem;
-            color: #ff4d4d;
-            font-weight: bold;
-            z-index: 5;
-        }
-
-        #falling-item {
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            font-size: 2rem;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-        }
-
-        #player-basket {
-            position: absolute;
-            bottom: 10px;
-            left: 170px;
-            font-size: 2.2rem;
-            width: 60px;
-            height: 40px;
-            line-height: 40px;
-            transition: left 0.08s linear;
-        }
-
-        .game-controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 15px;
-        }
-
-        .control-btn {
-            background: #012233;
-            color: #00ffcc;
-            border: 2px solid #00ffcc;
-            padding: 10px 25px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px #000;
-        }
-        .control-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 0px 0px 0px #000;
-        }
-
-        /* Game State Screens Inside Panel */
-        .game-screen {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 12, 20, 0.95);
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 20;
-            box-sizing: border-box;
-            padding: 20px;
-        }
-
-        .success-text { color: #00ffcc; font-size: 1.5rem; text-transform: uppercase; font-weight: bold; line-height: 1.5;}
-        .fail-text { color: #ff4d4d; font-size: 1.6rem; text-transform: uppercase; font-weight: bold; }
-
-        /* --- PIXEL CONFETTI SYSTEM --- */
-        .confetti-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; overflow: hidden; display: none; z-index: 15;
-        }
-        .confetti-piece {
-            position: absolute; width: 8px; height: 8px;
-            top: -10px; opacity: 0.8;
-            animation: fallConfetti 2s linear infinite;
-        }
-        @keyframes fallConfetti {
-            0% { transform: translateY(0) rotate(0deg); top: -10px; }
-            100% { transform: translateY(320px) rotate(360deg); }
-        }
-
-        /* --- BACKGROUND RETRO GRID ENVIRONMENT --- */
-        .matrix-bg {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            pointer-events:none; z-index: 1; opacity: 0.04;
-            background-image: linear-gradient(#fff 2px, transparent 2px), linear-gradient(90deg, #fff 2px, transparent 2px);
-            background-size: 40px 40px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="matrix-bg"></div>
-
-    <h1>ARCADE SYSTEM: APPA</h1>
-    <div class="subtitle">[ SELECT LEVEL TO START ]</div>
-
-    <div class="grid-container">
-        <div class="menu-card" onclick="startLevel('gift-panel')">
-            <div class="card-icon">🎁</div>
-            <div class="card-title">Lvl 1: Mystery Box</div>
-            <span class="level-tag">[ PRESS START ]</span>
-        </div>
-        <div class="menu-card" onclick="startLevel('cake-panel')">
-            <div class="card-icon">🎂</div>
-            <div class="card-title">Lvl 2: Cake Mission</div>
-            <span class="level-tag">[ PRESS START ]</span>
-        </div>
-        <div class="menu-card" onclick="startLevel('video-panel')">
-            <div class="card-icon">🎬</div>
-            <div class="card-title">Lvl 3: Special Video</div>
-            <span class="level-tag">[ PRESS START ]</span>
-        </div>
-        <div class="menu-card" onclick="startLevel('stats-panel')">
-            <div class="card-icon">🎮</div>
-            <div class="card-title">Lvl 4: Candy Catcher</div>
-            <span class="level-tag">[ PRESS START ]</span>
-        </div>
-    </div>
-
-    <div id="gift-panel" class="stage-panel">
-        <h3 id="gift-instruction" style="color: #ffe066; text-transform: uppercase; margin: 0;">[ TARGET: UNBOX MYSTERY ITEM ]</h3>
-        <div class="gift-box-wrapper">
-            <div id="peacock-bubble" class="speech-bubble">Happy Birthday Appa! 🦚</div>
-            <div id="peacock-render" class="pixel-peacock"></div>
-            <div id="clickable-box" class="gift-box-closed" onclick="runGiftUnbox()">🎁</div>
-        </div>
-    </div>
-
-    <div id="cake-panel" class="stage-panel">
-        <h3 style="color: #00ffcc; text-transform: uppercase; margin: 0;">[ TARGET: EXTINGUISH CANDLE ]</h3>
-        <div id="countdown-text" class="countdown-overlay">3</div>
-        <div id="smoke" class="smoke-cloud">💨💨</div>
-        
-        <div class="cake-container">
-            <div id="cake-flame" class="flame"></div>
-            <div class="candle"></div>
-            <div class="cake-layer layer-top"></div>
-            <div class="cake-layer layer-mid"></div>
-            <div class="cake-layer layer-base"></div>
-        </div>
-        <button id="blow-trigger" class="action-btn" onclick="runCakeCountdown()">ACTIVATE BLOW DEVICE</button>
-    </div>
-
-    <div id="video-panel" class="stage-panel">
-        <h3 style="color: #ffe066; text-transform: uppercase; margin: 0;">[ VIDEO MODULE UNLOCKED ]</h3>
-        <p style="margin-top:15px; font-size:1rem; letter-spacing: 1px;">Transmission received: Loading personal birthday project file...</p>
-        
-        <div class="canva-placeholder">
-            [ Paste your Canva Video Embed Code / Iframe Code Right Here Later ]
-        </div>
-    </div>
-
-    <div id="stats-panel" class="stage-panel">
-        <h3 style="color: #00ffcc; text-transform: uppercase; margin: 0;">[ LVL 4: CANDY CATCHER ]</h3>
-        <p style="font-size: 0.9rem; margin: 10px 0; color: #ffe066;">Catch 5 candies before time runs out!</p>
-        
-        <div class="game-canvas-area">
-            <div id="game-score">SCORE: 0</div>
-            <div id="game-timer">TIME: 15</div>
-            <div id="falling-item">🍬</div>
-            <div id="player-basket">🛒</div>
-
-            <div id="win-screen" class="game-screen">
-                <div class="success-text">Great Job!<br>You have been promoted to the age of 46! 🎉</div>
-                <button class="action-btn" onclick="resetLevelState()">PLAY AGAIN</button>
-            </div>
-
-            <div id="lose-screen" class="game-screen">
-                <div class="fail-text">Oh no!<br>Try again! 👾</div>
-                <button class="action-btn" onclick="initMiniGame()">REDO LEVEL</button>
-            </div>
-
-            <div id="confetti-room" class="confetti-container"></div>
-        </div>
-
-        <div class="game-controls">
-            <button class="control-btn" onclick="moveBasket(-35)">&lt;</button>
-            <button class="control-btn" onclick="moveBasket(35)">&gt;</button>
-        </div>
-        <button id="start-game-btn" class="action-btn" onclick="initMiniGame()">START GAME</button>
-    </div>
-
-    <script>
-        // System Room Router Engine
-        function startLevel(panelId) {
-            document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
-            stopGameLoops();
-            
-            const selectedStage = document.getElementById(panelId);
-            selectedStage.style.display = 'block';
-            void selectedStage.offsetWidth;
-            selectedStage.classList.add('animate-pop');
-
-            // Reset Level 1 triggers cleanly
-            if (panelId === 'gift-panel') {
-                document.getElementById('clickable-box').style.display = 'block';
-                document.getElementById('peacock-render').classList.remove('peacock-launch');
-                document.getElementById('peacock-bubble').style.display = 'none';
-                document.getElementById('gift-instruction').innerText = "[ TARGET: UNBOX MYSTERY ITEM ]";
-            }
-
-            // Reset Level 4 Screen Overlays
-            if (panelId === 'stats-panel') {
-                resetLevelState();
-            }
-        }
-
-        function resetLevelState() {
-            stopGameLoops();
-            document.getElementById('start-game-btn').style.display = 'inline-block';
-            document.getElementById('win-screen').style.display = 'none';
-            document.getElementById('lose-screen').style.display = 'none';
-            document.getElementById('confetti-room').style.display = 'none';
-            document.getElementById('game-score').innerText = "SCORE: 0";
-            document.getElementById('game-timer').innerText = "TIME: 15";
-            document.getElementById('falling-item').style.top = "-40px";
-            document.getElementById('player-basket').style.left = "170px";
-            score = 0;
-            timeLeft = 15;
-        }
-
-        function stopGameLoops() {
-            clearInterval(gameInterval);
-            clearInterval(timerInterval);
-        }
-
-        // Lvl 1 Action Sequence
-        function runGiftUnbox() {
-            document.getElementById('gift-instruction').innerText = "STAGE COMPLETE! ✔️";
-            document.getElementById('clickable-box').style.display = 'none';
-            
-            const peacock = document.getElementById('peacock-render');
-            peacock.classList.add('peacock-launch');
-
-            setTimeout(() => {
-                document.getElementById('peacock-bubble').style.display = 'block';
-            }, 500);
-        }
-
-        // Lvl 2 Action Sequence
-        function runCakeCountdown() {
-            const btn = document.getElementById('blow-trigger');
-            const overlay = document.getElementById('countdown-text');
-            
-            btn.style.display = 'none';
-            overlay.style.display = 'block';
-            
-            let count = 3;
-            overlay.innerText = count;
-
-            const timer = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    overlay.innerText = count;
-                } else {
-                    clearInterval(timer);
-                    overlay.style.display = 'none';
-                    
-                    document.getElementById('cake-flame').style.display = 'none';
-                    const smoke = document.getElementById('smoke');
-                    smoke.style.display = 'block';
-                    
-                    setTimeout(() => {
-                        smoke.style.display = 'none';
-                        alert("MISSION ACCOMPLISHED! 🎉 Happy Birthday Appa!");
-                    }, 1000);
-                }
-            }, 1000);
-        }
-
-        /* --- MINI GAME ENGINE LOGIC --- */
-        let score = 0;
-        let timeLeft = 15;
-        let gameInterval, timerInterval;
-        let itemX = 180;
-        let itemY = -40;
-        let basketX = 170;
-        const candyPool = ['🍬', '🍭', '🍫', '🍩', '🍪'];
-
-        function initMiniGame() {
-            // Hide menu overlays, clear parameters
-            document.getElementById('start-game-btn').style.display = 'none';
-            document.getElementById('win-screen').style.display = 'none';
-            document.getElementById('lose-screen').style.display = 'none';
-            document.getElementById('confetti-room').style.display = 'none';
-            
-            score = 0;
-            timeLeft = 15;
-            itemY = -40;
-            basketX = 170;
-            
-            document.getElementById('game-score').innerText = "SCORE: " + score;
-            document.getElementById('game-timer').innerText = "TIME: " + timeLeft;
-            document.getElementById('player-basket').style.left = basketX + "px";
-            spawnCandy();
-            
-            // 1. Core Physics Animation Frame Tick Loop
-            gameInterval = setInterval(() => {
-                itemY += 6; 
-                document.getElementById('falling-item').style.top = itemY + "px";
-
-                // Collision detection range setup
-                if (itemY >= 230 && itemY <= 260) {
-                    if (itemX >= basketX - 25 && itemX <= basketX + 45) {
-                        score++;
-                        document.getElementById('game-score').innerText = "SCORE: " + score;
-                        
-                        if (score >= 5) {
-                            endGameSequence(true);
-                            return;
-                        }
-                        spawnCandy();
-                    }
-                }
-
-                // Recycle object if missed
-                if (itemY > 300) {
-                    spawnCandy();
-                }
-            }, 30);
-
-            // 2. Countdown Timer Loop
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('game-timer').innerText = "TIME: " + timeLeft;
-                if (timeLeft <= 0) {
-                    endGameSequence(false);
-                }
-            }, 1000);
-        }
-
-        function spawnCandy() {
-            itemY = -40;
-            itemX = Math.floor(Math.random() * 340) + 10;
-            const randomCandy = candyPool[Math.floor(Math.random() * candyPool.length)];
-            
-            const itemElement = document.getElementById('falling-item');
-            itemElement.innerText = randomCandy;
-            itemElement.style.left = itemX + "px";
-            itemElement.style.top = itemY + "px";
-        }
-
-        function moveBasket(dir) {
-            basketX += dir;
-            if (basketX < 10) basketX = 10;
-            if (basketX > 330) basketX = 330;
-            document.getElementById('player-basket').style.left = basketX + "px";
-        }
-
-        function endGameSequence(isWin) {
-            stopGameLoops();
-            if (isWin) {
-                document.getElementById('win-screen').style.display = 'flex';
-                buildConfetti();
-            } else {
-                document.getElementById('lose-screen').style.display = 'flex';
-            }
-        }
-
-        // Generate retro 8-bit block confetti explosion
-        function buildConfetti() {
-            const container = document.getElementById('confetti-room');
-            container.innerHTML = '';
-            container.style.display = 'block';
-            const colors = ['#00ffcc', '#ffe066', '#ff4d4d', '#ff9900', '#ffffff'];
-            
-            for (let i = 0; i < 40; i++) {
-                const piece = document.createElement('div');
-                piece.className = 'confetti-piece';
-                piece.style.left = Math.random() * 100 + '%';
-                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                piece.style.animationDelay = (Math.random() * 1.5) + 's';
-                piece.style.animationDuration = (Math.random() * 1 + 1) + 's';
-                container.appendChild(piece);
-            }
-        }
-    </script>
-</body>
-</html>
-
-```
