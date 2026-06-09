@@ -1,68 +1,305 @@
 <!DOCTYPE html>
-<html lang="en"><head>    
+<html lang="en">
+<head>    
     <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday, Dad!</title>    
     <style>        
-        /* --- GLOBAL STYLE SETUP --- */        
+        /* --- RETRO VIDEO GAME SETUP --- */        
         body {            
-            font-family: 'Arial Black', 'Arial', sans-serif;            
-            background-color: #002b3d; /* Dark Peacock Blue */            
+            font-family: 'Courier New', Courier, monospace; /* Arcade style font */
+            background: #00121c;
             text-align: center;            
             padding: 50px 20px;            
             color: #ffffff;            
             margin: 0;            
             overflow-x: hidden;        
+            min-height: 100vh;
+            position: relative;
         }        
-        /* Large Bubbly Gold Title */        
+        
+        /* 8-Bit Glowing Gold Title */        
         h1 {            
-            color: #d4af37; /* Bright Gold */            
-            font-size: 5rem;            
+            color: #d4af37;
+            font-size: 3.5rem;            
             margin-bottom: 5px;            
             text-transform: uppercase;            
-            letter-spacing: 2px;            
-            text-shadow:                 
-                 0 4px 0 #997d25,                
-                 0 8px 0 #665319,                
-                 0 12px 20px rgba(0,0,0,0.6);            
-            animation: bounceTitle 2s infinite alternate;        
+            letter-spacing: 3px;            
+            text-shadow: 4px 4px 0px #665319, 8px 8px 0px #000000;
+            animation: bounceTitle 1s infinite alternate cubic-bezier(0.6, -0.28, 0.735, 0.045);        
         }        
+        
         @keyframes bounceTitle {
             from { transform: translateY(0); }
             to { transform: translateY(-10px); }
         }
+
         .subtitle {            
-            font-size: 1.8rem;            
-            color: #ffffff;            
+            font-size: 1.4rem;            
+            color: #00ffcc; /* Retro cyan */
             font-weight: bold;            
             margin-bottom: 50px;            
-            letter-spacing: 1px;            
-            opacity: 0.95;        
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px #000;
         }        
-        /* --- BUBBLY BLUE BOXES WITH GOLD OUTLINE --- */        
+
+        /* --- ARCADE BUTTONS --- */        
         .menu-container {            
             display: flex;            
             justify-content: center;            
             gap: 25px;            
             max-width: 1000px;            
-            margin: 0 auto 60px auto;            
+            margin: 0 auto 40px auto;            
             flex-wrap: wrap;        
+            position: relative;
+            z-index: 10;
         }        
+        
         .bubbly-btn {            
-            background-color: #016795; /* Deep Blue Box */            
-            color: #d4af37; /* Gold Text */            
-            border: 5px solid #d4af37; /* Gold Outline */            
-            padding: 25px 50px;            
-            font-size: 1.8rem;            
+            background-color: #016795;            
+            color: #ffffff;            
+            border: 4px solid #ffffff;            
+            padding: 20px 40px;            
+            font-size: 1.5rem;            
             font-weight: bold;            
-            font-family: 'Arial Black', sans-serif;            
-            border-radius: 50px;            
+            font-family: 'Courier New', monospace;            
             cursor: pointer;            
-            box-shadow: 0 10px 0 #004666, 0 15px 25px rgba(0,0,0,0.4);            
-            transition: all 0.1s ease;        
+            box-shadow: 6px 6px 0px #d4af37, 10px 10px 0px #000;            
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
         }        
+
         .bubbly-btn:hover {            
-            transform: translateY(-5px);            
             background-color: #027cb3;            
-            box-shadow: 0 15px 0 #004666, 0 20px 30px rgba(0,0,0,0.5);        
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px #d4af37, 12px 12px 0px #000;            
         }        
-        .bubbly-btn
+        
+        .bubbly-btn:active {            
+            transform: translate(6px, 6px);            
+            box-shadow: 0px 0px 0px #000;        
+        }        
+
+        /* --- GAME BOX CONTAINERS --- */        
+        .surprise-section {            
+            display: none;            
+            max-width: 700px;            
+            margin: 30px auto;            
+            background: #01415e; 
+            padding: 40px;            
+            border: 5px solid #d4af37;            
+            box-shadow: 12px 12px 0px #000;
+            position: relative; 
+            z-index: 10;
+        }        
+        
+        .animate-pop {
+            animation: popIn 0.3s steps(4) forwards;        
+        }
+
+        @keyframes popIn {            
+            from { opacity: 0; transform: scale(0.9); }            
+            to { opacity: 1; transform: scale(1); }        
+        }        
+
+        /* --- TRIVIA ENGINE STYLING --- */
+        .quiz-box h3 {
+            font-size: 1.6rem;
+            color: #ffe066;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: #002233;
+            border: 3px solid #ffffff;
+            color: #fff;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #01557a;
+        }
+
+        .feedback-box {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 50px;
+            text-transform: uppercase;
+        }
+
+        .wrong-text { color: #ff4d4d; }
+        .right-text { color: #00ffcc; }
+
+        .next-btn {
+            background: #d4af37;
+            color: #000;
+            border: 3px solid #000;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* --- BACKGROUND BALLOONS ANIMATION --- */
+        .balloon-pool {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: 1; pointer-events: none;
+        }
+
+        .balloon {
+            position: absolute; bottom: -150px;
+            width: 45px; height: 60px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            opacity: 0.3;
+            animation: floatUp 10s linear infinite;
+        }
+
+        .balloon::after {
+            content: "🎈"; position: absolute;
+            bottom: -15px; left: 10px; font-size: 1rem;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-120vh) translateX(40px) rotate(10deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="balloon-pool">
+        <div class="balloon" style="left: 15%; background-color: #d4af37; animation-duration: 12s; animation-delay: 0s;"></div>
+        <div class="balloon" style="left: 40%; background-color: #016795; animation-duration: 15s; animation-delay: 3s;"></div>
+        <div class="balloon" style="left: 70%; background-color: #00ffcc; animation-duration: 10s; animation-delay: 1s;"></div>
+        <div class="balloon" style="left: 85%; background-color: #ffe066; animation-duration: 14s; animation-delay: 5s;"></div>
+    </div>
+
+    <h1>LEVEL UP: DAD'S BIRTHDAY</h1>
+    <div class="subtitle">[ PRESS START TO CONTINUE ]</div>
+
+    <div class="menu-container">
+        <button class="bubbly-btn" onclick="showSurprise('trivia')">START TRIVIA</button>
+    </div>
+
+    <div id="trivia-surprise" class="surprise-section">
+        <div class="quiz-box" id="quiz-box">
+            <h3 id="question-text">Loading Question...</h3>
+            <div class="options-grid" id="options-container"></div>
+            <div class="feedback-box" id="feedback-container"></div>
+            <button class="next-btn" id="next-button" onclick="nextQuestion()">NEXT LEVEL &gt;</button>
+        </div>
+    </div>
+
+    <script>
+        const triviaData = [
+            {
+                q: "Question 1: What is one thing you love about yourself?",
+                options: ["My unmatched wisdom", "My fixing skills", "Everything, honestly", "All of the above"],
+                correctIndex: 2, 
+                jokeMode: true,
+                customWrongMsg: "WRONG! ❌ The correct answer is: What's not to love? 😎"
+            },
+            {
+                q: "Question 2: Who is your absolute favorite child?",
+                options: ["The one who built this webpage", "The other ones", "The dog", "Pass"],
+                correctIndex: 0,
+                jokeMode: false,
+                customWrongMsg: "WRONG! ❌ Try again, you know who coded this. 😉",
+                customRightMsg: "CORRECT! 💎 +100XP Gained."
+            },
+            {
+                q: "Question 3: How does it feel turning another year legendary?",
+                options: ["I feel old", "Still a champion", "Need a nap", "Level Max reached"],
+                correctIndex: 1,
+                jokeMode: true,
+                customWrongMsg: "WRONG! ❌ The system says you are: Still a champion! 🏆 Happy Birthday, Dad!"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function showSurprise(type) {
+            const triviaSec = document.getElementById('trivia-surprise');
+            triviaSec.style.display = 'block';
+            void triviaSec.offsetWidth; 
+            triviaSec.classList.add('animate-pop');
+            currentQuestionIndex = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const data = triviaData[currentQuestionIndex];
+            document.getElementById('question-text').innerText = data.q;
+            document.getElementById('feedback-container').innerHTML = "";
+            document.getElementById('next-button').style.display = "none";
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = "";
+
+            data.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(index);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const data = triviaData[currentQuestionIndex];
+            const feedback = document.getElementById('feedback-container');
+            const nextBtn = document.getElementById('next-button');
+            
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            if (data.jokeMode) {
+                feedback.innerHTML = `<span class="wrong-text">${data.customWrongMsg}</span>`;
+            } else {
+                if (selectedIndex === data.correctIndex) {
+                    feedback.innerHTML = `<span class="right-text">${data.customRightMsg}</span>`;
+                } else {
+                    feedback.innerHTML = `<span class="wrong-text">${data.customWrongMsg}</span>`;
+                }
+            }
+            
+            nextBtn.style.display = "inline-block";
+            if(currentQuestionIndex === triviaData.length - 1) {
+                nextBtn.innerText = "FINISH GAME";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < triviaData.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('quiz-box').innerHTML = `
+                    <h3>🎉 GAME COMPLETE! 🎉</h3>
+                    <p style="font-size:1.4rem; color:#00ffcc;">YOU WIN! MAX LEVEL ACHIEVED.</p>
+                    <p style="font-size:1.2rem; line-height: 1.6;">Have an amazing birthday, Dad!</p>
+                `;
+            }
+        }
+    </script>
+
+</body>
+</html>
