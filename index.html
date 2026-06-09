@@ -1,86 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Happy Birthday, Dad!</title>
-    <style>
-        /* --- GLOBAL STYLE SETUP --- */
-        body {
-            font-family: 'Arial Black', 'Arial', sans-serif;
-            background-color: #002b3d; /* Dark Peacock Blue */
-            text-align: center;
-            padding: 50px 20px;
-            color: #ffffff;
-            margin: 0;
-            overflow-x: hidden;
+<html lang="en"><head>    
+    <meta charset="UTF-8">    
+    <title>Happy Birthday, Dad!</title>    
+    <style>        
+        /* --- GLOBAL STYLE SETUP --- */        
+        body {            
+            font-family: 'Arial Black', 'Arial', sans-serif;            
+            background-color: #002b3d; /* Dark Peacock Blue */            
+            text-align: center;            
+            padding: 50px 20px;            
+            color: #ffffff;            
+            margin: 0;            
+            overflow-x: hidden;        
+        }        
+        /* Large Bubbly Gold Title */        
+        h1 {            
+            color: #d4af37; /* Bright Gold */            
+            font-size: 5rem;            
+            margin-bottom: 5px;            
+            text-transform: uppercase;            
+            letter-spacing: 2px;            
+            text-shadow:                 
+                 0 4px 0 #997d25,                
+                 0 8px 0 #665319,                
+                 0 12px 20px rgba(0,0,0,0.6);            
+            animation: bounceTitle 2s infinite alternate;        
+        }        
+        @keyframes bounceTitle {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
         }
-
-        /* Large Bubbly Gold Title */
-        h1 {
-            color: #d4af37; /* Bright Gold */
-            font-size: 5rem;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 
-                0 4px 0 #997d25,
-                0 8px 0 #665319,
-                0 12px 20px rgba(0,0,0,0.6);
-            animation: bounceTitle 2s infinite alternate;
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            color: #ffffff;
-            font-weight: bold;
-            margin-bottom: 50px;
-            letter-spacing: 1px;
-            opacity: 0.95;
-        }
-
-        /* --- BUBBLY BLUE BOXES WITH GOLD OUTLINE --- */
-        .menu-container {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            max-width: 1000px;
-            margin: 0 auto 60px auto;
-            flex-wrap: wrap;
-        }
-
-        .bubbly-btn {
-            background-color: #016795; /* Deep Blue Box */
-            color: #d4af37; /* Gold Text */
-            border: 5px solid #d4af37; /* Gold Outline */
-            padding: 25px 50px;
-            font-size: 1.8rem;
-            font-weight: bold;
-            font-family: 'Arial Black', sans-serif;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 0 #004666, 0 15px 25px rgba(0,0,0,0.4);
-            transition: all 0.1s ease;
-        }
-
-        .bubbly-btn:hover {
-            transform: translateY(-5px);
-            background-color: #027cb3;
-            box-shadow: 0 15px 0 #004666, 0 20px 30px rgba(0,0,0,0.5);
-        }
-
-        .bubbly-btn:active {
-            transform: translateY(6px);
-            box-shadow: 0 2px 0 #004666, 0 4px 10px rgba(0,0,0,0.4);
-        }
-
-        /* --- SURPRISE DISPLAY CONTAINERS --- */
-        .surprise-section {
-            display: none;
-            max-width: 850px;
-            margin: 30px auto;
-            background: #01415e; /* Content Container Box */
-            padding: 60px 40px;
-            border-radius: 40px;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.6);
-            border: 6px solid #d4af37; /* Gold Border Frame */
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.
+        .subtitle {            
+            font-size: 1.8rem;            
+            color: #ffffff;            
+            font-weight: bold;            
+            margin-bottom: 50px;            
+            letter-spacing: 1px;            
+            opacity: 0.95;        
+        }        
+        /* --- BUBBLY BLUE BOXES WITH GOLD OUTLINE --- */        
+        .menu-container {            
+            display: flex;            
+            justify-content: center;            
+            gap: 25px;            
+            max-width: 1000px;            
+            margin: 0 auto 60px auto;            
+            flex-wrap: wrap;        
+        }        
+        .bubbly-btn {            
+            background-color: #016795; /* Deep Blue Box */            
+            color: #d4af37; /* Gold Text */            
+            border: 5px solid #d4af37; /* Gold Outline */            
+            padding: 25px 50px;            
+            font-size: 1.8rem;            
+            font-weight: bold;            
+            font-family: 'Arial Black', sans-serif;            
+            border-radius: 50px;            
+            cursor: pointer;            
+            box-shadow: 0 10px 0 #004666, 0 15px 25px rgba(0,0,0,0.4);            
+            transition: all 0.1s ease;        
+        }        
+        .bubbly-btn:hover {            
+            transform: translateY(-5px);            
+            background-color: #027cb3;            
+            box-shadow: 0 15px 0 #004666, 0 20px 30px rgba(0,0,0,0.5);        
+        }        
+        .bubbly-btn
