@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Happy Birthday, Appa!</title>
+    <title>Happy Birthday, Dad!</title>
     <style>
-        /* --- GLOBAL STYLES --- */
+        /* --- GLOBAL STYLE SETUP --- */
         body {
             font-family: 'Arial Black', 'Arial', sans-serif;
             background-color: #002b3d; /* Dark Peacock Blue */
@@ -17,7 +17,7 @@
 
         /* Large Bubbly Gold Title */
         h1 {
-            color: #d4af37; /* Gold */
+            color: #d4af37; /* Bright Gold */
             font-size: 5rem;
             margin-bottom: 5px;
             text-transform: uppercase;
@@ -26,7 +26,7 @@
                 0 4px 0 #997d25,
                 0 8px 0 #665319,
                 0 12px 20px rgba(0,0,0,0.6);
-            animation: bounce Title 2s infinite alternate;
+            animation: bounceTitle 2s infinite alternate;
         }
 
         .subtitle {
@@ -38,7 +38,7 @@
             opacity: 0.95;
         }
 
-        /* --- BUBBLY BUTTONS MENU --- */
+        /* --- BUBBLY BLUE BOXES WITH GOLD OUTLINE --- */
         .menu-container {
             display: flex;
             justify-content: center;
@@ -49,7 +49,7 @@
         }
 
         .bubbly-btn {
-            background-color: #016795; /* Blue Boxes */
+            background-color: #016795; /* Deep Blue Box */
             color: #d4af37; /* Gold Text */
             border: 5px solid #d4af37; /* Gold Outline */
             padding: 25px 50px;
@@ -73,16 +73,16 @@
             box-shadow: 0 2px 0 #004666, 0 4px 10px rgba(0,0,0,0.4);
         }
 
-        /* --- SURPRISE SECTIONS --- */
+        /* --- SURPRISE DISPLAY CONTAINERS --- */
         .surprise-section {
             display: none;
             max-width: 850px;
             margin: 30px auto;
-            background: #01415e; /* Darker Blue Container Box */
+            background: #01415e; /* Content Container Box */
             padding: 60px 40px;
             border-radius: 40px;
             box-shadow: 0 20px 45px rgba(0,0,0,0.6);
-            border: 6px solid #d4af37; /* Gold Outline */
+            border: 6px solid #d4af37; /* Gold Border Frame */
             animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
@@ -98,17 +98,17 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* --- SURPRISE ONE: GIANT GIFT & ELABORATE PEACOCK --- */
+        /* --- SURPRISE 1: ENORMOUS GIFT BOX & RECONFIGURED PEACOCK --- */
         .gift-container {
             cursor: pointer;
             display: inline-block;
             margin: 40px auto;
-            transform: scale(2.5); /* Massive Gift Box */
+            transform: scale(3.5); /* Giant Gift Box Size */
             transition: transform 0.2s ease;
         }
 
         .gift-container:hover {
-            transform: scale(2.8) rotate(3deg);
+            transform: scale(3.8) rotate(3deg);
         }
 
         .pixel-gift {
@@ -118,212 +118,4 @@
             margin: 0 auto;
             box-shadow: 
                 -20px 0px #d4af37, 0px 0px #d4af37, 20px 0px #d4af37,
-                -20px 20px #016795, 0px 20px #d4af37, 20px 20px #016795,
-                -20px 40px #016795, 0px 40px #d4af37, 20px 40px #016795;
-        }
-
-        .peacock-pop {
-            display: none;
-            margin-top: 20px;
-        }
-
-        /* Highly Elaborate, Majestic Pixel Peacock */
-        .pixel-peacock {
-            width: 8px;
-            height: 8px;
-            background: transparent;
-            margin: 0 auto;
-            transform: scale(2.2); /* Huge Scale */
-            box-shadow:
-                /* Golden Crest Crown Feathers */
-                -24px -56px #d4af37, 0px -64px #d4af37, 24px -56px #d4af37,
-                -16px -48px #016795, 0px -56px #016795, 16px -48px #016795,
-                /* Huge, Elaborate Eye-Pattern Tail Plumes (Fan) */
-                -72px -24px #d4af37, -56px -40px #016795, 56px -40px #016795, 72px -24px #d4af37,
-                -80px 0px #027cb3, -64px -16px #d4af37, 64px -16px #d4af37, 80px 0px #027cb3,
-                -88px 24px #d4af37, -72px 8px #016795, 72px 8px #016795, 88px 24px #d4af37,
-                /* Layered inner wing designs */
-                -48px -8px #d4af37, -40px -24px #016795, 40px -24px #016795, 48px -8px #d4af37,
-                -48px 16px #016795, -32px 0px #027cb3, 32px 0px #027cb3, 48px 16px #016795,
-                /* Detailed Crown & Neck */
-                -8px -40px #016795, 0px -40px #016795, 8px -40px #016795,
-                -8px -32px #016795, 0px -32px #016795, 8px -32px #016795,
-                /* Majestic Body */
-                -16px -24px #016795, -8px -24px #016795, 0px -24px #016795, 8px -24px #016795, 16px -24px #016795,
-                -16px -16px #016795, -8px -16px #027cb3, 0px -16px #027cb3, 8px -16px #027cb3, 16px -16px #016795,
-                -16px -8px #016795, -8px -8px #016795, 0px -8px #016795, 8px -8px #016795, 16px -8px #016795,
-                -16px 0px #016795, -8px 0px #016795, 0px 0px #016795, 8px 0px #016795, 16px 0px #016795,
-                -8px 8px #016795, 0px 8px #016795, 8px 8px #016795,
-                -8px 16px #016795, 0px 16px #016795, 8px 16px #016795,
-                /* Facial Elements */
-                16px -36px #d4af37, /* Sharp Gold Beak */
-                0px -36px #111,       /* Beady Pixel Eye */
-                /* Long Elegant Golden Legs */
-                -8px 24px #d4af37, 8px 24px #d4af37,
-                -8px 32px #d4af37, 8px 32px #d4af37,
-                -8px 40px #d4af37, 8px 40px #d4af37,
-                -16px 48px #d4af37, 16px 48px #d4af37;
-            animation: jumpUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes jumpUp {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(2.2); opacity: 1; }
-        }
-
-        .speech-bubble {
-            background: #016795;
-            color: #d4af37;
-            font-size: 1.8rem;
-            font-weight: bold;
-            padding: 20px 40px;
-            border-radius: 25px;
-            margin-top: 190px; /* Spaced perfectly below massive peacock scales */
-            display: inline-block;
-            border: 5px solid #d4af37;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
-        }
-
-        /* --- SURPRISE TWO: MASSIVE 3-LAYER CAKE & FLAIR EXTINGUISH --- */
-        .cake-wrapper {
-            position: relative;
-            display: inline-block;
-            margin: 100px auto 40px auto;
-            transform: scale(2.5); /* Massive Cake Assembly */
-        }
-
-        /* Large Striped Pixel Candle */
-        .candle {
-            width: 14px;
-            height: 45px;
-            background: linear-gradient(to bottom, #d4af37 50%, #016795 50%);
-            background-size: 100% 16px;
-            position: relative;
-            margin: 0 auto;
-            top: 2px;
-            z-index: 2;
-        }
-
-        .wick {
-            width: 2px;
-            height: 8px;
-            background-color: #222;
-            position: absolute;
-            top: -8px;
-            left: 6px;
-        }
-
-        .flame {
-            width: 14px;
-            height: 24px;
-            background: radial-gradient(ellipse at bottom, #ff8c00 30%, #d4af37 70%, transparent 90%);
-            border-radius: 50% 50% 20% 20%;
-            position: absolute;
-            top: -32px;
-            left: 0px;
-            box-shadow: 0 0 25px rgba(212,175,55,1);
-            animation: flicker 0.4s ease-in-out infinite alternate;
-            transition: all 0.3s ease;
-        }
-
-        @keyframes flicker {
-            0% { transform: scale(1) rotate(-2deg); }
-            100% { transform: scale(1.2) rotate(3deg); }
-        }
-
-        .flame.blown-out {
-            opacity: 0;
-            transform: scale(0);
-        }
-
-        /* Pixel Smoke Clouds Effect */
-        .smoke-puff {
-            display: none;
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: transparent;
-            top: -45px;
-            left: -15px;
-            z-index: 5;
-        }
-
-        /* Cute pixelated puffs of smoke expanding outwards */
-        .smoke-puff.active {
-            display: block;
-            box-shadow: 
-                -10px -10px #bbb, 0px -15px #ddd, 10px -10px #bbb,
-                -20px 0px #999, 20px 0px #999,
-                -10px 10px #bbb, 0px 15px #bbb, 10px 10px #bbb;
-            animation: smokeDissolve 0.8s ease-out forwards;
-        }
-
-        @keyframes smokeDissolve {
-            0% { transform: scale(0.4) translateY(0); opacity: 1; }
-            50% { transform: scale(1.4) translateY(-15px); opacity: 0.8; }
-            100% { transform: scale(2) translateY(-35px); opacity: 0; }
-        }
-
-        /* Huge Three-Layer Dark Chocolate Pixel Cake */
-        .pixel-chocolate-cake {
-            width: 10px;
-            height: 10px;
-            background: transparent;
-            margin: 0 auto;
-            box-shadow: 
-                /* TOP LAYER (Smallest) */
-                -20px 0px #fff, -10px 0px #fff, 0px 0px #fff, 10px 0px #fff, 20px 0px #fff,
-                -20px 10px #4a2c11, -10px 10px #4a2c11, 0px 10px #3d230d, 10px 10px #4a2c11, 20px 10px #4a2c11,
-                /* MIDDLE LAYER */
-                -35px 20px #fff, -25px 20px #fff, -15px 20px #fff, -5px 20px #fff, 5px 20px #fff, 15px 20px #fff, 25px 20px #fff, 35px 20px #fff,
-                -35px 30px #4a2c11, -25px 30px #4a2c11, -15px 30px #3d230d, -5px 30px #3d230d, 5px 30px #3d230d, 15px 30px #3d230d, 25px 30px #4a2c11, 35px 30px #4a2c11,
-                /* BOTTOM LAYER (Largest) */
-                -50px 40px #fff, -40px 40px #fff, -30px 40px #fff, -20px 40px #fff, -10px 40px #fff, 0px 40px #fff, 10px 40px #fff, 20px 40px #fff, 30px 40px #fff, 40px 40px #fff, 50px 40px #fff,
-                -50px 50px #4a2c11, -40px 50px #4a2c11, -30px 50px #4a2c11, -20px 50px #3d230d, -10px 50px #3d230d, 0px 50px #3d230d, 10px 50px #3d230d, 20px 50px #3d230d, 30px 50px #4a2c11, 40px 50px #4a2c11, 50px 50px #4a2c11,
-                /* Giant Golden Plate Base */
-                -60px 60px #d4af37, -50px 60px #d4af37, -40px 60px #d4af37, -30px 60px #d4af37, -20px 60px #d4af37, -10px 60px #d4af37, 0px 60px #d4af37, 10px 60px #d4af37, 20px 60px #d4af37, 30px 60px #d4af37, 40px 60px #d4af37, 50px 60px #d4af37, 60px 60px #d4af37;
-        }
-
-        /* Giant Dramatic Countdown text */
-        .countdown-text {
-            display: none;
-            font-size: 9rem;
-            color: #ff6b6b;
-            font-family: 'Arial Black', sans-serif;
-            text-shadow: 0 0 40px rgba(255,107,107,0.7);
-            margin: 40px 0 10px 0;
-            animation: pulseCount 0.8s infinite alternate;
-        }
-
-        @keyframes pulseCount {
-            0% { transform: scale(0.9); opacity: 0.7; }
-            100% { transform: scale(1.1); opacity: 1; }
-        }
-
-        .big-action-btn {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 25px 70px;
-            font-size: 2rem;
-            font-weight: bold;
-            font-family: 'Arial Black', sans-serif;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-top: 50px;
-            box-shadow: 0 8px 0 #cc5252, 0 10px 20px rgba(0,0,0,0.3);
-            transition: all 0.1s ease;
-        }
-
-        .big-action-btn:active {
-            transform: translateY(6px);
-            box-shadow: 0 2px 0 #cc5252;
-        }
-
-        /* --- OPTION 3: VIDEO --- */
-        .video-box {
-            padding: 10px;
-        }
-        
-        .video-placeholder {
-            width: 100%;
+                -20px 20px #016795, 0px 20px #d4af37, 20px 20px #01
