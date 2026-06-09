@@ -105,3 +105,511 @@
         .menu-card:hover {
             background-color: #01415e;
             border-color: #ffe066;
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0px #000;
+        }
+
+        .menu-card:active {
+            transform: translate(6px, 6px);
+            box-shadow: 0px 0px 0px #000;
+        }
+
+        .card-icon { font-size: 2.8rem; margin-bottom: 15px; }
+        .card-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; color: #fff; }
+        .level-tag { font-size: 0.8rem; color: #00ffcc; margin-top: 8px; display: block; }
+
+        /* --- STAGE DISPLAY MONITOR PANEL --- */
+        .stage-panel {
+            display: none;
+            max-width: 750px;
+            margin: 40px auto;
+            background-color: #00121c;
+            border: 4px solid #fff;
+            box-shadow: 12px 12px 0px #000;
+            padding: 40px;
+            position: relative;
+            min-height: 480px;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .animate-pop { animation: pixelPop 0.25s steps(3) forwards; }
+        @keyframes pixelPop {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- LEVEL 1: PIXEL GIFT BOX & PEACOCK LAUNCH --- */
+        .gift-box-wrapper { 
+            position: relative; 
+            height: 380px; 
+            margin-top: 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .pixel-gift-container {
+            width: 140px;
+            height: 140px;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 20px;
+            z-index: 12;
+        }
+
+        .gift-base {
+            width: 120px;
+            height: 100px;
+            background: #ff4d4d;
+            border: 4px solid #fff;
+            position: absolute;
+            bottom: 0;
+            left: 6px;
+            box-shadow: inset -15px 0px 0px rgba(0,0,0,0.15), 5px 5px 0px #000;
+        }
+
+        .gift-base::before, .gift-lid::before {
+            content: ''; position: absolute; top: 0; left: 45px;
+            width: 26px; height: 100%; background: #ffe066;
+            border-left: 4px solid #fff; border-right: 4px solid #fff;
+        }
+
+        .gift-lid {
+            width: 140px;
+            height: 32px;
+            background: #ff4d4d;
+            border: 4px solid #fff;
+            position: absolute;
+            top: 0;
+            left: -4px;
+            box-shadow: inset -15px 0px 0px rgba(0,0,0,0.15), 4px 4px 0px #000;
+            z-index: 14;
+        }
+
+        .lid-exploded {
+            animation: lidFlyOff 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+        }
+        @keyframes lidFlyOff {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            30% { transform: translateY(-70px) rotate(-15deg); opacity: 1; }
+            100% { transform: translateY(180px) translateX(-160px) rotate(-110deg); opacity: 0; }
+        }
+
+        .vector-peacock {
+            display: none;
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #005f73, #0a9396);
+            border-radius: 50% 50% 40% 40%;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.2);
+            border: 4px solid #00ffcc;
+            box-shadow: 0px -12px 0px #94d2bd, 0px -24px 0px #e9d8a6;
+            z-index: 11;
+        }
+        .vector-peacock::before {
+            content: ''; position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 40px; background: #005f73; border-radius: 50%; border: 3px solid #00ffcc;
+        }
+        .vector-peacock::after {
+            content: '🔶'; position: absolute; top: -14px; left: 52%; transform: translateX(-50%) rotate(45deg); font-size: 1rem;
+        }
+
+        .peacock-launch {
+            display: block;
+            animation: smoothJump 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+        }
+        @keyframes smoothJump {
+            0% { bottom: 20px; transform: translateX(-50%) scale(0.2); }
+            100% { bottom: 160px; transform: translateX(-50%) scale(1.3); }
+        }
+
+        .speech-bubble {
+            display: none;
+            position: absolute;
+            bottom: 210px; 
+            left: calc(50% + 110px);
+            background: #ffffff; color: #000; padding: 12px 20px;
+            font-weight: bold; font-size: 1.2rem; border: 4px solid #000;
+            box-shadow: 4px 4px 0px #00ffcc; border-radius: 12px;
+            white-space: nowrap;
+            z-index: 15;
+        }
+        .speech-bubble::after {
+            content: ''; position: absolute; bottom: 16px; left: -16px;
+            border-width: 8px; border-style: solid;
+            border-color: transparent #ffffff transparent transparent;
+        }
+
+        /* --- LEVEL 2: DETAILED REALISTIC CAKE --- */
+        .cake-artwork {
+            margin: 40px auto 20px auto;
+            position: relative;
+            height: 250px;
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .cake-tier {
+            border: 4px solid #fff;
+            border-radius: 12px 12px 4px 4px;
+            box-shadow: inset 0 8px 0 rgba(255,255,255,0.4), 5px 5px 0px #000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tier-3 { 
+            width: 140px; height: 50px; background: #ffb703; z-index: 3; 
+            background-image: radial-gradient(#ff4d4d 20%, transparent 20%), radial-gradient(#00ffcc 20%, transparent 20%);
+            background-size: 15px 15px; background-position: 0 0, 7px 7px;
+        }
+        .tier-2 { 
+            width: 190px; height: 60px; background: #ffb7b2; z-index: 2; margin-top: -4px;
+            background-image: radial-gradient(#fff 25%, transparent 25%), radial-gradient(#ff4d4d 20%, transparent 20%);
+            background-size: 20px 20px; background-position: 5px 5px, 12px 12px;
+        }
+        .tier-1 { 
+            width: 240px; height: 70px; background: #b5e2fa; z-index: 1; margin-top: -4px;
+            background-image: radial-gradient(#ffe066 20%, transparent 20%), radial-gradient(#00ffcc 20%, transparent 20%);
+            background-size: 16px 16px; background-position: 2px 2px, 8px 8px;
+        }
+
+        .frosting-rim {
+            position: absolute; top: 0; left: 0; width: 100%; height: 14px;
+            background: #ffffff; border-radius: 8px 8px 0 0;
+            border-bottom: 3px solid rgba(0,0,0,0.15);
+        }
+
+        .candle-stick {
+            width: 12px; height: 45px;
+            background: linear-gradient(90deg, #ff4d4d, #ffffff);
+            border: 3px solid #fff; border-radius: 4px;
+            position: absolute; top: -42px; left: 50%;
+            transform: translateX(-50%); z-index: 10;
+            box-shadow: 3px 3px 0px #000;
+        }
+
+        .candle-flame {
+            width: 16px; height: 26px;
+            background: linear-gradient(to bottom, #ffcc00, #ff4d4d);
+            border-radius: 50% 50% 35% 35%;
+            position: absolute; top: -28px; left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px #ff9900, 0 0 25px #ffcc00;
+            animation: wiggleFlame 0.6s ease-in-out infinite alternate;
+            z-index: 11;
+        }
+
+        @keyframes wiggleFlame {
+            0% { transform: translateX(-50%) rotate(-3deg) scaleX(0.9); }
+            100% { transform: translateX(-50%) rotate(4deg) scaleX(1.1); }
+        }
+
+        .smoke-plume {
+            display: none;
+            position: absolute;
+            top: -60px; left: 50%; transform: translateX(-50%);
+            width: 8px; height: 30px; background: rgba(220, 220, 220, 0.5);
+            border-radius: 50%; filter: blur(4px);
+        }
+        .smoke-active {
+            display: block;
+            animation: driftAway 1.4s ease-out forwards;
+        }
+        @keyframes driftAway {
+            0% { transform: translateX(-50%) translateY(20px) scale(0.5); opacity: 0.8; filter: blur(2px); }
+            50% { width: 25px; height: 40px; }
+            100% { transform: translateX(-30%) translateY(-60px) scale(2.5); opacity: 0; filter: blur(8px); }
+        }
+
+        .countdown-overlay {
+            display: none; font-size: 4rem; color: #ffe066;
+            font-weight: bold; text-shadow: 4px 4px 0px #000; margin-bottom: 10px;
+        }
+
+        /* --- LEVEL 4: CANDY CATCHER SCREEN --- */
+        .game-canvas-area {
+            width: 100%; max-width: 400px; height: 300px;
+            background-color: #000c14; border: 3px solid #00ffcc;
+            margin: 15px auto; position: relative; overflow: hidden;
+        }
+        #game-score { position: absolute; top: 10px; left: 10px; font-size: 1.1rem; color: #ffe066; font-weight: bold; z-index: 5; }
+        #game-timer { position: absolute; top: 10px; right: 10px; font-size: 1.1rem; color: #ff4d4d; font-weight: bold; z-index: 5; }
+        #falling-item { position: absolute; top: -40px; left: 50%; font-size: 2rem; width: 40px; height: 40px; line-height: 40px; }
+        #player-basket { position: absolute; bottom: 10px; left: 170px; font-size: 2.2rem; width: 60px; height: 40px; line-height: 40px; transition: left 0.08s linear; }
+
+        .game-controls { display: flex; justify-content: center; gap: 20px; margin-top: 15px; }
+        .control-btn { background: #012233; color: #00ffcc; border: 2px solid #00ffcc; padding: 10px 25px; font-size: 1.5rem; font-weight: bold; cursor: pointer; box-shadow: 3px 3px 0px #000; }
+        .control-btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px #000; }
+
+        .game-screen {
+            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 12, 20, 0.95); align-items: center; justify-content: center;
+            flex-direction: column; z-index: 20; box-sizing: border-box; padding: 20px;
+        }
+        .success-text { color: #00ffcc; font-size: 1.4rem; text-transform: uppercase; font-weight: bold; line-height: 1.5; }
+        .fail-text { color: #ff4d4d; font-size: 1.6rem; text-transform: uppercase; font-weight: bold; }
+
+        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; display: none; z-index: 15; }
+        .confetti-piece { position: absolute; width: 8px; height: 8px; top: -10px; opacity: 0.8; animation: fallConfetti 2s linear infinite; }
+        @keyframes fallConfetti {
+            0% { transform: translateY(0) rotate(0deg); top: -10px; }
+            100% { transform: translateY(320px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="balloon-container" id="balloon-room"></div>
+
+    <div><span class="bubble-heading">Happy Birthday Appa</span></div>
+    <div class="subtitle">[ SELECT LEVEL TO START ]</div>
+
+    <div class="grid-container">
+        <div class="menu-card" onclick="startLevel('gift-panel')">
+            <div class="card-icon">🎁</div>
+            <div class="card-title">Lvl 1: Mystery Box</div>
+            <span class="level-tag">[ PRESS START ]</span>
+        </div>
+        <div class="menu-card" onclick="startLevel('cake-panel')">
+            <div class="card-icon">🎂</div>
+            <div class="card-title">Lvl 2: Cake Mission</div>
+            <span class="level-tag">[ PRESS START ]</span>
+        </div>
+        <div class="menu-card" onclick="startLevel('video-panel')">
+            <div class="card-icon">🎬</div>
+            <div class="card-title">Lvl 3: Special Video</div>
+            <span class="level-tag">[ PRESS START ]</span>
+        </div>
+        <div class="menu-card" onclick="startLevel('stats-panel')">
+            <div class="card-icon">🎮</div>
+            <div class="card-title">Lvl 4: Candy Catcher</div>
+            <span class="level-tag">[ PRESS START ]</span>
+        </div>
+    </div>
+
+    <div id="gift-panel" class="stage-panel">
+        <h3 id="gift-instruction" style="color: #ffe066; text-transform: uppercase; margin: 0;">[ TARGET: UNBOX MYSTERY ITEM ]</h3>
+        <div class="gift-box-wrapper">
+            <div id="peacock-bubble" class="speech-bubble">Happy birthday to you! 🦚</div>
+            <div id="peacock-render" class="vector-peacock"></div>
+            
+            <div id="clickable-box" class="pixel-gift-container" onclick="runGiftUnbox()">
+                <div id="gift-lid-element" class="gift-lid"></div>
+                <div class="gift-base"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cake-panel" class="stage-panel">
+        <h3 style="color: #00ffcc; text-transform: uppercase; margin: 0;">[ TARGET: EXTINGUISH CANDLE ]</h3>
+        <div id="countdown-text" class="countdown-overlay">3</div>
+        
+        <div class="cake-artwork">
+            <div id="smoke-trail" class="smoke-plume"></div>
+            <div id="cake-flame" class="candle-flame"></div>
+            <div id="main-cake-body" style="position:relative; display:flex; flex-direction:column; align-items:center;">
+                <div class="candle-stick"></div>
+                <div class="cake-tier tier-3"><div class="frosting-rim"></div></div>
+                <div class="cake-tier tier-2"><div class="frosting-rim"></div></div>
+                <div class="cake-tier tier-1"><div class="frosting-rim"></div></div>
+            </div>
+        </div>
+        <button id="blow-trigger" class="action-btn" onclick="runCakeCountdown()">ACTIVATE BLOW DEVICE</button>
+    </div>
+
+    <div id="video-panel" class="stage-panel">
+        <h3 style="color: #ffe066; text-transform: uppercase; margin: 0; line-height: 1.4;">
+            Happy Birthday to the most special man in the world!<br>
+            <span style="color:#fff; font-size:1rem; transform:translateY(10px); display:block;">Click on the video to take a journey down memory lane</span>
+        </h3>
+        
+        <div class="canva-placeholder" style="margin-top: 30px;">
+            [ Paste your Canva Video Embed Code / Iframe Code Right Here Later ]
+        </div>
+    </div>
+
+    <div id="stats-panel" class="stage-panel">
+        <h3 style="color: #00ffcc; text-transform: uppercase; margin: 0;">[ LVL 4: CANDY CATCHER ]</h3>
+        <p style="font-size: 0.9rem; margin: 10px 0; color: #ffe066;">Catch 5 candies before time runs out!</p>
+        
+        <div class="game-canvas-area">
+            <div id="game-score">SCORE: 0</div>
+            <div id="game-timer">TIME: 15</div>
+            <div id="falling-item">🍬</div>
+            <div id="player-basket">🛒</div>
+
+            <div id="win-screen" class="game-screen">
+                <div class="success-text">Great Job!<br>You have been promoted to the age of 46! 🎉</div>
+                <button class="action-btn" onclick="resetLevelState()">PLAY AGAIN</button>
+            </div>
+
+            <div id="lose-screen" class="game-screen">
+                <div class="fail-text">Oh no!<br>Try again! 👾</div>
+                <button class="action-btn" onclick="initMiniGame()">REDO LEVEL</button>
+            </div>
+
+            <div id="confetti-room" class="confetti-container"></div>
+        </div>
+
+        <div class="game-controls">
+            <button class="control-btn" onclick="moveBasket(-35)">&lt;</button>
+            <button class="control-btn" onclick="moveBasket(35)">&gt;</button>
+        </div>
+        <button id="start-game-btn" class="action-btn" onclick="initMiniGame()">START GAME</button>
+    </div>
+
+    <script>
+        let score = 0, timeLeft = 15;
+        let gameInterval, timerInterval;
+        let itemX = 180, itemY = -40, basketX = 170;
+        const candyPool = ['🍬', '🍭', '🍫', '🍩', '🍪'];
+
+        // Build continuous floating background balloons
+        function initBalloons() {
+            const room = document.getElementById('balloon-room');
+            const colors = ['#ff4d4d', '#00ffcc', '#ffe066', '#ff9900', '#b5e2fa', '#ffb7b2'];
+            for(let i=0; i<15; i++) {
+                const b = document.createElement('div');
+                b.className = 'balloon';
+                b.style.left = Math.random() * 90 + '%';
+                b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                b.style.animationDelay = (Math.random() * 8) + 's';
+                b.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                room.appendChild(b);
+            }
+        }
+        window.onload = initBalloons;
+
+        function startLevel(panelId) {
+            document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
+            stopGameLoops();
+            
+            const selectedStage = document.getElementById(panelId);
+            selectedStage.style.display = 'block';
+            void selectedStage.offsetWidth;
+            selectedStage.classList.add('animate-pop');
+
+            if (panelId === 'gift-panel') {
+                document.getElementById('gift-lid-element').classList.remove('lid-exploded');
+                document.getElementById('peacock-render').classList.remove('peacock-launch');
+                document.getElementById('peacock-bubble').style.display = 'none';
+                document.getElementById('gift-instruction').innerText = "[ TARGET: UNBOX MYSTERY ITEM ]";
+            }
+            if (panelId === 'cake-panel') {
+                document.getElementById('cake-flame').style.display = 'block';
+                document.getElementById('smoke-trail').classList.remove('smoke-active');
+                document.getElementById('blow-trigger').style.display = 'inline-block';
+                document.getElementById('countdown-text').style.display = 'none';
+            }
+            if (panelId === 'stats-panel') { resetLevelState(); }
+        }
+
+        function resetLevelState() {
+            stopGameLoops();
+            document.getElementById('start-game-btn').style.display = 'inline-block';
+            document.getElementById('win-screen').style.display = 'none';
+            document.getElementById('lose-screen').style.display = 'none';
+            document.getElementById('confetti-room').style.display = 'none';
+            document.getElementById('game-score').innerText = "SCORE: 0";
+            document.getElementById('game-timer').innerText = "TIME: 15";
+            document.getElementById('falling-item').style.top = "-40px";
+            document.getElementById('player-basket').style.left = "170px";
+            score = 0; timeLeft = 15;
+        }
+
+        function stopGameLoops() { clearInterval(gameInterval); clearInterval(timerInterval); }
+
+        function runGiftUnbox() {
+            document.getElementById('gift-instruction').innerText = "STAGE COMPLETE! ✔️";
+            document.getElementById('gift-lid-element').classList.add('lid-exploded');
+            const peacock = document.getElementById('peacock-render');
+            peacock.classList.add('peacock-launch');
+            setTimeout(() => { document.getElementById('peacock-bubble').style.display = 'block'; }, 600);
+        }
+
+        function runCakeCountdown() {
+            const btn = document.getElementById('blow-trigger');
+            const overlay = document.getElementById('countdown-text');
+            btn.style.display = 'none'; overlay.style.display = 'block';
+            let count = 3; overlay.innerText = count;
+
+            const timer = setInterval(() => {
+                count--;
+                if (count > 0) { overlay.innerText = count; } 
+                else {
+                    clearInterval(timer); overlay.style.display = 'none';
+                    document.getElementById('cake-flame').style.display = 'none';
+                    document.getElementById('smoke-trail').classList.add('smoke-active');
+                }
+            }, 1000);
+        }
+
+        function initMiniGame() {
+            document.getElementById('start-game-btn').style.display = 'none';
+            document.getElementById('win-screen').style.display = 'none';
+            document.getElementById('lose-screen').style.display = 'none';
+            document.getElementById('confetti-room').style.display = 'none';
+            score = 0; timeLeft = 15; itemY = -40; basketX = 170;
+            document.getElementById('game-score').innerText = "SCORE: " + score;
+            document.getElementById('game-timer').innerText = "TIME: " + timeLeft;
+            spawnCandy();
+            
+            gameInterval = setInterval(() => {
+                itemY += 6; document.getElementById('falling-item').style.top = itemY + "px";
+                if (itemY >= 230 && itemY <= 260) {
+                    if (itemX >= basketX - 25 && itemX <= basketX + 45) {
+                        score++; document.getElementById('game-score').innerText = "SCORE: " + score;
+                        if (score >= 5) { endGameSequence(true); return; }
+                        spawnCandy();
+                    }
+                }
+                if (itemY > 300) { spawnCandy(); }
+            }, 30);
+
+            timerInterval = setInterval(() => {
+                timeLeft--; document.getElementById('game-timer').innerText = "TIME: " + timeLeft;
+                if (timeLeft <= 0) { endGameSequence(false); }
+            }, 1000);
+        }
+
+        function spawnCandy() {
+            itemY = -40; itemX = Math.floor(Math.random() * 340) + 10;
+            const randomCandy = candyPool[Math.floor(Math.random() * candyPool.length)];
+            const itemElement = document.getElementById('falling-item');
+            itemElement.innerText = randomCandy; itemElement.style.left = itemX + "px"; itemElement.style.top = itemY + "px";
+        }
+
+        function moveBasket(dir) {
+            basketX += dir; if (basketX < 10) basketX = 10; if (basketX > 330) basketX = 330;
+            document.getElementById('player-basket').style.left = basketX + "px";
+        }
+
+        function endGameSequence(isWin) {
+            stopGameLoops();
+            if (isWin) {
+                document.getElementById('win-screen').style.display = 'flex'; buildConfetti();
+            } else { document.getElementById('lose-screen').style.display = 'flex'; }
+        }
+
+        function buildConfetti() {
+            const container = document.getElementById('confetti-room');
+            container.innerHTML = ''; container.style.display = 'block';
+            const colors = ['#00ffcc', '#ffe066', '#ff4d4d', '#ff9900', '#ffffff'];
+            for (let i = 0; i < 40; i++) {
+                const piece = document.createElement('div'); piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%'; piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = (Math.random() * 1.5) + 's'; piece.style.animationDuration = (Math.random() * 1 + 1) + 's';
+                container.appendChild(piece);
+            }
+        }
+    </script>
+</body>
+</html>
