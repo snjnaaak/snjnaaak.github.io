@@ -40,14 +40,6 @@
             filter: drop-shadow(4px 4px 0px #000);
         }
 
-        .subtitle {
-            font-size: 1rem;
-            color: #5dade2;
-            text-shadow: 2px 2px 0px #000;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
         /* --- DASHBOARD LAYOUT ENGINE --- */
         .dashboard-container {
             display: flex;
@@ -105,10 +97,10 @@
             gap: 25px;
         }
 
-        /* --- LONG RECTANGULAR MENU GRID --- */
+        /* --- TALL VERTICAL OPTIONS GRID (Length < Width) --- */
         .grid-container {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             width: 100%;
         }
@@ -117,16 +109,18 @@
             background-color: #0c1f3d;
             border: 4px solid #f1c40f;
             border-radius: 24px;
-            padding: 18px 30px;
+            padding: 30px 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            gap: 25px;
+            justify-content: center;
+            gap: 15px;
             cursor: pointer;
             box-shadow: 0px 6px 0px #000;
             transition: all 0.2s ease-in-out;
             box-sizing: border-box;
-            width: 100%;
+            aspect-ratio: 4 / 5; /* Forces vertical card shape */
+            text-align: center;
         }
 
         .menu-card:hover {
@@ -140,18 +134,18 @@
             box-shadow: 0px 3px 0px #000;
         }
 
-        .card-icon { font-size: 2.2rem; }
+        .card-icon { font-size: 3rem; }
         
         .card-text-wrapper {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            gap: 8px;
             width: 100%;
         }
 
-        .card-title { font-size: 1.2rem; font-weight: bold; text-transform: uppercase; color: #fff; }
-        .level-tag { font-size: 0.85rem; color: #f1c40f; letter-spacing: 1px; font-weight: bold; }
+        .card-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; color: #fff; }
+        .level-tag { font-size: 0.8rem; color: #f1c40f; letter-spacing: 1px; font-weight: bold; }
 
         /* --- ACTIVE DISPLAY PANELS --- */
         .stage-panel {
@@ -162,7 +156,7 @@
             padding: 30px;
             border-radius: 24px;
             position: relative;
-            min-height: 520px;
+            min-height: 550px;
             box-sizing: border-box;
         }
 
@@ -217,11 +211,12 @@
         /* --- MYSTERY BOX & SVG PEACOCK CONTAINER --- */
         .gift-box-wrapper { 
             position: relative; 
-            height: 440px; 
+            height: 480px; 
             margin-top: 20px; 
             display: flex;
-            justify-content: center;
-            align-items: flex-end;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
         }
 
         .pixel-gift-container {
@@ -270,12 +265,9 @@
             100% { transform: translateY(-140px) translateX(-120px) rotate(-70deg); opacity: 0; }
         }
 
-        /* PEACOCK ANIMATION MODULE */
         .peacock-svg-container {
             display: none;
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
+            margin-bottom: 20px;
             z-index: 11;
         }
 
@@ -285,17 +277,17 @@
         }
 
         @keyframes majesticReveal {
-            0% { bottom: 20px; transform: translateX(-50%) scale(0.3); opacity: 0; }
-            100% { bottom: 120px; transform: translateX(-50%) scale(1); opacity: 1; }
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Peacock SVG Crisp Rendering Rules */
+        /* SVG Crisp Pixel Styling Rules */
         .peacock-svg-container svg {
             shape-rendering: crispEdges;
             filter: drop-shadow(4px 6px 0px rgba(0,0,0,0.5));
         }
 
-        .t1 { fill: #008080; } 
+        .t1 { fill: #006666; } 
         .t2 { fill: #00bfa5; } 
         .t3 { fill: #00e676; } 
         .b1 { fill: #002266; } 
@@ -306,23 +298,23 @@
         .w0 { fill: #ffffff; } 
         .n0 { fill: #020b18; }
 
+        /* Speech Bubble Below Peacock */
         .speech-bubble {
             display: none;
-            position: absolute;
-            bottom: 360px; 
-            left: calc(50% + 140px);
             background: #ffffff; color: #000; padding: 10px 18px;
             font-weight: bold; font-size: 1.1rem; border: 3px solid #000;
             box-shadow: 4px 4px 0px #1abc9c; border-radius: 12px;
             white-space: nowrap;
             z-index: 15;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
-        /* --- CAKE DESIGN --- */
+        /* --- PRETTIER CAKE DESIGN --- */
         .cake-artwork {
             margin: 30px auto 10px auto;
             position: relative;
-            height: 220px;
+            height: 240px;
             width: 240px;
             display: flex;
             flex-direction: column;
@@ -332,20 +324,61 @@
         .cake-tier {
             border: 3px solid #fff;
             border-radius: 8px 8px 3px 3px;
-            box-shadow: inset 0 6px 0 rgba(255,255,255,0.4), 4px 4px 0px #000;
+            box-shadow: 4px 4px 0px #000;
             position: relative;
             overflow: hidden;
         }
-        .tier-3 { width: 120px; height: 45px; background: #f39c12; z-index: 3; }
-        .tier-2 { width: 170px; height: 50px; background: #e84393; z-index: 2; margin-top: -3px; }
-        .tier-1 { width: 220px; height: 60px; background: #0984e3; z-index: 1; margin-top: -3px; }
-        .frosting-rim { position: absolute; top: 0; left: 0; width: 100%; height: 12px; background: #fff; }
-        .candle-stick { width: 10px; height: 38px; background: linear-gradient(90deg, #e74c3c, #fff); border: 2px solid #fff; position: absolute; top: -35px; left: 50%; transform: translateX(-50%); z-index: 10; }
-        .candle-flame { width: 14px; height: 22px; background: linear-gradient(to bottom, #ffea00, #e74c3c); border-radius: 50% 50% 35% 35%; position: absolute; top: -54px; left: 50%; transform: translateX(-50%); box-shadow: 0 0 15px #ff9f43; animation: wiggle 0.5s infinite alternate; z-index: 11; }
+        .tier-3 { width: 120px; height: 50px; background: #f39c12; z-index: 3; }
+        .tier-2 { width: 170px; height: 55px; background: #e84393; z-index: 2; margin-top: -3px; }
+        .tier-1 { width: 220px; height: 65px; background: #0984e3; z-index: 1; margin-top: -3px; }
+        
+        /* Frosting Ribbons & Drips */
+        .frosting-rim { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 14px; 
+            background: #fff; 
+            border-bottom: 3px dashed rgba(0,0,0,0.15);
+        }
+        
+        /* Decorative Pixel Sprinkles */
+        .sprinkles::before {
+            content: '';
+            position: absolute;
+            top: 18px; left: 15px; width: 6px; height: 4px; background: #e74c3c;
+            box-shadow: 25px 8px #ffd700, 50px -2px #2979ff, 75px 6px #00e676, 90px 2px #e84393, 35px 14px #fff;
+        }
+
+        /* Candle Anchored Correctly Touching Cake */
+        .candle-stick { 
+            width: 10px; height: 38px; 
+            background: linear-gradient(90deg, #e74c3c, #fff); 
+            border: 2px solid #fff; 
+            position: absolute; 
+            top: -36px; left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 10; 
+        }
+        .candle-flame { 
+            width: 14px; height: 22px; 
+            background: linear-gradient(to bottom, #ffea00, #e74c3c); 
+            border-radius: 50% 50% 35% 35%; 
+            position: absolute; 
+            top: -57px; left: 50%; 
+            transform: translateX(-50%); 
+            box-shadow: 0 0 15px #ff9f43; 
+            animation: wiggle 0.5s infinite alternate; 
+            z-index: 11;
+            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+        }
         @keyframes wiggle { 0% { transform: translateX(-50%) rotate(-3deg); } 100% { transform: translateX(-50%) rotate(4deg); } }
-        .smoke-plume { display: none; position: absolute; top: -70px; left: 50%; transform: translateX(-50%); width: 6px; height: 25px; background: rgba(200, 200, 200, 0.6); border-radius: 50%; filter: blur(3px); }
-        .smoke-active { display: block; animation: drift 1s ease-out forwards; }
-        @keyframes drift { 0% { transform: translateX(-50%) translateY(10px) scale(0.6); opacity: 1; } 100% { transform: translateX(-30%) translateY(-40px) scale(2); opacity: 0; } }
+        
+        .countdown-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e74c3c;
+            text-align: center;
+            height: 40px;
+            margin-top: 15px;
+        }
 
         /* --- VIDEO ELEMENT CONTAINER --- */
         .video-container-wrapper { margin: 20px auto 0 auto; width: 100%; min-height: 240px; }
@@ -364,7 +397,6 @@
 
     <header>
         <span class="bubble-heading">Happy Birthday Appa</span>
-        <div class="subtitle">[ SYSTEM ONLINE // MODIFIED HORIZONTAL LAYOUT ENGINE ]</div>
     </header>
 
     <div class="dashboard-container">
@@ -394,29 +426,29 @@
                 <div class="menu-card" onclick="startLevel('gift-panel', 1)">
                     <div class="card-icon">🎁</div>
                     <div class="card-text-wrapper">
-                        <div class="card-title">Lvl 1: Mystery Box</div>
-                        <span class="level-tag">[ UNBOX ITEM ]</span>
+                        <div class="card-title">Mystery Box</div>
+                        <span class="level-tag">[ LVL 1 ]</span>
                     </div>
                 </div>
                 <div class="menu-card" onclick="startLevel('cake-panel', 2)">
                     <div class="card-icon">🎂</div>
                     <div class="card-text-wrapper">
-                        <div class="card-title">Lvl 2: Cake Blast</div>
-                        <span class="level-tag">[ START MISSION ]</span>
+                        <div class="card-title">Cake Blast</div>
+                        <span class="level-tag">[ LVL 2 ]</span>
                     </div>
                 </div>
                 <div class="menu-card" onclick="startLevel('video-panel', 3)">
                     <div class="card-icon">🎬</div>
                     <div class="card-text-wrapper">
-                        <div class="card-title">Lvl 3: Special Film</div>
-                        <span class="level-tag">[ WATCH TRAILER ]</span>
+                        <div class="card-title">Special Film</div>
+                        <span class="level-tag">[ LVL 3 ]</span>
                     </div>
                 </div>
                 <div class="menu-card" onclick="startLevel('stats-panel', 4)">
                     <div class="card-icon">🎮</div>
                     <div class="card-text-wrapper">
-                        <div class="card-title">Lvl 4: Candy Rush</div>
-                        <span class="level-tag">[ LAUNCH MINIGAME ]</span>
+                        <div class="card-title">Candy Rush</div>
+                        <span class="level-tag">[ LVL 4 ]</span>
                     </div>
                 </div>
             </div>
@@ -424,76 +456,72 @@
             <div id="gift-panel" class="stage-panel">
                 <h3 id="gift-instruction" style="color: #f1c40f; text-transform: uppercase; margin: 0;">[ TARGET: OPEN THE MYSTERY BOX ]</h3>
                 <div class="gift-box-wrapper">
-                    <div id="peacock-bubble" class="speech-bubble">Happy birthday to you, Appa! 🦚</div>
                     
                     <div id="peacock-render" class="peacock-svg-container">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 30" width="380" height="340">
-                            <rect x="16" y="2" width="3" height="1" class="t1"/>
-                            <rect x="15" y="3" width="5" height="1" class="t2"/>
-                            <rect x="14" y="4" width="7" height="1" class="t3"/>
-                            <rect x="16" y="4" width="3" height="1" class="g2"/>
-                            <rect x="17" y="4" width="1" height="1" class="b2"/>
-                            <rect x="10" y="4" width="3" height="1" class="t1"/>
-                            <rect x="9" y="5" width="5" height="1" class="t2"/>
-                            <rect x="22" y="4" width="3" height="1" class="t1"/>
-                            <rect x="21" y="5" width="5" height="1" class="t2"/>
-                            <rect x="8" y="6" width="7" height="1" class="t3"/>
-                            <rect x="10" y="6" width="3" height="1" class="g2"/>
-                            <rect x="11" y="6" width="1" height="1" class="b2"/>
-                            <rect x="20" y="6" width="7" height="1" class="t3"/>
-                            <rect x="22" y="6" width="3" height="1" class="g2"/>
-                            <rect x="23" y="6" width="1" height="1" class="b2"/>
-                            <rect x="5" y="7" width="3" height="1" class="t1"/>
-                            <rect x="4" y="8" width="5" height="1" class="t2"/>
-                            <rect x="3" y="9" width="7" height="1" class="t3"/>
-                            <rect x="5" y="9" width="3" height="1" class="g2"/>
-                            <rect x="6" y="9" width="1" height="1" class="b2"/>
-                            <rect x="27" y="7" width="3" height="1" class="t1"/>
-                            <rect x="26" y="8" width="5" height="1" class="t2"/>
-                            <rect x="25" y="9" width="7" height="1" class="t3"/>
-                            <rect x="27" y="9" width="3" height="1" class="g2"/>
-                            <rect x="28" y="9" width="1" height="1" class="b2"/>
-                            <rect x="2" y="10" width="31" height="1" class="t2"/>
-                            <rect x="1" y="11" width="33" height="1" class="t3"/>
-                            <rect x="3" y="11" width="3" height="1" class="g2"/> <rect x="4" y="11" width="1" height="1" class="b2"/>
-                            <rect x="29" y="11" width="3" height="1" class="g2"/> <rect x="30" y="11" width="1" height="1" class="b2"/>
-                            <rect x="1" y="12" width="33" height="1" class="t1"/>
-                            <rect x="2" y="13" width="31" height="1" class="t2"/>
-                            <rect x="2" y="14" width="31" height="1" class="t3"/>
-                            <rect x="4" y="14" width="3" height="1" class="g2"/> <rect x="5" y="14" width="1" height="1" class="b2"/>
-                            <rect x="28" y="14" width="3" height="1" class="g2"/> <rect x="29" y="14" width="1" height="1" class="b2"/>
-                            <rect x="3" y="15" width="29" height="1" class="t2"/>
-                            <rect x="4" y="16" width="27" height="1" class="t1"/>
-                            <rect x="5" y="17" width="25" height="1" class="t2"/>
-                            <rect x="6" y="18" width="23" height="1" class="t3"/>
-                            <rect x="15" y="8" width="1" height="1" class="b3"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 26" width="280" height="240">
+                            <rect x="14" y="2" width="3" height="1" class="t1"/>
+                            <rect x="13" y="3" width="5" height="1" class="t2"/>
+                            <rect x="12" y="4" width="7" height="1" class="t3"/>
+                            <rect x="14" y="4" width="3" height="1" class="g2"/>
+                            <rect x="15" y="4" width="1" height="1" class="b2"/>
+                            
+                            <rect x="8" y="4" width="3" height="1" class="t1"/>
+                            <rect x="7" y="5" width="5" height="1" class="t2"/>
+                            <rect x="20" y="4" width="3" height="1" class="t1"/>
+                            <rect x="19" y="5" width="5" height="1" class="t2"/>
+                            
+                            <rect x="6" y="6" width="7" height="1" class="t3"/>
+                            <rect x="8" y="6" width="3" height="1" class="g2"/>
+                            <rect x="9" y="6" width="1" height="1" class="b2"/>
+                            <rect x="18" y="6" width="7" height="1" class="t3"/>
+                            <rect x="20" y="6" width="3" height="1" class="g2"/>
+                            <rect x="21" y="6" width="1" height="1" class="b2"/>
+                            
+                            <rect x="3" y="7" width="3" height="1" class="t1"/>
+                            <rect x="2" y="8" width="5" height="1" class="t2"/>
+                            <rect x="1" y="9" width="7" height="1" class="t3"/>
+                            <rect x="3" y="9" width="3" height="1" class="g2"/>
+                            <rect x="4" y="9" width="1" height="1" class="b2"/>
+                            
+                            <rect x="25" y="7" width="3" height="1" class="t1"/>
+                            <rect x="24" y="8" width="5" height="1" class="t2"/>
+                            <rect x="23" y="9" width="7" height="1" class="t3"/>
+                            <rect x="25" y="9" width="3" height="1" class="g2"/>
+                            <rect x="26" y="9" width="1" height="1" class="b2"/>
+                            
+                            <rect x="1" y="10" width="29" height="1" class="t2"/>
+                            <rect x="0" y="11" width="31" height="1" class="t3"/>
+                            <rect x="2" y="11" width="3" height="1" class="g2"/> <rect x="3" y="11" width="1" height="1" class="b2"/>
+                            <rect x="26" y="11" width="3" height="1" class="g2"/> <rect x="27" y="11" width="1" height="1" class="b2"/>
+                            
+                            <rect x="0" y="12" width="31" height="1" class="t1"/>
+                            <rect x="1" y="13" width="29" height="1" class="t2"/>
+                            
+                            <rect x="13" y="7" width="1" height="1" class="b3"/>
+                            <rect x="15" y="6" width="1" height="1" class="b3"/>
                             <rect x="17" y="7" width="1" height="1" class="b3"/>
-                            <rect x="19" y="8" width="1" height="1" class="b3"/>
-                            <rect x="16" y="9" width="3" height="1" class="b1"/>
-                            <rect x="16" y="10" width="4" height="1" class="b2"/>
-                            <rect x="16" y="11" width="2" height="1" class="b2"/> 
-                            <rect x="18" y="11" width="2" height="1" class="w0"/> 
-                            <rect x="18" y="11" width="1" height="1" class="n0"/> 
-                            <rect x="20" y="11" width="2" height="1" class="g2"/> 
-                            <rect x="16" y="12" width="4" height="1" class="b2"/>
-                            <rect x="20" y="12" width="1" height="1" class="g1"/>
-                            <rect x="16" y="13" width="3" height="1" class="b2"/>
-                            <rect x="16" y="14" width="3" height="1" class="b2"/>
-                            <rect x="15" y="15" width="4" height="1" class="b2"/>
-                            <rect x="14" y="16" width="6" height="1" class="b2"/>
-                            <rect x="13" y="17" width="8" height="1" class="b2"/>
-                            <rect x="13" y="18" width="8" height="1" class="b3"/> 
-                            <rect x="13" y="19" width="8" height="1" class="b2"/>
-                            <rect x="14" y="20" width="6" height="1" class="b2"/>
-                            <rect x="15" y="21" width="4" height="1" class="b1"/>
-                            <rect x="16" y="22" width="1" height="3" class="g1"/>
-                            <rect x="18" y="22" width="1" height="3" class="g1"/>
-                            <rect x="15" y="25" width="2" height="1" class="g2"/>
-                            <rect x="18" y="25" width="2" height="1" class="g2"/>
-                            <rect x="14" y="26" width="3" height="1" class="g1"/>
-                            <rect x="18" y="26" width="3" height="1" class="g1"/>
+                            <rect x="14" y="8" width="3" height="1" class="b1"/>
+                            <rect x="14" y="9" width="4" height="1" class="b2"/>
+                            <rect x="14" y="10" width="2" height="1" class="b2"/> 
+                            <rect x="16" y="10" width="2" height="1" class="w0"/> 
+                            <rect x="16" y="10" width="1" height="1" class="n0"/> 
+                            <rect x="18" y="10" width="2" height="1" class="g2"/> 
+                            <rect x="14" y="11" width="4" height="1" class="b2"/>
+                            <rect x="14" y="12" width="3" height="1" class="b2"/>
+                            <rect x="13" y="13" width="5" height="1" class="b2"/>
+                            <rect x="12" y="14" width="7" height="1" class="b2"/>
+                            <rect x="12" y="15" width="7" height="1" class="b3"/> 
+                            <rect x="13" y="16" width="5" height="1" class="b2"/>
+                            <rect x="14" y="17" width="3" height="1" class="b1"/>
+                            
+                            <rect x="14" y="18" width="1" height="3" class="g1"/>
+                            <rect x="16" y="18" width="1" height="3" class="g1"/>
+                            <rect x="13" y="21" width="2" height="1" class="g2"/>
+                            <rect x="16" y="21" width="2" height="1" class="g2"/>
                         </svg>
                     </div>
+
+                    <div id="peacock-bubble" class="speech-bubble">HAPPY BIRTHDAY TO YOU, APPA! 🦚</div>
                     
                     <div id="clickable-box" class="pixel-gift-container" onclick="runGiftUnbox()">
                         <div id="gift-lid-element" class="gift-lid"></div>
@@ -505,14 +533,15 @@
             <div id="cake-panel" class="stage-panel">
                 <h3 style="color: #1abc9c; text-transform: uppercase; margin: 0;">[ TARGET: EXTINGUISH LAYER CANDLE ]</h3>
                 <div class="cake-artwork">
-                    <div id="smoke-trail" class="smoke-plume"></div>
                     <div id="cake-flame" class="candle-flame"></div>
                     <div class="candle-stick"></div>
-                    <div class="cake-tier tier-3"><div class="frosting-rim"></div></div>
-                    <div class="cake-tier tier-2"><div class="frosting-rim"></div></div>
-                    <div class="cake-tier tier-1"><div class="frosting-rim"></div></div>
+                    
+                    <div class="cake-tier tier-3 sprinkles"><div class="frosting-rim"></div></div>
+                    <div class="cake-tier tier-2 sprinkles"><div class="frosting-rim"></div></div>
+                    <div class="cake-tier tier-1 sprinkles"><div class="frosting-rim"></div></div>
                 </div>
-                <button id="blow-trigger" class="action-btn" onclick="runCakeBlow()">BLOW CANDLE</button>
+                <div id="countdown-box" class="countdown-display"></div>
+                <button id="blow-trigger" class="action-btn" onclick="runCakeBlowCountdown()">BLOW CANDLE</button>
             </div>
 
             <div id="video-panel" class="stage-panel">
@@ -585,8 +614,11 @@
                 document.getElementById('gift-instruction').innerText = "[ TARGET: OPEN THE MYSTERY BOX ]";
             }
             if (panelId === 'cake-panel') {
-                document.getElementById('cake-flame').style.display = 'block';
-                document.getElementById('smoke-trail').classList.remove('smoke-active');
+                const flame = document.getElementById('cake-flame');
+                flame.style.display = 'block';
+                flame.style.opacity = '1';
+                flame.style.transform = 'translateX(-50%) scale(1)';
+                document.getElementById('countdown-box').innerText = "";
                 document.getElementById('blow-trigger').style.display = 'inline-block';
             }
             if (panelId === 'stats-panel') { resetMiniGameState(); }
@@ -600,10 +632,25 @@
             setTimeout(() => { document.getElementById('peacock-bubble').style.display = 'block'; }, 600);
         }
 
-        function runCakeBlow() {
+        function runCakeBlowCountdown() {
             document.getElementById('blow-trigger').style.display = 'none';
-            document.getElementById('cake-flame').style.display = 'none';
-            document.getElementById('smoke-trail').classList.add('smoke-active');
+            const countdownBox = document.getElementById('countdown-box');
+            let count = 3;
+            countdownBox.innerText = count;
+
+            let countInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownBox.innerText = count;
+                } else if (count === 0) {
+                    countdownBox.innerText = "BLOW!";
+                    // Extinguish slowly over 1.5 seconds
+                    const flame = document.getElementById('cake-flame');
+                    flame.style.opacity = '0';
+                    flame.style.transform = 'translateX(-50%) scale(0)';
+                    clearInterval(countInterval);
+                }
+            }, 1000);
         }
 
         // --- MINI GAME ENGINE ---
