@@ -66,7 +66,7 @@
             width: 280px;
             background: #09172e;
             border: 3px solid #34495e;
-            border-radius: 16px;
+            border-radius: 24px;
             padding: 20px;
             box-sizing: border-box;
             display: flex;
@@ -78,7 +78,7 @@
         .stat-box {
             background: #0d2244;
             border: 2px solid #1abc9c;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 12px;
             text-align: left;
         }
@@ -105,39 +105,53 @@
             gap: 25px;
         }
 
-        /* Level Grid Selectors */
+        /* --- LONG RECTANGULAR MENU GRID --- */
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             width: 100%;
         }
 
         .menu-card {
             background-color: #0c1f3d;
             border: 4px solid #f1c40f;
-            border-radius: 16px;
-            padding: 25px 15px;
-            text-align: center;
+            border-radius: 24px;
+            padding: 18px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 25px;
             cursor: pointer;
-            box-shadow: 0px 8px 0px #000;
+            box-shadow: 0px 6px 0px #000;
             transition: all 0.2s ease-in-out;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .menu-card:hover {
             background-color: #122e5c;
-            transform: translateY(-4px);
-            box-shadow: 0px 12px 0px #000;
+            transform: translateY(-3px);
+            box-shadow: 0px 9px 0px #000;
         }
 
         .menu-card:active {
-            transform: translateY(4px);
-            box-shadow: 0px 4px 0px #000;
+            transform: translateY(3px);
+            box-shadow: 0px 3px 0px #000;
         }
 
-        .card-icon { font-size: 2.5rem; margin-bottom: 10px; }
-        .card-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; color: #fff; }
-        .level-tag { font-size: 0.8rem; color: #f1c40f; margin-top: 8px; display: block; letter-spacing: 1px; }
+        .card-icon { font-size: 2.2rem; }
+        
+        .card-text-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .card-title { font-size: 1.2rem; font-weight: bold; text-transform: uppercase; color: #fff; }
+        .level-tag { font-size: 0.85rem; color: #f1c40f; letter-spacing: 1px; font-weight: bold; }
 
         /* --- ACTIVE DISPLAY PANELS --- */
         .stage-panel {
@@ -146,9 +160,9 @@
             border: 4px solid #fff;
             box-shadow: 10px 10px 0px #000;
             padding: 30px;
-            border-radius: 16px;
+            border-radius: 24px;
             position: relative;
-            min-height: 480px;
+            min-height: 520px;
             box-sizing: border-box;
         }
 
@@ -169,7 +183,7 @@
             cursor: pointer;
             box-shadow: 4px 4px 0px #000;
             margin-top: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             font-family: inherit;
         }
         .action-btn:active {
@@ -191,7 +205,7 @@
             width: 40px;
             height: 52px;
             border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            opacity: 0.15;
+            opacity: 0.13;
             animation: floatUp 14s linear infinite;
         }
         @keyframes floatUp {
@@ -200,10 +214,10 @@
             100% { transform: translateY(-120vh) translateX(-10px); }
         }
 
-        /* --- MYSTERY BOX & NEW ADVANCED CSC PEACOCK ENGINE --- */
+        /* --- MYSTERY BOX & SVG PEACOCK CONTAINER --- */
         .gift-box-wrapper { 
             position: relative; 
-            height: 380px; 
+            height: 440px; 
             margin-top: 20px; 
             display: flex;
             justify-content: center;
@@ -256,80 +270,47 @@
             100% { transform: translateY(-140px) translateX(-120px) rotate(-70deg); opacity: 0; }
         }
 
-        /* VIBRANT DENSE MICRO-PIXEL ART PEACOCK MODEL */
-        .pixel-peacock {
+        /* PEACOCK ANIMATION MODULE */
+        .peacock-svg-container {
             display: none;
-            width: 3px;
-            height: 3px;
             position: absolute;
             bottom: 30px;
             left: 50%;
             z-index: 11;
-            background: transparent;
         }
 
         .peacock-launch {
             display: block;
-            animation: majesticReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+            animation: majesticReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
         }
 
         @keyframes majesticReveal {
-            0% { bottom: 20px; transform: translateX(-50%) scale(0.4); opacity: 0; }
-            100% { bottom: 150px; transform: translateX(-50%) scale(2.8); opacity: 1; }
+            0% { bottom: 20px; transform: translateX(-50%) scale(0.3); opacity: 0; }
+            100% { bottom: 120px; transform: translateX(-50%) scale(1); opacity: 1; }
         }
 
-        /* Color Palette mapping key:
-           b = Deep Sapphire Royal Blue (#053594)
-           t = Bright Emerald Teal (#00bfa5)
-           g = Radiant Metallic Gold (#ffdf00)
-           w = Crisp Clean Highlight White (#ffffff)
-           n = Midnight Tail Shade (#02153b)
-        */
-        .pixel-peacock::before {
-            content: '';
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: transparent;
-            box-shadow:
-                /* --- CROWN PLUMES --- */
-                -6px -42px #00bfa5, 0px -45px #00bfa5, 6px -42px #00bfa5,
-                -3px -39px #053594, 0px -39px #053594, 3px -39px #053594,
-                /* --- HEAD & NECK CREST --- */
-                -3px -36px #053594, 0px -36px #053594, 3px -36px #053594,
-                -3px -33px #053594, 0px -33px #053594, 3px -33px #ffffff, /* Eye placement */
-                -3px -30px #053594, 0px -30px #053594, 3px -30px #053594,
-                -3px -27px #053594, 0px -27px #053594, 3px -27px #ffdf00, /* Beak tip */
-                -3px -24px #053594, 0px -24px #053594,
-                -3px -21px #053594, 0px -21px #053594,
-                /* --- LOWER ROYAL BLUE ANATOMY --- */
-                -6px -18px #053594, -3px -18px #053594, 0px -18px #053594, 3px -18px #053594,
-                -6px -15px #053594, -3px -15px #053594, 0px -15px #053594, 3px -15px #053594,
-                -6px -12px #053594, -3px -12px #053594, 0px -12px #053594, 3px -12px #053594,
-                -3px -9px  #02153b, 0px -9px  #02153b, 3px -9px  #02153b,
-                -3px -6px  #02153b, 0px -6px  #02153b, 3px -6px  #02153b,
-                /* --- GOLD CHEST WINGS OVERLAY --- */
-                -9px -15px #ffdf00, -9px -12px #ffdf00, -6px -12px #ffdf00,
-                6px -15px #ffdf00,  6px -12px #ffdf00,  9px -12px #ffdf00,
-                /* --- REAR FAN FEATHER WALL (SYMMETRIC SPREAD) --- */
-                0px -33px #ffdf00, -9px -30px #00bfa5, 9px -30px #00bfa5,
-                -15px -27px #ffdf00, -12px -27px #053594, 12px -27px #053594, 15px -27px #ffdf00,
-                -21px -21px #00bfa5, -18px -21px #ffdf00, 18px -21px #ffdf00, 21px -21px #00bfa5,
-                -27px -15px #053594, -24px -15px #00bfa5, -21px -15px #ffdf00, 21px -15px #ffdf00, 24px -15px #00bfa5, 27px -15px #053594,
-                -30px -9px  #00bfa5, -27px -9px  #ffdf00, -24px -9px  #02153b, 24px -9px  #02153b, 27px -9px  #ffdf00, 30px -9px  #00bfa5,
-                -30px -3px  #053594, -27px -3px  #00bfa5, -24px -3px  #ffdf00, 24px -3px  #ffdf00, 27px -3px  #00bfa5, 30px -3px  #053594,
-                -27px 3px   #00bfa5, -24px 3px   #02153b, 24px 3px   #02153b, 27px 3px   #00bfa5,
-                /* --- LEGS AND GROUND PLINTH --- */
-                -3px 0px #ffdf00, 3px 0px #ffdf00,
-                -3px 3px #ffdf00, 3px 3px #ffdf00,
-                -6px 6px #02153b, -3px 6px #02153b, 0px 6px #02153b, 3px 6px #02153b, 6px 6px #02153b;
+        /* Peacock SVG Crisp Rendering Rules */
+        .peacock-svg-container svg {
+            shape-rendering: crispEdges;
+            filter: drop-shadow(4px 6px 0px rgba(0,0,0,0.5));
         }
+
+        .t1 { fill: #008080; } 
+        .t2 { fill: #00bfa5; } 
+        .t3 { fill: #00e676; } 
+        .b1 { fill: #002266; } 
+        .b2 { fill: #053594; } 
+        .b3 { fill: #2979ff; } 
+        .g1 { fill: #d4af37; } 
+        .g2 { fill: #ffd700; } 
+        .w0 { fill: #ffffff; } 
+        .n0 { fill: #020b18; }
 
         .speech-bubble {
             display: none;
             position: absolute;
-            bottom: 240px; 
-            left: calc(50% + 80px);
+            bottom: 360px; 
+            left: calc(50% + 140px);
             background: #ffffff; color: #000; padding: 10px 18px;
             font-weight: bold; font-size: 1.1rem; border: 3px solid #000;
             box-shadow: 4px 4px 0px #1abc9c; border-radius: 12px;
@@ -368,10 +349,10 @@
 
         /* --- VIDEO ELEMENT CONTAINER --- */
         .video-container-wrapper { margin: 20px auto 0 auto; width: 100%; min-height: 240px; }
-        .canva-placeholder { border: 3px dashed #f1c40f; padding: 40px 20px; background: #09172e; text-align: center; border-radius: 12px; }
+        .canva-placeholder { border: 3px dashed #f1c40f; padding: 40px 20px; background: #09172e; text-align: center; border-radius: 24px; }
 
         /* --- GAME ENGINE OVERLAYS --- */
-        .game-canvas-area { width: 100%; max-width: 380px; height: 260px; background-color: #020813; border: 3px solid #1abc9c; margin: 15px auto; position: relative; overflow: hidden; }
+        .game-canvas-area { width: 100%; max-width: 380px; height: 260px; background-color: #020813; border: 3px solid #1abc9c; margin: 15px auto; position: relative; overflow: hidden; border-radius: 16px; }
         #falling-item { position: absolute; top: -40px; left: 50%; font-size: 1.8rem; pointer-events: none; }
         #player-basket { position: absolute; bottom: 10px; left: 160px; font-size: 2rem; user-select: none; }
         .game-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 10, 22, 0.95); align-items: center; justify-content: center; flex-direction: column; text-align: center; }
@@ -383,7 +364,7 @@
 
     <header>
         <span class="bubble-heading">Happy Birthday Appa</span>
-        <div class="subtitle">[ SYSTEM ONLINE // SYSTEM LEVEL INTERFACE ]</div>
+        <div class="subtitle">[ SYSTEM ONLINE // MODIFIED HORIZONTAL LAYOUT ENGINE ]</div>
     </header>
 
     <div class="dashboard-container">
@@ -412,23 +393,31 @@
             <div class="grid-container">
                 <div class="menu-card" onclick="startLevel('gift-panel', 1)">
                     <div class="card-icon">🎁</div>
-                    <div class="card-title">Lvl 1: Mystery Box</div>
-                    <span class="level-tag">[ START UNBOX ]</span>
+                    <div class="card-text-wrapper">
+                        <div class="card-title">Lvl 1: Mystery Box</div>
+                        <span class="level-tag">[ UNBOX ITEM ]</span>
+                    </div>
                 </div>
                 <div class="menu-card" onclick="startLevel('cake-panel', 2)">
                     <div class="card-icon">🎂</div>
-                    <div class="card-title">Lvl 2: Cake Blast</div>
-                    <span class="level-tag">[ START MISSION ]</span>
+                    <div class="card-text-wrapper">
+                        <div class="card-title">Lvl 2: Cake Blast</div>
+                        <span class="level-tag">[ START MISSION ]</span>
+                    </div>
                 </div>
                 <div class="menu-card" onclick="startLevel('video-panel', 3)">
                     <div class="card-icon">🎬</div>
-                    <div class="card-title">Lvl 3: Special Film</div>
-                    <span class="level-tag">[ START MOVIE ]</span>
+                    <div class="card-text-wrapper">
+                        <div class="card-title">Lvl 3: Special Film</div>
+                        <span class="level-tag">[ WATCH TRAILER ]</span>
+                    </div>
                 </div>
                 <div class="menu-card" onclick="startLevel('stats-panel', 4)">
                     <div class="card-icon">🎮</div>
-                    <div class="card-title">Lvl 4: Candy Rush</div>
-                    <span class="level-tag">[ START MINI-GAME ]</span>
+                    <div class="card-text-wrapper">
+                        <div class="card-title">Lvl 4: Candy Rush</div>
+                        <span class="level-tag">[ LAUNCH MINIGAME ]</span>
+                    </div>
                 </div>
             </div>
 
@@ -436,7 +425,75 @@
                 <h3 id="gift-instruction" style="color: #f1c40f; text-transform: uppercase; margin: 0;">[ TARGET: OPEN THE MYSTERY BOX ]</h3>
                 <div class="gift-box-wrapper">
                     <div id="peacock-bubble" class="speech-bubble">Happy birthday to you, Appa! 🦚</div>
-                    <div id="peacock-render" class="pixel-peacock"></div>
+                    
+                    <div id="peacock-render" class="peacock-svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 30" width="380" height="340">
+                            <rect x="16" y="2" width="3" height="1" class="t1"/>
+                            <rect x="15" y="3" width="5" height="1" class="t2"/>
+                            <rect x="14" y="4" width="7" height="1" class="t3"/>
+                            <rect x="16" y="4" width="3" height="1" class="g2"/>
+                            <rect x="17" y="4" width="1" height="1" class="b2"/>
+                            <rect x="10" y="4" width="3" height="1" class="t1"/>
+                            <rect x="9" y="5" width="5" height="1" class="t2"/>
+                            <rect x="22" y="4" width="3" height="1" class="t1"/>
+                            <rect x="21" y="5" width="5" height="1" class="t2"/>
+                            <rect x="8" y="6" width="7" height="1" class="t3"/>
+                            <rect x="10" y="6" width="3" height="1" class="g2"/>
+                            <rect x="11" y="6" width="1" height="1" class="b2"/>
+                            <rect x="20" y="6" width="7" height="1" class="t3"/>
+                            <rect x="22" y="6" width="3" height="1" class="g2"/>
+                            <rect x="23" y="6" width="1" height="1" class="b2"/>
+                            <rect x="5" y="7" width="3" height="1" class="t1"/>
+                            <rect x="4" y="8" width="5" height="1" class="t2"/>
+                            <rect x="3" y="9" width="7" height="1" class="t3"/>
+                            <rect x="5" y="9" width="3" height="1" class="g2"/>
+                            <rect x="6" y="9" width="1" height="1" class="b2"/>
+                            <rect x="27" y="7" width="3" height="1" class="t1"/>
+                            <rect x="26" y="8" width="5" height="1" class="t2"/>
+                            <rect x="25" y="9" width="7" height="1" class="t3"/>
+                            <rect x="27" y="9" width="3" height="1" class="g2"/>
+                            <rect x="28" y="9" width="1" height="1" class="b2"/>
+                            <rect x="2" y="10" width="31" height="1" class="t2"/>
+                            <rect x="1" y="11" width="33" height="1" class="t3"/>
+                            <rect x="3" y="11" width="3" height="1" class="g2"/> <rect x="4" y="11" width="1" height="1" class="b2"/>
+                            <rect x="29" y="11" width="3" height="1" class="g2"/> <rect x="30" y="11" width="1" height="1" class="b2"/>
+                            <rect x="1" y="12" width="33" height="1" class="t1"/>
+                            <rect x="2" y="13" width="31" height="1" class="t2"/>
+                            <rect x="2" y="14" width="31" height="1" class="t3"/>
+                            <rect x="4" y="14" width="3" height="1" class="g2"/> <rect x="5" y="14" width="1" height="1" class="b2"/>
+                            <rect x="28" y="14" width="3" height="1" class="g2"/> <rect x="29" y="14" width="1" height="1" class="b2"/>
+                            <rect x="3" y="15" width="29" height="1" class="t2"/>
+                            <rect x="4" y="16" width="27" height="1" class="t1"/>
+                            <rect x="5" y="17" width="25" height="1" class="t2"/>
+                            <rect x="6" y="18" width="23" height="1" class="t3"/>
+                            <rect x="15" y="8" width="1" height="1" class="b3"/>
+                            <rect x="17" y="7" width="1" height="1" class="b3"/>
+                            <rect x="19" y="8" width="1" height="1" class="b3"/>
+                            <rect x="16" y="9" width="3" height="1" class="b1"/>
+                            <rect x="16" y="10" width="4" height="1" class="b2"/>
+                            <rect x="16" y="11" width="2" height="1" class="b2"/> 
+                            <rect x="18" y="11" width="2" height="1" class="w0"/> 
+                            <rect x="18" y="11" width="1" height="1" class="n0"/> 
+                            <rect x="20" y="11" width="2" height="1" class="g2"/> 
+                            <rect x="16" y="12" width="4" height="1" class="b2"/>
+                            <rect x="20" y="12" width="1" height="1" class="g1"/>
+                            <rect x="16" y="13" width="3" height="1" class="b2"/>
+                            <rect x="16" y="14" width="3" height="1" class="b2"/>
+                            <rect x="15" y="15" width="4" height="1" class="b2"/>
+                            <rect x="14" y="16" width="6" height="1" class="b2"/>
+                            <rect x="13" y="17" width="8" height="1" class="b2"/>
+                            <rect x="13" y="18" width="8" height="1" class="b3"/> 
+                            <rect x="13" y="19" width="8" height="1" class="b2"/>
+                            <rect x="14" y="20" width="6" height="1" class="b2"/>
+                            <rect x="15" y="21" width="4" height="1" class="b1"/>
+                            <rect x="16" y="22" width="1" height="3" class="g1"/>
+                            <rect x="18" y="22" width="1" height="3" class="g1"/>
+                            <rect x="15" y="25" width="2" height="1" class="g2"/>
+                            <rect x="18" y="25" width="2" height="1" class="g2"/>
+                            <rect x="14" y="26" width="3" height="1" class="g1"/>
+                            <rect x="18" y="26" width="3" height="1" class="g1"/>
+                        </svg>
+                    </div>
                     
                     <div id="clickable-box" class="pixel-gift-container" onclick="runGiftUnbox()">
                         <div id="gift-lid-element" class="gift-lid"></div>
@@ -510,7 +567,6 @@
         }
         window.addEventListener('DOMContentLoaded', initBalloons);
 
-        // --- CORE EVENT SELECTOR ---
         function startLevel(panelId, levelNum) {
             document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
             stopGameLoops();
@@ -550,7 +606,7 @@
             document.getElementById('smoke-trail').classList.add('smoke-active');
         }
 
-        // --- MINI GAME SYSTEM MODULE ---
+        // --- MINI GAME ENGINE ---
         const canvasBox = document.getElementById('canvas-game-box');
         const basketElement = document.getElementById('player-basket');
 
@@ -629,5 +685,3 @@
     </script>
 </body>
 </html>
-
-```
