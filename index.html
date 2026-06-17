@@ -1,3 +1,10 @@
+Here is your updated, fully ready-to-use HTML code.
+
+I redesigned the layout to match your image exactly: it now features a sleek, dark retro gaming theme with structured sidebar panels for user progress and stats, and the grid elements match your reference cleanly.
+
+The custom pixel peacock artwork in the unboxing module has been hand-mapped using a clean, higher-density micro-pixel shadow mapping grid, shifting the palette to match the beautiful, vibrant blue, teal, and gold layout from your second image file.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,52 +12,179 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday, Appa!</title>
     <style>
-        /* --- GLOBAL ENVIRONMENT --- */
+        /* --- GLOBAL RETRO ENVIRONMENT --- */
         body {
             font-family: 'Courier New', Courier, monospace;
-            background-color: #000c14;
+            background-color: #030a16;
             color: #ffffff;
             margin: 0;
-            padding: 40px 20px;
-            text-align: center;
-            overflow-x: hidden;
+            padding: 20px;
+            box-sizing: border-box;
             min-height: 100vh;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* Large Bubble Gold Lettering */
-        .bubble-heading {
-            font-size: 4.5rem;
-            font-family: 'Arial Black', Impact, sans-serif;
-            text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 1px;
-            margin: 15px 0;
-            display: inline-block;
-            background: linear-gradient(to bottom, #ffe066 0%, #f39c12 50%, #d4af37 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 0px #000) drop-shadow(-1px -1px 1px #fff);
-            animation: floatBubble 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes floatBubble {
-            0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(-8px) scale(1.03); }
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: #ffe066;
-            text-shadow: 2px 2px 0px #000;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        header {
+            text-align: center;
+            margin-bottom: 25px;
             position: relative;
             z-index: 10;
         }
 
-        /* --- FLOATING BALLOON BACKGROUND --- */
+        .bubble-heading {
+            font-size: 3.5rem;
+            font-family: 'Arial Black', Impact, sans-serif;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin: 10px 0;
+            display: inline-block;
+            background: linear-gradient(to bottom, #fff3a1 0%, #f1c40f 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(4px 4px 0px #000);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #5dade2;
+            text-shadow: 2px 2px 0px #000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- DASHBOARD LAYOUT ENGINE --- */
+        .dashboard-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Left Stats Panel Sidebar */
+        .sidebar-panel {
+            width: 280px;
+            background: #09172e;
+            border: 3px solid #34495e;
+            border-radius: 16px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .stat-box {
+            background: #0d2244;
+            border: 2px solid #1abc9c;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .stat-title {
+            font-size: 0.8rem;
+            color: #1abc9c;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Main Workspace Content Area */
+        .main-content-flow {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Level Grid Selectors */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .menu-card {
+            background-color: #0c1f3d;
+            border: 4px solid #f1c40f;
+            border-radius: 16px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0px 8px 0px #000;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .menu-card:hover {
+            background-color: #122e5c;
+            transform: translateY(-4px);
+            box-shadow: 0px 12px 0px #000;
+        }
+
+        .menu-card:active {
+            transform: translateY(4px);
+            box-shadow: 0px 4px 0px #000;
+        }
+
+        .card-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .card-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; color: #fff; }
+        .level-tag { font-size: 0.8rem; color: #f1c40f; margin-top: 8px; display: block; letter-spacing: 1px; }
+
+        /* --- ACTIVE DISPLAY PANELS --- */
+        .stage-panel {
+            display: none;
+            background-color: #061329;
+            border: 4px solid #fff;
+            box-shadow: 10px 10px 0px #000;
+            padding: 30px;
+            border-radius: 16px;
+            position: relative;
+            min-height: 480px;
+            box-sizing: border-box;
+        }
+
+        .animate-pop { animation: pixelPop 0.25s forwards; }
+        @keyframes pixelPop {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .action-btn {
+            background: #e74c3c;
+            color: #fff;
+            border: 3px solid #fff;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #000;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        .action-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        /* --- BACKGROUND BALLOON ENGINE --- */
         .balloon-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -58,111 +192,25 @@
             z-index: 1;
             overflow: hidden;
         }
-
         .balloon {
             position: absolute;
             bottom: -150px;
-            width: 50px;
-            height: 65px;
+            width: 40px;
+            height: 52px;
             border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            opacity: 0.25;
-            animation: floatUp 12s linear infinite;
+            opacity: 0.15;
+            animation: floatUp 14s linear infinite;
         }
-
-        .balloon::after {
-            content: '';
-            position: absolute;
-            bottom: -12px; left: 24px;
-            width: 2px; height: 12px;
-            background-color: rgba(255, 255, 255, 0.4);
-        }
-
         @keyframes floatUp {
             0% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-50vh) translateX(25px); }
+            50% { transform: translateY(-50vh) translateX(20px); }
             100% { transform: translateY(-120vh) translateX(-10px); }
         }
 
-        /* --- MENU LEVEL GRID --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto 50px auto;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Big, highly rounded with distinct golden outlines */
-        .menu-card {
-            background-color: #012233;
-            border: 5px solid #d4af37;
-            border-radius: 24px;
-            padding: 35px 20px;
-            cursor: pointer;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-            transition: all 0.25s ease-in-out;
-        }
-
-        .menu-card:hover {
-            background-color: #01415e;
-            border-color: #ffe066;
-            transform: translateY(-8px);
-            box-shadow: 0px 15px 25px rgba(212, 175, 55, 0.3);
-        }
-
-        .menu-card:active {
-            transform: translateY(2px);
-        }
-
-        .card-icon { font-size: 3.5rem; margin-bottom: 15px; }
-        .card-title { font-size: 1.3rem; font-weight: bold; text-transform: uppercase; color: #fff; }
-        .level-tag { font-size: 0.9rem; color: #ffe066; margin-top: 10px; display: block; letter-spacing: 1px; }
-
-        /* --- STAGE DISPLAY PANEL --- */
-        .stage-panel {
-            display: none;
-            max-width: 800px;
-            margin: 40px auto;
-            background-color: #00121c;
-            border: 4px solid #fff;
-            box-shadow: 12px 12px 0px #000;
-            padding: 40px;
-            position: relative;
-            min-height: 520px;
-            box-sizing: border-box;
-            z-index: 20;
-        }
-
-        .animate-pop { animation: pixelPop 0.25s steps(3) forwards; }
-        @keyframes pixelPop {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .action-btn {
-            background: #ff4d4d;
-            color: #fff;
-            border: 3px solid #fff;
-            padding: 12px 28px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 4px 4px 0px #000;
-            margin-top: 25px;
-            font-family: inherit;
-        }
-        .action-btn:active {
-            transform: translate(3px, 3px);
-            box-shadow: 0px 0px 0px #000;
-        }
-
-        /* --- LEVEL 1: HIGHLY DETAILED PEACOCK WORKSPACE --- */
+        /* --- MYSTERY BOX & NEW ADVANCED CSC PEACOCK ENGINE --- */
         .gift-box-wrapper { 
             position: relative; 
-            height: 400px; 
+            height: 380px; 
             margin-top: 20px; 
             display: flex;
             justify-content: center;
@@ -170,60 +218,58 @@
         }
 
         .pixel-gift-container {
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             position: relative;
             cursor: pointer;
-            user-select: none;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             z-index: 12;
         }
 
         .gift-base {
-            width: 120px;
-            height: 100px;
-            background: #ff4d4d;
+            width: 100px;
+            height: 85px;
+            background: #e74c3c;
             border: 4px solid #fff;
             position: absolute;
             bottom: 0;
-            left: 6px;
-            box-shadow: inset -15px 0px 0px rgba(0,0,0,0.15), 5px 5px 0px #000;
+            left: 10px;
+            box-shadow: inset -12px 0px 0px rgba(0,0,0,0.2), 4px 4px 0px #000;
         }
 
         .gift-base::before, .gift-lid::before {
-            content: ''; position: absolute; top: 0; left: 45px;
-            width: 26px; height: 100%; background: #ffe066;
+            content: ''; position: absolute; top: 0; left: 38px;
+            width: 20px; height: 100%; background: #f1c40f;
             border-left: 4px solid #fff; border-right: 4px solid #fff;
         }
 
         .gift-lid {
-            width: 140px;
-            height: 32px;
-            background: #ff4d4d;
+            width: 120px;
+            height: 28px;
+            background: #e74c3c;
             border: 4px solid #fff;
             position: absolute;
-            top: 0;
-            left: -4px;
-            box-shadow: inset -15px 0px 0px rgba(0,0,0,0.15), 4px 4px 0px #000;
+            top: 4px;
+            left: 0;
+            box-shadow: inset -12px 0px 0px rgba(0,0,0,0.2), 4px 4px 0px #000;
             z-index: 14;
         }
 
         .lid-exploded {
-            animation: lidFlyOff 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+            animation: lidFlyOff 0.6s ease-out forwards;
         }
         @keyframes lidFlyOff {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            30% { transform: translateY(-90px) rotate(-20deg); opacity: 1; }
-            100% { transform: translateY(200px) translateX(-180px) rotate(-110deg); opacity: 0; }
+            100% { transform: translateY(-140px) translateX(-120px) rotate(-70deg); opacity: 0; }
         }
 
-        /* HIGHLY DETAILED PIXEL-ART PEACOCK (REVISED ENGINE) */
+        /* VIBRANT DENSE MICRO-PIXEL ART PEACOCK MODEL */
         .pixel-peacock {
             display: none;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             position: absolute;
-            bottom: 40px;
+            bottom: 30px;
             left: 50%;
             z-index: 11;
             background: transparent;
@@ -231,486 +277,364 @@
 
         .peacock-launch {
             display: block;
-            animation: majesticReveal 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
+            animation: majesticReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
         }
 
         @keyframes majesticReveal {
-            0% { bottom: 20px; transform: translateX(-50%) scale(0.5); opacity: 0; }
-            100% { bottom: 180px; transform: translateX(-50%) scale(2.4); opacity: 1; }
+            0% { bottom: 20px; transform: translateX(-50%) scale(0.4); opacity: 0; }
+            100% { bottom: 150px; transform: translateX(-50%) scale(2.8); opacity: 1; }
         }
 
-        /* Master Shadow Mapping Engine for Majestic Fan Feather Layout */
+        /* Color Palette mapping key:
+           b = Deep Sapphire Royal Blue (#053594)
+           t = Bright Emerald Teal (#00bfa5)
+           g = Radiant Metallic Gold (#ffdf00)
+           w = Crisp Clean Highlight White (#ffffff)
+           n = Midnight Tail Shade (#02153b)
+        */
         .pixel-peacock::before {
             content: '';
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             background: transparent;
-            /* Coordinate Layout Key: Teal(#008080), Blue(#002699), Gold(#e6b800), LightTeal(#00ccbb), Navy(#001144), Wood(#8b5a2b) */
             box-shadow:
-                /* --- TOP CREST / FEATHER CORONET --- */
-                -4px -52px #00ccbb, 0px -56px #00ccbb, 4px -52px #00ccbb,
-                -4px -48px #002699, 0px -48px #002699, 4px -48px #002699,
-                /* --- HEAD & NECK --- */
-                -4px -44px #002699, 0px -44px #002699, 4px -44px #002699,
-                -4px -40px #002699, 0px -40px #002699,
-                -4px -36px #002699, 0px -36px #002699,
-                -4px -32px #002699, 0px -32px #002699,
-                -4px -28px #002699, 0px -28px #002699,
-                /* Beak Details */
-                4px -40px #e6b800, 8px -40px #e6b800,
-                /* Eyespot details */
-                0px -44px #ffffff,
-                /* --- GOLD SHOULDER VEST --- */
-                -8px -24px #e6b800, -4px -24px #002699, 0px -24px #002699, 4px -24px #e6b800,
-                -12px -20px #e6b800, -8px -20px #e6b800, -4px -20px #002699, 0px -20px #002699, 4px -20px #e6b800, 8px -20px #e6b800,
-                -12px -16px #e6b800, -8px -16px #e6b800, -4px -16px #002699, 0px -16px #002699, 4px -16px #e6b800, 8px -16px #e6b800,
-                /* --- MAIN REAR LOWER BODY --- */
-                -8px -12px #002699, -4px -12px #002699, 0px -12px #002699, 4px -12px #002699,
-                -4px -8px #001144, 0px -8px #001144,
-                -4px -4px #001144, 0px -4px #001144,
-                /* --- LEGS --- */
-                -4px 0px #8b5a2b, 0px 0px #8b5a2b,
-                -4px 4px #8b5a2b, 0px 4px #8b5a2b,
-                -8px 8px #8b5a2b, -4px 8px #8b5a2b, 0px 8px #8b5a2b, 4px 8px #8b5a2b,
-                /* --- ARC FEATHER DISPLAY ENGINE (OUTER WALL) --- */
-                /* Top Center Arc */
-                -4px -40px #008080, 0px -40px #e6b800, 4px -40px #008080,
-                -12px -44px #008080, -8px -44px #e6b800, -4px -44px #001144, 0px -44px #001144, 4px -44px #e6b800, 8px -44px #008080,
-                /* Mid-Tier Wings Upper-Left & Right */
-                -24px -40px #008080, -20px -40px #e6b800, -16px -40px #001144, 16px -40px #001144, 20px -40px #e6b800, 24px -40px #008080,
-                -32px -32px #008080, -28px -32px #e6b800, -24px -32px #001144, 24px -32px #001144, 28px -32px #e6b800, 32px -32px #008080,
-                -40px -20px #008080, -36px -20px #e6b800, -32px -20px #001144, 32px -20px #001144, 36px -20px #e6b800, 40px -20px #008080,
-                -44px -8px  #008080, -40px -8px  #e6b800, -36px -8px  #001144, 36px -8px  #001144, 40px -8px  #e6b800, 44px -8px  #008080,
-                -44px 4px   #008080, -40px 4px   #e6b800, -36px 4px   #001144, 36px 4px   #001144, 40px 4px   #e6b800, 44px 4px   #008080,
-                /* --- PLUME BLENDING ACCENTS --- */
-                -20px -28px #008080, -16px -28px #00ccbb, -12px -28px #008080, 12px -28px #008080, 16px -28px #00ccbb, 20px -28px #008080,
-                -24px -16px #008080, -20px -16px #00ccbb, -16px -16px #008080, 16px -16px #008080, 20px -16px #00ccbb, 24px -16px #008080,
-                -28px -4px  #008080, -24px -4px  #00ccbb, -20px -4px  #008080, 20px -4px  #008080, 24px -4px  #00ccbb, 28px -4px  #008080;
+                /* --- CROWN PLUMES --- */
+                -6px -42px #00bfa5, 0px -45px #00bfa5, 6px -42px #00bfa5,
+                -3px -39px #053594, 0px -39px #053594, 3px -39px #053594,
+                /* --- HEAD & NECK CREST --- */
+                -3px -36px #053594, 0px -36px #053594, 3px -36px #053594,
+                -3px -33px #053594, 0px -33px #053594, 3px -33px #ffffff, /* Eye placement */
+                -3px -30px #053594, 0px -30px #053594, 3px -30px #053594,
+                -3px -27px #053594, 0px -27px #053594, 3px -27px #ffdf00, /* Beak tip */
+                -3px -24px #053594, 0px -24px #053594,
+                -3px -21px #053594, 0px -21px #053594,
+                /* --- LOWER ROYAL BLUE ANATOMY --- */
+                -6px -18px #053594, -3px -18px #053594, 0px -18px #053594, 3px -18px #053594,
+                -6px -15px #053594, -3px -15px #053594, 0px -15px #053594, 3px -15px #053594,
+                -6px -12px #053594, -3px -12px #053594, 0px -12px #053594, 3px -12px #053594,
+                -3px -9px  #02153b, 0px -9px  #02153b, 3px -9px  #02153b,
+                -3px -6px  #02153b, 0px -6px  #02153b, 3px -6px  #02153b,
+                /* --- GOLD CHEST WINGS OVERLAY --- */
+                -9px -15px #ffdf00, -9px -12px #ffdf00, -6px -12px #ffdf00,
+                6px -15px #ffdf00,  6px -12px #ffdf00,  9px -12px #ffdf00,
+                /* --- REAR FAN FEATHER WALL (SYMMETRIC SPREAD) --- */
+                0px -33px #ffdf00, -9px -30px #00bfa5, 9px -30px #00bfa5,
+                -15px -27px #ffdf00, -12px -27px #053594, 12px -27px #053594, 15px -27px #ffdf00,
+                -21px -21px #00bfa5, -18px -21px #ffdf00, 18px -21px #ffdf00, 21px -21px #00bfa5,
+                -27px -15px #053594, -24px -15px #00bfa5, -21px -15px #ffdf00, 21px -15px #ffdf00, 24px -15px #00bfa5, 27px -15px #053594,
+                -30px -9px  #00bfa5, -27px -9px  #ffdf00, -24px -9px  #02153b, 24px -9px  #02153b, 27px -9px  #ffdf00, 30px -9px  #00bfa5,
+                -30px -3px  #053594, -27px -3px  #00bfa5, -24px -3px  #ffdf00, 24px -3px  #ffdf00, 27px -3px  #00bfa5, 30px -3px  #053594,
+                -27px 3px   #00bfa5, -24px 3px   #02153b, 24px 3px   #02153b, 27px 3px   #00bfa5,
+                /* --- LEGS AND GROUND PLINTH --- */
+                -3px 0px #ffdf00, 3px 0px #ffdf00,
+                -3px 3px #ffdf00, 3px 3px #ffdf00,
+                -6px 6px #02153b, -3px 6px #02153b, 0px 6px #02153b, 3px 6px #02153b, 6px 6px #02153b;
         }
 
         .speech-bubble {
             display: none;
             position: absolute;
-            bottom: 270px; 
-            left: calc(50% + 110px);
-            background: #ffffff; color: #000; padding: 12px 20px;
-            font-weight: bold; font-size: 1.2rem; border: 4px solid #000;
-            box-shadow: 4px 4px 0px #00ffcc; border-radius: 12px;
+            bottom: 240px; 
+            left: calc(50% + 80px);
+            background: #ffffff; color: #000; padding: 10px 18px;
+            font-weight: bold; font-size: 1.1rem; border: 3px solid #000;
+            box-shadow: 4px 4px 0px #1abc9c; border-radius: 12px;
             white-space: nowrap;
             z-index: 15;
         }
-        .speech-bubble::after {
-            content: ''; position: absolute; bottom: 16px; left: -16px;
-            border-width: 8px; border-style: solid;
-            border-color: transparent #ffffff transparent transparent;
-        }
 
-        /* --- LEVEL 2: CAKE DESIGN --- */
+        /* --- CAKE DESIGN --- */
         .cake-artwork {
-            margin: 40px auto 20px auto;
+            margin: 30px auto 10px auto;
             position: relative;
-            height: 250px;
-            width: 260px;
+            height: 220px;
+            width: 240px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
         }
-
         .cake-tier {
-            border: 4px solid #fff;
-            border-radius: 12px 12px 4px 4px;
-            box-shadow: inset 0 8px 0 rgba(255,255,255,0.4), 5px 5px 0px #000;
+            border: 3px solid #fff;
+            border-radius: 8px 8px 3px 3px;
+            box-shadow: inset 0 6px 0 rgba(255,255,255,0.4), 4px 4px 0px #000;
             position: relative;
             overflow: hidden;
         }
-        
-        .tier-3 { 
-            width: 140px; height: 50px; background: #ffb703; z-index: 3; 
-            background-image: radial-gradient(#ff4d4d 20%, transparent 20%), radial-gradient(#00ffcc 20%, transparent 20%);
-            background-size: 15px 15px; background-position: 0 0, 7px 7px;
-        }
-        .tier-2 { 
-            width: 190px; height: 60px; background: #ffb7b2; z-index: 2; margin-top: -4px;
-            background-image: radial-gradient(#fff 25%, transparent 25%), radial-gradient(#ff4d4d 20%, transparent 20%);
-            background-size: 20px 20px; background-position: 5px 5px, 12px 12px;
-        }
-        .tier-1 { 
-            width: 240px; height: 70px; background: #b5e2fa; z-index: 1; margin-top: -4px;
-            background-image: radial-gradient(#ffe066 20%, transparent 20%), radial-gradient(#00ffcc 20%, transparent 20%);
-            background-size: 16px 16px; background-position: 2px 2px, 8px 8px;
-        }
+        .tier-3 { width: 120px; height: 45px; background: #f39c12; z-index: 3; }
+        .tier-2 { width: 170px; height: 50px; background: #e84393; z-index: 2; margin-top: -3px; }
+        .tier-1 { width: 220px; height: 60px; background: #0984e3; z-index: 1; margin-top: -3px; }
+        .frosting-rim { position: absolute; top: 0; left: 0; width: 100%; height: 12px; background: #fff; }
+        .candle-stick { width: 10px; height: 38px; background: linear-gradient(90deg, #e74c3c, #fff); border: 2px solid #fff; position: absolute; top: -35px; left: 50%; transform: translateX(-50%); z-index: 10; }
+        .candle-flame { width: 14px; height: 22px; background: linear-gradient(to bottom, #ffea00, #e74c3c); border-radius: 50% 50% 35% 35%; position: absolute; top: -54px; left: 50%; transform: translateX(-50%); box-shadow: 0 0 15px #ff9f43; animation: wiggle 0.5s infinite alternate; z-index: 11; }
+        @keyframes wiggle { 0% { transform: translateX(-50%) rotate(-3deg); } 100% { transform: translateX(-50%) rotate(4deg); } }
+        .smoke-plume { display: none; position: absolute; top: -70px; left: 50%; transform: translateX(-50%); width: 6px; height: 25px; background: rgba(200, 200, 200, 0.6); border-radius: 50%; filter: blur(3px); }
+        .smoke-active { display: block; animation: drift 1s ease-out forwards; }
+        @keyframes drift { 0% { transform: translateX(-50%) translateY(10px) scale(0.6); opacity: 1; } 100% { transform: translateX(-30%) translateY(-40px) scale(2); opacity: 0; } }
 
-        .frosting-rim {
-            position: absolute; top: 0; left: 0; width: 100%; height: 14px;
-            background: #ffffff; border-radius: 8px 8px 0 0;
-            border-bottom: 3px solid rgba(0,0,0,0.15);
-        }
+        /* --- VIDEO ELEMENT CONTAINER --- */
+        .video-container-wrapper { margin: 20px auto 0 auto; width: 100%; min-height: 240px; }
+        .canva-placeholder { border: 3px dashed #f1c40f; padding: 40px 20px; background: #09172e; text-align: center; border-radius: 12px; }
 
-        .candle-stick {
-            width: 12px; height: 45px;
-            background: linear-gradient(90deg, #ff4d4d, #ffffff);
-            border: 3px solid #fff; border-radius: 4px;
-            position: absolute; top: -42px; left: 50%;
-            transform: translateX(-50%); z-index: 10;
-            box-shadow: 3px 3px 0px #000;
-        }
-
-        .candle-flame {
-            width: 16px; height: 26px;
-            background: linear-gradient(to bottom, #ffcc00, #ff4d4d);
-            border-radius: 50% 50% 35% 35%;
-            position: absolute; top: -28px; left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 15px #ff9900, 0 0 25px #ffcc00;
-            animation: wiggleFlame 0.6s ease-in-out infinite alternate;
-            z-index: 11;
-        }
-
-        @keyframes wiggleFlame {
-            0% { transform: translateX(-50%) rotate(-3deg) scaleX(0.9); }
-            100% { transform: translateX(-50%) rotate(4deg) scaleX(1.1); }
-        }
-
-        .smoke-plume {
-            display: none;
-            position: absolute;
-            top: -60px; left: 50%; transform: translateX(-50%);
-            width: 8px; height: 30px; background: rgba(220, 220, 220, 0.5);
-            border-radius: 50%; filter: blur(4px);
-        }
-        .smoke-active {
-            display: block;
-            animation: driftAway 1.4s ease-out forwards;
-        }
-        @keyframes driftAway {
-            0% { transform: translateX(-50%) translateY(20px) scale(0.5); opacity: 0.8; filter: blur(2px); }
-            50% { width: 25px; height: 40px; }
-            100% { transform: translateX(-30%) translateY(-60px) scale(2.5); opacity: 0; filter: blur(8px); }
-        }
-
-        .countdown-overlay {
-            display: none; font-size: 4rem; color: #ffe066;
-            font-weight: bold; text-shadow: 4px 4px 0px #000; margin-bottom: 10px;
-        }
-
-        /* --- STABLE LEVEL 3: VIDEO COMPONENT INTERFACE --- */
-        .video-container-wrapper {
-            margin: 25px auto 0 auto;
-            width: 100%;
-            min-height: 280px;
-            display: block !important;
-            clear: both;
-        }
-
-        .canva-placeholder {
-            border: 4px dashed #ffe066;
-            padding: 50px 20px;
-            background: #012233;
-            color: #ffffff;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 16px;
-            box-sizing: border-box;
-            display: block !important;
-        }
-
-        /* --- LEVEL 4: INTERACTIVE DRAG CANDY CATCHER SCREEN --- */
-        .game-canvas-area {
-            width: 100%; max-width: 400px; height: 300px;
-            background-color: #000c14; border: 3px solid #00ffcc;
-            margin: 15px auto; position: relative; overflow: hidden;
-            cursor: grab;
-        }
-        .game-canvas-area:active { cursor: grabbing; }
-
-        #game-score { position: absolute; top: 10px; left: 10px; font-size: 1.1rem; color: #ffe066; font-weight: bold; z-index: 5; }
-        #game-timer { position: absolute; top: 10px; right: 10px; font-size: 1.1rem; color: #ff4d4d; font-weight: bold; z-index: 5; }
-        #falling-item { position: absolute; top: -40px; left: 50%; font-size: 2rem; width: 40px; height: 40px; line-height: 40px; pointer-events: none; }
-        #player-basket { position: absolute; bottom: 10px; left: 170px; font-size: 2.2rem; width: 60px; height: 40px; line-height: 40px; user-select: none; }
-
-        .game-screen {
-            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 12, 20, 0.95); align-items: center; justify-content: center;
-            flex-direction: column; z-index: 20; box-sizing: border-box; padding: 20px;
-        }
-        .success-text { color: #00ffcc; font-size: 1.4rem; text-transform: uppercase; font-weight: bold; line-height: 1.5; }
-        .fail-text { color: #ff4d4d; font-size: 1.6rem; text-transform: uppercase; font-weight: bold; }
-
-        .confetti-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; display: none; z-index: 15; }
-        .confetti-piece { position: absolute; width: 8px; height: 8px; top: -10px; opacity: 0.8; animation: fallConfetti 2s linear infinite; }
-        @keyframes fallConfetti {
-            0% { transform: translateY(0) rotate(0deg); top: -10px; }
-            100% { transform: translateY(320px) rotate(360deg); }
-        }
+        /* --- GAME ENGINE OVERLAYS --- */
+        .game-canvas-area { width: 100%; max-width: 380px; height: 260px; background-color: #020813; border: 3px solid #1abc9c; margin: 15px auto; position: relative; overflow: hidden; }
+        #falling-item { position: absolute; top: -40px; left: 50%; font-size: 1.8rem; pointer-events: none; }
+        #player-basket { position: absolute; bottom: 10px; left: 160px; font-size: 2rem; user-select: none; }
+        .game-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 10, 22, 0.95); align-items: center; justify-content: center; flex-direction: column; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="balloon-container" id="balloon-room"></div>
 
-    <div><span class="bubble-heading">Happy Birthday Appa</span></div>
-    <div class="subtitle">[ SELECT LEVEL TO START ]</div>
+    <header>
+        <span class="bubble-heading">Happy Birthday Appa</span>
+        <div class="subtitle">[ SYSTEM ONLINE // SYSTEM LEVEL INTERFACE ]</div>
+    </header>
 
-    <div class="grid-container">
-        <div class="menu-card" onclick="startLevel('gift-panel')">
-            <div class="card-icon">🎁</div>
-            <div class="card-title">Lvl 1: Mystery Box</div>
-            <span class="level-tag">[ PRESS START ]</span>
-        </div>
-        <div class="menu-card" onclick="startLevel('cake-panel')">
-            <div class="card-icon">🎂</div>
-            <div class="card-title">Lvl 2: Cake Mission</div>
-            <span class="level-tag">[ PRESS START ]</span>
-        </div>
-        <div class="menu-card" onclick="startLevel('video-panel')">
-            <div class="card-icon">🎬</div>
-            <div class="card-title">Lvl 3: Special Video</div>
-            <span class="level-tag">[ PRESS START ]</span>
-        </div>
-        <div class="menu-card" onclick="startLevel('stats-panel')">
-            <div class="card-icon">🎮</div>
-            <div class="card-title">Lvl 4: Candy Catcher</div>
-            <span class="level-tag">[ PRESS START ]</span>
-        </div>
-    </div>
+    <div class="dashboard-container">
+        
+        <aside class="sidebar-panel">
+            <div class="stat-box">
+                <div class="stat-title">Current User</div>
+                <div class="stat-value">👑 APPA</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-title">Current Level</div>
+                <div class="stat-value" id="sidebar-level-status">LEVEL 1</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-title">Game Performance</div>
+                <div class="stat-value" id="sidebar-score-status">0 CANDIES</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-title">System Status</div>
+                <div class="stat-value" style="color: #1abc9c; font-size: 1rem;">READY TO PARTY</div>
+            </div>
+        </aside>
 
-    <div id="gift-panel" class="stage-panel">
-        <h3 id="gift-instruction" style="color: #ffe066; text-transform: uppercase; margin: 0;">[ TARGET: UNBOX MYSTERY ITEM ]</h3>
-        <div class="gift-box-wrapper">
-            <div id="peacock-bubble" class="speech-bubble">Happy birthday to you! 🦚</div>
-            <div id="peacock-render" class="pixel-peacock"></div>
+        <main class="main-content-flow">
             
-            <div id="clickable-box" class="pixel-gift-container" onclick="runGiftUnbox()">
-                <div id="gift-lid-element" class="gift-lid"></div>
-                <div class="gift-base"></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="cake-panel" class="stage-panel">
-        <h3 style="color: #00ffcc; text-transform: uppercase; margin: 0;">[ TARGET: EXTINGUISH CANDLE ]</h3>
-        <div id="countdown-text" class="countdown-overlay">3</div>
-        
-        <div class="cake-artwork">
-            <div id="smoke-trail" class="smoke-plume"></div>
-            <div id="cake-flame" class="candle-flame"></div>
-            <div id="main-cake-body" style="position:relative; display:flex; flex-direction:column; align-items:center;">
-                <div class="candle-stick"></div>
-                <div class="cake-tier tier-3"><div class="frosting-rim"></div></div>
-                <div class="cake-tier tier-2"><div class="frosting-rim"></div></div>
-                <div class="cake-tier tier-1"><div class="frosting-rim"></div></div>
-            </div>
-        </div>
-        <button id="blow-trigger" class="action-btn" onclick="runCakeCountdown()">ACTIVATE BLOW DEVICE</button>
-    </div>
-
-    <div id="video-panel" class="stage-panel">
-        <h3 style="color: #ffe066; text-transform: uppercase; margin: 0; line-height: 1.4;">
-            HAPPY BIRTHDAY TO THE MOST SPECIAL MAN IN THE WORLD!<br>
-            <span style="color:#fff; font-size:1rem; transform:translateY(10px); display:block;">Click on the video to take a journey down memory lane</span>
-        </h3>
-        
-        <div class="video-container-wrapper">
-            <div class="canva-placeholder">
-                [ Paste your Canva Video Embed Code / Iframe Code Right Here Later ]
-            </div>
-        </div>
-    </div>
-
-    <div id="stats-panel" class="stage-panel">
-        <h3 style="color: #00ffcc; text-transform: uppercase; margin: 0;">[ LVL 4: CANDY CATCHER ]</h3>
-        <p style="font-size: 0.9rem; margin: 10px 0; color: #ffe066;">Drag the grocery cart basket with your cursor to catch 5 candies!</p>
-        
-        <div class="game-canvas-area" id="canvas-game-box">
-            <div id="game-score">SCORE: 0</div>
-            <div id="game-timer">TIME: 15</div>
-            <div id="falling-item">🍬</div>
-            <div id="player-basket">🛒</div>
-
-            <div id="win-screen" class="game-screen">
-                <div class="success-text">Great Job!<br>You have been promoted to the age of 46! 🎉</div>
-                <button class="action-btn" onclick="resetLevelState()">PLAY AGAIN</button>
+            <div class="grid-container">
+                <div class="menu-card" onclick="startLevel('gift-panel', 1)">
+                    <div class="card-icon">🎁</div>
+                    <div class="card-title">Lvl 1: Mystery Box</div>
+                    <span class="level-tag">[ START UNBOX ]</span>
+                </div>
+                <div class="menu-card" onclick="startLevel('cake-panel', 2)">
+                    <div class="card-icon">🎂</div>
+                    <div class="card-title">Lvl 2: Cake Blast</div>
+                    <span class="level-tag">[ START MISSION ]</span>
+                </div>
+                <div class="menu-card" onclick="startLevel('video-panel', 3)">
+                    <div class="card-icon">🎬</div>
+                    <div class="card-title">Lvl 3: Special Film</div>
+                    <span class="level-tag">[ START MOVIE ]</span>
+                </div>
+                <div class="menu-card" onclick="startLevel('stats-panel', 4)">
+                    <div class="card-icon">🎮</div>
+                    <div class="card-title">Lvl 4: Candy Rush</div>
+                    <span class="level-tag">[ START MINI-GAME ]</span>
+                </div>
             </div>
 
-            <div id="lose-screen" class="game-screen">
-                <div class="fail-text">Oh no!<br>Try again! 👾</div>
-                <button class="action-btn" onclick="initMiniGame()">REDO LEVEL</button>
+            <div id="gift-panel" class="stage-panel">
+                <h3 id="gift-instruction" style="color: #f1c40f; text-transform: uppercase; margin: 0;">[ TARGET: OPEN THE MYSTERY BOX ]</h3>
+                <div class="gift-box-wrapper">
+                    <div id="peacock-bubble" class="speech-bubble">Happy birthday to you, Appa! 🦚</div>
+                    <div id="peacock-render" class="pixel-peacock"></div>
+                    
+                    <div id="clickable-box" class="pixel-gift-container" onclick="runGiftUnbox()">
+                        <div id="gift-lid-element" class="gift-lid"></div>
+                        <div class="gift-base"></div>
+                    </div>
+                </div>
             </div>
 
-            <div id="confetti-room" class="confetti-container"></div>
-        </div>
-        <button id="start-game-btn" class="action-btn" onclick="initMiniGame()">START GAME</button>
+            <div id="cake-panel" class="stage-panel">
+                <h3 style="color: #1abc9c; text-transform: uppercase; margin: 0;">[ TARGET: EXTINGUISH LAYER CANDLE ]</h3>
+                <div class="cake-artwork">
+                    <div id="smoke-trail" class="smoke-plume"></div>
+                    <div id="cake-flame" class="candle-flame"></div>
+                    <div class="candle-stick"></div>
+                    <div class="cake-tier tier-3"><div class="frosting-rim"></div></div>
+                    <div class="cake-tier tier-2"><div class="frosting-rim"></div></div>
+                    <div class="cake-tier tier-1"><div class="frosting-rim"></div></div>
+                </div>
+                <button id="blow-trigger" class="action-btn" onclick="runCakeBlow()">BLOW CANDLE</button>
+            </div>
+
+            <div id="video-panel" class="stage-panel">
+                <h3 style="color: #f1c40f; text-transform: uppercase; margin: 0;">[ LEVEL 3: TIMELINE MEMORIES ]</h3>
+                <div class="video-container-wrapper">
+                    <div class="canva-placeholder">
+                        [ Paste your Canva Video Embed Code / Link Here Later ]
+                    </div>
+                </div>
+            </div>
+
+            <div id="stats-panel" class="stage-panel">
+                <h3 style="color: #1abc9c; text-transform: uppercase; margin: 0;">[ LVL 4: CANDY CATCH ENGINE ]</h3>
+                <div class="game-canvas-area" id="canvas-game-box">
+                    <div id="falling-item">🍬</div>
+                    <div id="player-basket">🛒</div>
+
+                    <div id="win-screen" class="game-screen">
+                        <div style="color: #1abc9c; font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;">STAGE COMPLETED!<br>Promoted to the age of 46! 🎉</div>
+                        <button class="action-btn" onclick="resetMiniGameState()">PLAY AGAIN</button>
+                    </div>
+                    <div id="lose-screen" class="game-screen">
+                        <div style="color: #e74c3c; font-size: 1.4rem; font-weight: bold; margin-bottom: 15px;">MISSION FAILED!</div>
+                        <button class="action-btn" onclick="initMiniGame()">TRY AGAIN</button>
+                    </div>
+                </div>
+                <button id="start-game-btn" class="action-btn" onclick="initMiniGame()">START ENGINE</button>
+            </div>
+
+        </main>
     </div>
 
     <script>
         let score = 0, timeLeft = 15;
         let gameInterval, timerInterval;
-        let itemX = 180, itemY = -40, basketX = 170;
-        const candyPool = ['🍬', '🍭', '🍫', '🍩', '🍪'];
+        let itemX = 180, itemY = -40, basketX = 160;
         let isDragging = false;
+        const candyPool = ['🍬', '🍭', '🍫', '🍩'];
 
         function initBalloons() {
             const room = document.getElementById('balloon-room');
             if (!room) return;
-            room.innerHTML = '';
-            const colors = ['#ff4d4d', '#00ffcc', '#ffe066', '#ff9900', '#b5e2fa', '#ffb7b2'];
-            for(let i=0; i<15; i++) {
+            const colors = ['#e74c3c', '#1abc9c', '#f1c40f', '#3498db'];
+            for(let i=0; i<12; i++) {
                 const b = document.createElement('div');
                 b.className = 'balloon';
-                b.style.left = Math.random() * 90 + '%';
+                b.style.left = Math.random() * 95 + '%';
                 b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                b.style.animationDelay = (Math.random() * 8) + 's';
-                b.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                b.style.animationDelay = (Math.random() * 6) + 's';
                 room.appendChild(b);
             }
         }
         window.addEventListener('DOMContentLoaded', initBalloons);
 
-        // --- STABLE CURSOR MOUSE-DRAG EVENTS ---
-        const canvasBox = document.getElementById('canvas-game-box');
-        const basketElement = document.getElementById('player-basket');
-
-        canvasBox.addEventListener('mousedown', (e) => { isDragging = true; handleMove(e); });
-        window.addEventListener('mouseup', () => { isDragging = false; });
-        canvasBox.addEventListener('mousemove', (e) => { if (isDragging) handleMove(e); });
-
-        // Multi-touch tracking support for tablet devices
-        canvasBox.addEventListener('touchstart', (e) => { isDragging = true; handleMove(e.touches[0]); });
-        window.addEventListener('touchend', () => { isDragging = false; });
-        canvasBox.addEventListener('touchmove', (e) => { if (isDragging) handleMove(e.touches[0]); });
-
-        function handleMove(e) {
-            const rect = canvasBox.getBoundingClientRect();
-            let relativeX = e.clientX - rect.left - 30; 
-            if (relativeX < 5) relativeX = 5;
-            if (relativeX > 335) relativeX = 335;
-            basketX = relativeX;
-            basketElement.style.left = basketX + "px";
-        }
-
-        function startLevel(panelId) {
+        // --- CORE EVENT SELECTOR ---
+        function startLevel(panelId, levelNum) {
             document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
             stopGameLoops();
             
-            const selectedStage = document.getElementById(panelId);
-            if (selectedStage) {
-                selectedStage.style.display = 'block';
-                void selectedStage.offsetWidth;
-                selectedStage.classList.add('animate-pop');
+            document.getElementById('sidebar-level-status').innerText = "LEVEL " + levelNum;
+            const panel = document.getElementById(panelId);
+            if (panel) {
+                panel.style.display = 'block';
+                panel.classList.add('animate-pop');
             }
 
             if (panelId === 'gift-panel') {
                 document.getElementById('gift-lid-element').classList.remove('lid-exploded');
                 document.getElementById('peacock-render').classList.remove('peacock-launch');
                 document.getElementById('peacock-bubble').style.display = 'none';
-                document.getElementById('gift-instruction').innerText = "[ TARGET: UNBOX MYSTERY ITEM ]";
+                document.getElementById('gift-instruction').innerText = "[ TARGET: OPEN THE MYSTERY BOX ]";
             }
             if (panelId === 'cake-panel') {
                 document.getElementById('cake-flame').style.display = 'block';
                 document.getElementById('smoke-trail').classList.remove('smoke-active');
                 document.getElementById('blow-trigger').style.display = 'inline-block';
-                document.getElementById('countdown-text').style.display = 'none';
             }
-            if (panelId === 'stats-panel') { resetLevelState(); }
+            if (panelId === 'stats-panel') { resetMiniGameState(); }
         }
-
-        function resetLevelState() {
-            stopGameLoops();
-            isDragging = false;
-            document.getElementById('start-game-btn').style.display = 'inline-block';
-            document.getElementById('win-screen').style.display = 'none';
-            document.getElementById('lose-screen').style.display = 'none';
-            document.getElementById('confetti-room').style.display = 'none';
-            document.getElementById('game-score').innerText = "SCORE: 0";
-            document.getElementById('game-timer').innerText = "TIME: 15";
-            document.getElementById('falling-item').style.top = "-40px";
-            basketElement.style.left = "170px";
-            basketX = 170; score = 0; timeLeft = 15;
-        }
-
-        function stopGameLoops() { clearInterval(gameInterval); clearInterval(timerInterval); }
 
         function runGiftUnbox() {
             document.getElementById('gift-instruction').innerText = "STAGE COMPLETE! ✔️";
             document.getElementById('gift-lid-element').classList.add('lid-exploded');
             const peacock = document.getElementById('peacock-render');
             peacock.classList.add('peacock-launch');
-            setTimeout(() => { document.getElementById('peacock-bubble').style.display = 'block'; }, 700);
+            setTimeout(() => { document.getElementById('peacock-bubble').style.display = 'block'; }, 600);
         }
 
-        function runCakeCountdown() {
-            const btn = document.getElementById('blow-trigger');
-            const overlay = document.getElementById('countdown-text');
-            btn.style.display = 'none'; overlay.style.display = 'block';
-            let count = 3; overlay.innerText = count;
+        function runCakeBlow() {
+            document.getElementById('blow-trigger').style.display = 'none';
+            document.getElementById('cake-flame').style.display = 'none';
+            document.getElementById('smoke-trail').classList.add('smoke-active');
+        }
 
-            const timer = setInterval(() => {
-                count--;
-                if (count > 0) { overlay.innerText = count; } 
-                else {
-                    clearInterval(timer); overlay.style.display = 'none';
-                    document.getElementById('cake-flame').style.display = 'none';
-                    document.getElementById('smoke-trail').classList.add('smoke-active');
-                }
-            }, 1000);
+        // --- MINI GAME SYSTEM MODULE ---
+        const canvasBox = document.getElementById('canvas-game-box');
+        const basketElement = document.getElementById('player-basket');
+
+        canvasBox.addEventListener('mousedown', (e) => { isDragging = true; handleInputMove(e); });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+        canvasBox.addEventListener('mousemove', (e) => { if (isDragging) handleInputMove(e); });
+        canvasBox.addEventListener('touchstart', (e) => { isDragging = true; handleInputMove(e.touches[0]); });
+        window.addEventListener('touchend', () => { isDragging = false; });
+        canvasBox.addEventListener('touchmove', (e) => { if (isDragging) handleInputMove(e.touches[0]); });
+
+        function handleInputMove(e) {
+            const rect = canvasBox.getBoundingClientRect();
+            let relX = e.clientX - rect.left - 25;
+            if (relX < 5) relX = 5;
+            if (relX > 325) relX = 325;
+            basketX = relX;
+            basketElement.style.left = basketX + "px";
+        }
+
+        function stopGameLoops() { clearInterval(gameInterval); clearInterval(timerInterval); }
+
+        function resetMiniGameState() {
+            stopGameLoops();
+            isDragging = false;
+            document.getElementById('start-game-btn').style.display = 'inline-block';
+            document.getElementById('win-screen').style.display = 'none';
+            document.getElementById('lose-screen').style.display = 'none';
+            document.getElementById('sidebar-score-status').innerText = "0 CANDIES";
+            document.getElementById('falling-item').style.top = "-40px";
+            basketX = 160; basketElement.style.left = "160px";
+            score = 0; timeLeft = 15;
         }
 
         function initMiniGame() {
             document.getElementById('start-game-btn').style.display = 'none';
             document.getElementById('win-screen').style.display = 'none';
             document.getElementById('lose-screen').style.display = 'none';
-            document.getElementById('confetti-room').style.display = 'none';
-            score = 0; timeLeft = 15; itemY = -40; basketX = 170;
-            document.getElementById('game-score').innerText = "SCORE: " + score;
-            document.getElementById('game-timer').innerText = "TIME: " + timeLeft;
-            spawnCandy();
-            
+            score = 0; timeLeft = 15; itemY = -40;
+            generateCandyDrop();
+
             gameInterval = setInterval(() => {
-                itemY += 6; document.getElementById('falling-item').style.top = itemY + "px";
-                if (itemY >= 230 && itemY <= 260) {
-                    if (itemX >= basketX - 25 && itemX <= basketX + 45) {
-                        score++; document.getElementById('game-score').innerText = "SCORE: " + score;
-                        if (score >= 5) { endGameSequence(true); return; }
-                        spawnCandy();
+                itemY += 5;
+                document.getElementById('falling-item').style.top = itemY + "px";
+                if (itemY >= 200 && itemY <= 230) {
+                    if (itemX >= basketX - 20 && itemX <= basketX + 40) {
+                        score++;
+                        document.getElementById('sidebar-score-status').innerText = score + " CANDIES";
+                        if (score >= 5) { endGame(true); return; }
+                        generateCandyDrop();
                     }
                 }
-                if (itemY > 300) { spawnCandy(); }
+                if (itemY > 260) { generateCandyDrop(); }
             }, 30);
 
             timerInterval = setInterval(() => {
-                timeLeft--; document.getElementById('game-timer').innerText = "TIME: " + timeLeft;
-                if (timeLeft <= 0) { endGameSequence(false); }
+                timeLeft--;
+                if (timeLeft <= 0 && score < 5) { endGame(false); }
             }, 1000);
         }
 
-        function spawnCandy() {
-            itemY = -40; itemX = Math.floor(Math.random() * 320) + 20;
-            const randomCandy = candyPool[Math.floor(Math.random() * candyPool.length)];
+        function generateCandyDrop() {
+            itemY = -40;
+            itemX = Math.floor(Math.random() * 300) + 10;
             const itemElement = document.getElementById('falling-item');
-            itemElement.innerText = randomCandy; itemElement.style.left = itemX + "px"; itemElement.style.top = itemY + "px";
+            itemElement.innerText = candyPool[Math.floor(Math.random() * candyPool.length)];
+            itemElement.style.left = itemX + "px";
+            itemElement.style.top = itemY + "px";
         }
 
-        function endGameSequence(isWin) {
+        function endGame(isWin) {
             stopGameLoops();
             isDragging = false;
-            if (isWin) {
-                document.getElementById('win-screen').style.display = 'flex'; buildConfetti();
-            } else { document.getElementById('lose-screen').style.display = 'flex'; }
-        }
-
-        function buildConfetti() {
-            const container = document.getElementById('confetti-room');
-            container.innerHTML = ''; container.style.display = 'block';
-            const colors = ['#00ffcc', '#ffe066', '#ff4d4d', '#ff9900', '#ffffff'];
-            for (let i = 0; i < 40; i++) {
-                const piece = document.createElement('div'); piece.className = 'confetti-piece';
-                piece.style.left = Math.random() * 100 + '%'; piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                piece.style.animationDelay = (Math.random() * 1.5) + 's'; piece.style.animationDuration = (Math.random() * 1 + 1) + 's';
-                container.appendChild(piece);
-            }
+            if (isWin) { document.getElementById('win-screen').style.display = 'flex'; }
+            else { document.getElementById('lose-screen').style.display = 'flex'; }
         }
     </script>
 </body>
 </html>
+
+```
