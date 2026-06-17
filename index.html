@@ -65,7 +65,7 @@
             width: 50px;
             height: 65px;
             border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            opacity: 0.35;
+            opacity: 0.25;
             animation: floatUp 12s linear infinite;
         }
 
@@ -83,10 +83,10 @@
             100% { transform: translateY(-120vh) translateX(-10px); }
         }
 
-        /* --- UPDATED MENU LEVEL GRID --- */
+        /* --- MENU LEVEL GRID --- */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Made wider */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto 50px auto;
@@ -94,44 +94,44 @@
             z-index: 10;
         }
 
-        /* Bigger, more rounded options boxes with a golden outline */
+        /* Big, highly rounded with distinct golden outlines */
         .menu-card {
             background-color: #012233;
-            border: 5px solid #d4af37; /* Thick Golden Outline */
-            border-radius: 20px;       /* Heavily Rounded Corners */
-            padding: 35px 20px;        /* Increased Padding for size */
+            border: 5px solid #d4af37;
+            border-radius: 24px;
+            padding: 35px 20px;
             cursor: pointer;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
-            transition: all 0.2s ease-in-out;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s ease-in-out;
         }
 
         .menu-card:hover {
             background-color: #01415e;
-            border-color: #ffe066;     /* Brighter Gold on hover */
+            border-color: #ffe066;
             transform: translateY(-8px);
-            box-shadow: 0px 12px 24px rgba(212, 175, 55, 0.3);
+            box-shadow: 0px 15px 25px rgba(212, 175, 55, 0.3);
         }
 
         .menu-card:active {
             transform: translateY(2px);
         }
 
-        .card-icon { font-size: 3.5rem; margin-bottom: 15px; } /* Bigger Icons */
+        .card-icon { font-size: 3.5rem; margin-bottom: 15px; }
         .card-title { font-size: 1.3rem; font-weight: bold; text-transform: uppercase; color: #fff; }
         .level-tag { font-size: 0.9rem; color: #ffe066; margin-top: 10px; display: block; letter-spacing: 1px; }
 
-        /* --- STAGE DISPLAY MONITOR PANEL --- */
+        /* --- STAGE DISPLAY PANEL --- */
         .stage-panel {
             display: none;
-            max-width: 750px;
+            max-width: 800px;
             margin: 40px auto;
             background-color: #00121c;
             border: 4px solid #fff;
             box-shadow: 12px 12px 0px #000;
             padding: 40px;
             position: relative;
-            min-height: 480px;
-            overflow: hidden;
+            min-height: 520px;
+            box-sizing: border-box;
             z-index: 20;
         }
 
@@ -159,10 +159,10 @@
             box-shadow: 0px 0px 0px #000;
         }
 
-        /* --- LEVEL 1: PIXEL GIFT BOX & PEACOCK LAUNCH --- */
+        /* --- LEVEL 1: HIGHLY DETAILED PEACOCK WORKSPACE --- */
         .gift-box-wrapper { 
             position: relative; 
-            height: 380px; 
+            height: 400px; 
             margin-top: 20px; 
             display: flex;
             justify-content: center;
@@ -217,53 +217,82 @@
             100% { transform: translateY(200px) translateX(-180px) rotate(-110deg); opacity: 0; }
         }
 
+        /* HIGHLY DETAILED PIXEL-ART PEACOCK (REVISED ENGINE) */
         .pixel-peacock {
             display: none;
-            width: 120px;
-            height: 120px;
+            width: 4px;
+            height: 4px;
             position: absolute;
-            bottom: 20px;
+            bottom: 40px;
             left: 50%;
-            transform: translateX(-50%) scale(0.2);
             z-index: 11;
-        }
-
-        .pixel-peacock::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
             background: transparent;
-            box-shadow: 
-                48px 4px #00ffcc, 60px 4px #00ffcc, 72px 4px #00ffcc,
-                48px 12px #005f73, 60px 12px #005f73, 72px 12px #005f73,
-                54px 20px #0a9396, 66px 20px #0a9396,
-                54px 28px #0a9396, 66px 28px #0a9396,
-                54px 36px #005f73, 66px 36px #005f73,
-                42px 24px #ffe066, 60px 24px #ffffff,
-                42px 44px #0a9396, 54px 44px #0a9396, 66px 44px #0a9396, 78px 44px #0a9396,
-                30px 52px #005f73, 42px 52px #0a9396, 54px 54px #005f73, 66px 52px #0a9396, 78px 52px #0a9396, 90px 52px #005f73,
-                18px 60px #94d2bd, 30px 60px #0a9396, 42px 60px #0a9396, 54px 60px #0a9396, 66px 60px #0a9396, 78px 60px #0a9396, 90px 60px #0a9396, 102px 60px #94d2bd,
-                6px 44px #00ffcc, 114px 44px #00ffcc,
-                18px 32px #ee9b00, 102px 32px #ee9b00,
-                30px 20px #00ffcc, 90px 20px #00ffcc,
-                42px 12px #ee9b00, 78px 12px #ee9b00,
-                48px 72px #ffe066, 66px 72px #ffe066,
-                48px 80px #ffe066, 66px 80px #ffe066;
         }
 
         .peacock-launch {
             display: block;
-            animation: smoothJump 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+            animation: majesticReveal 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
         }
-        @keyframes smoothJump {
-            0% { bottom: 20px; transform: translateX(-50%) scale(0.2); }
-            100% { bottom: 150px; transform: translateX(-50%) scale(1.4); }
+
+        @keyframes majesticReveal {
+            0% { bottom: 20px; transform: translateX(-50%) scale(0.5); opacity: 0; }
+            100% { bottom: 180px; transform: translateX(-50%) scale(2.4); opacity: 1; }
+        }
+
+        /* Master Shadow Mapping Engine for Majestic Fan Feather Layout */
+        .pixel-peacock::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: transparent;
+            /* Coordinate Layout Key: Teal(#008080), Blue(#002699), Gold(#e6b800), LightTeal(#00ccbb), Navy(#001144), Wood(#8b5a2b) */
+            box-shadow:
+                /* --- TOP CREST / FEATHER CORONET --- */
+                -4px -52px #00ccbb, 0px -56px #00ccbb, 4px -52px #00ccbb,
+                -4px -48px #002699, 0px -48px #002699, 4px -48px #002699,
+                /* --- HEAD & NECK --- */
+                -4px -44px #002699, 0px -44px #002699, 4px -44px #002699,
+                -4px -40px #002699, 0px -40px #002699,
+                -4px -36px #002699, 0px -36px #002699,
+                -4px -32px #002699, 0px -32px #002699,
+                -4px -28px #002699, 0px -28px #002699,
+                /* Beak Details */
+                4px -40px #e6b800, 8px -40px #e6b800,
+                /* Eyespot details */
+                0px -44px #ffffff,
+                /* --- GOLD SHOULDER VEST --- */
+                -8px -24px #e6b800, -4px -24px #002699, 0px -24px #002699, 4px -24px #e6b800,
+                -12px -20px #e6b800, -8px -20px #e6b800, -4px -20px #002699, 0px -20px #002699, 4px -20px #e6b800, 8px -20px #e6b800,
+                -12px -16px #e6b800, -8px -16px #e6b800, -4px -16px #002699, 0px -16px #002699, 4px -16px #e6b800, 8px -16px #e6b800,
+                /* --- MAIN REAR LOWER BODY --- */
+                -8px -12px #002699, -4px -12px #002699, 0px -12px #002699, 4px -12px #002699,
+                -4px -8px #001144, 0px -8px #001144,
+                -4px -4px #001144, 0px -4px #001144,
+                /* --- LEGS --- */
+                -4px 0px #8b5a2b, 0px 0px #8b5a2b,
+                -4px 4px #8b5a2b, 0px 4px #8b5a2b,
+                -8px 8px #8b5a2b, -4px 8px #8b5a2b, 0px 8px #8b5a2b, 4px 8px #8b5a2b,
+                /* --- ARC FEATHER DISPLAY ENGINE (OUTER WALL) --- */
+                /* Top Center Arc */
+                -4px -40px #008080, 0px -40px #e6b800, 4px -40px #008080,
+                -12px -44px #008080, -8px -44px #e6b800, -4px -44px #001144, 0px -44px #001144, 4px -44px #e6b800, 8px -44px #008080,
+                /* Mid-Tier Wings Upper-Left & Right */
+                -24px -40px #008080, -20px -40px #e6b800, -16px -40px #001144, 16px -40px #001144, 20px -40px #e6b800, 24px -40px #008080,
+                -32px -32px #008080, -28px -32px #e6b800, -24px -32px #001144, 24px -32px #001144, 28px -32px #e6b800, 32px -32px #008080,
+                -40px -20px #008080, -36px -20px #e6b800, -32px -20px #001144, 32px -20px #001144, 36px -20px #e6b800, 40px -20px #008080,
+                -44px -8px  #008080, -40px -8px  #e6b800, -36px -8px  #001144, 36px -8px  #001144, 40px -8px  #e6b800, 44px -8px  #008080,
+                -44px 4px   #008080, -40px 4px   #e6b800, -36px 4px   #001144, 36px 4px   #001144, 40px 4px   #e6b800, 44px 4px   #008080,
+                /* --- PLUME BLENDING ACCENTS --- */
+                -20px -28px #008080, -16px -28px #00ccbb, -12px -28px #008080, 12px -28px #008080, 16px -28px #00ccbb, 20px -28px #008080,
+                -24px -16px #008080, -20px -16px #00ccbb, -16px -16px #008080, 16px -16px #008080, 20px -16px #00ccbb, 24px -16px #008080,
+                -28px -4px  #008080, -24px -4px  #00ccbb, -20px -4px  #008080, 20px -4px  #008080, 24px -4px  #00ccbb, 28px -4px  #008080;
         }
 
         .speech-bubble {
             display: none;
             position: absolute;
-            bottom: 230px; 
+            bottom: 270px; 
             left: calc(50% + 110px);
             background: #ffffff; color: #000; padding: 12px 20px;
             font-weight: bold; font-size: 1.2rem; border: 4px solid #000;
@@ -277,7 +306,7 @@
             border-color: transparent #ffffff transparent transparent;
         }
 
-        /* --- LEVEL 2: CAKE ART --- */
+        /* --- LEVEL 2: CAKE DESIGN --- */
         .cake-artwork {
             margin: 40px auto 20px auto;
             position: relative;
@@ -366,7 +395,15 @@
             font-weight: bold; text-shadow: 4px 4px 0px #000; margin-bottom: 10px;
         }
 
-        /* --- FIXED LEVEL 3: VIDEO VISIBILITY PLATFORM --- */
+        /* --- STABLE LEVEL 3: VIDEO COMPONENT INTERFACE --- */
+        .video-container-wrapper {
+            margin: 25px auto 0 auto;
+            width: 100%;
+            min-height: 280px;
+            display: block !important;
+            clear: both;
+        }
+
         .canva-placeholder {
             border: 4px dashed #ffe066;
             padding: 50px 20px;
@@ -374,19 +411,20 @@
             color: #ffffff;
             font-size: 1.2rem;
             font-weight: bold;
-            margin-top: 30px;
-            border-radius: 12px;
-            display: block !important; /* Forces layout rendering */
-            visibility: visible !important;
+            border-radius: 16px;
+            box-sizing: border-box;
+            display: block !important;
         }
 
-        /* --- LEVEL 4: INTERACTIVE CANDY CATCHER SCREEN --- */
+        /* --- LEVEL 4: INTERACTIVE DRAG CANDY CATCHER SCREEN --- */
         .game-canvas-area {
             width: 100%; max-width: 400px; height: 300px;
             background-color: #000c14; border: 3px solid #00ffcc;
             margin: 15px auto; position: relative; overflow: hidden;
-            cursor: crosshair; /* Changes cursor indicating click-drag environment */
+            cursor: grab;
         }
+        .game-canvas-area:active { cursor: grabbing; }
+
         #game-score { position: absolute; top: 10px; left: 10px; font-size: 1.1rem; color: #ffe066; font-weight: bold; z-index: 5; }
         #game-timer { position: absolute; top: 10px; right: 10px; font-size: 1.1rem; color: #ff4d4d; font-weight: bold; z-index: 5; }
         #falling-item { position: absolute; top: -40px; left: 50%; font-size: 2rem; width: 40px; height: 40px; line-height: 40px; pointer-events: none; }
@@ -470,18 +508,20 @@
 
     <div id="video-panel" class="stage-panel">
         <h3 style="color: #ffe066; text-transform: uppercase; margin: 0; line-height: 1.4;">
-            Happy Birthday to the most special man in the world!<br>
-            <span style="color:#fff; font-size:1rem; transform:translateY(10px); display:block;">Take a journey down memory lane below</span>
+            HAPPY BIRTHDAY TO THE MOST SPECIAL MAN IN THE WORLD!<br>
+            <span style="color:#fff; font-size:1rem; transform:translateY(10px); display:block;">Click on the video to take a journey down memory lane</span>
         </h3>
         
-        <div class="canva-placeholder">
-            [ Paste your Canva Video Embed Code / Iframe Code Right Here Later ]
+        <div class="video-container-wrapper">
+            <div class="canva-placeholder">
+                [ Paste your Canva Video Embed Code / Iframe Code Right Here Later ]
+            </div>
         </div>
     </div>
 
     <div id="stats-panel" class="stage-panel">
         <h3 style="color: #00ffcc; text-transform: uppercase; margin: 0;">[ LVL 4: CANDY CATCHER ]</h3>
-        <p style="font-size: 0.9rem; margin: 10px 0; color: #ffe066;">Drag the trolley box with your cursor to catch 5 candies!</p>
+        <p style="font-size: 0.9rem; margin: 10px 0; color: #ffe066;">Drag the grocery cart basket with your cursor to catch 5 candies!</p>
         
         <div class="game-canvas-area" id="canvas-game-box">
             <div id="game-score">SCORE: 0</div>
@@ -528,7 +568,7 @@
         }
         window.addEventListener('DOMContentLoaded', initBalloons);
 
-        // --- MOUSE DRAG/MOVE LOGIC FOR TROLLEY ---
+        // --- STABLE CURSOR MOUSE-DRAG EVENTS ---
         const canvasBox = document.getElementById('canvas-game-box');
         const basketElement = document.getElementById('player-basket');
 
@@ -536,14 +576,13 @@
         window.addEventListener('mouseup', () => { isDragging = false; });
         canvasBox.addEventListener('mousemove', (e) => { if (isDragging) handleMove(e); });
 
-        // Touch support for phones/tablets
+        // Multi-touch tracking support for tablet devices
         canvasBox.addEventListener('touchstart', (e) => { isDragging = true; handleMove(e.touches[0]); });
         window.addEventListener('touchend', () => { isDragging = false; });
         canvasBox.addEventListener('touchmove', (e) => { if (isDragging) handleMove(e.touches[0]); });
 
         function handleMove(e) {
             const rect = canvasBox.getBoundingClientRect();
-            // Center the basket item under the cursor position inside canvas container bounds
             let relativeX = e.clientX - rect.left - 30; 
             if (relativeX < 5) relativeX = 5;
             if (relativeX > 335) relativeX = 335;
@@ -598,7 +637,7 @@
             document.getElementById('gift-lid-element').classList.add('lid-exploded');
             const peacock = document.getElementById('peacock-render');
             peacock.classList.add('peacock-launch');
-            setTimeout(() => { document.getElementById('peacock-bubble').style.display = 'block'; }, 600);
+            setTimeout(() => { document.getElementById('peacock-bubble').style.display = 'block'; }, 700);
         }
 
         function runCakeCountdown() {
