@@ -19,22 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* HARDWARE SCREEN SHAKE ENGINE */
-        @keyframes peacock-shake {
-            0% { transform: translate(3px, 3px) rotate(0deg); }
-            10% { transform: translate(-2px, -4px) rotate(-1.5deg); }
-            20% { transform: translate(-5px, 0px) rotate(1.5deg); }
-            30% { transform: translate(5px, 3px) rotate(0deg); }
-            40% { transform: translate(2px, -2px) rotate(1.5deg); }
-            50% { transform: translate(-2px, 4px) rotate(-1.5deg); }
-            60% { transform: translate(-5px, 2px) rotate(0deg); }
-            70% { transform: translate(5px, 2px) rotate(-1.5deg); }
-            80% { transform: translate(-2px, -2px) rotate(1.5deg); }
-            90% { transform: translate(2px, 4px) rotate(0deg); }
-            100% { transform: translate(2px, -4px) rotate(-1.5deg); }
-        }
-        .shake-active { animation: peacock-shake 0.15s infinite; }
-
         header { text-align: center; margin-bottom: 25px; }
         .bubble-heading {
             font-size: 3.5rem;
@@ -197,13 +181,43 @@
         .pixel-gift-container {
             cursor: pointer;
             margin-top: 20px;
+            position: relative;
+            width: 150px;
+            height: 120px;
         }
         .gift-lid {
-            transition: all 0.4s ease-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 25px;
+            background: #e74c3c;
+            border: 3px solid white;
+            border-radius: 4px;
+            z-index: 2;
+            transition: all 0.5s ease-out;
+        }
+        .gift-body {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 130px;
+            height: 95px;
+            background: #c0392b;
+            border: 3px solid white;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            z-index: 1;
+        }
+        .peacock-reward {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
-<body id="master-body">
+<body>
 
     <header><span class="bubble-heading">Happy Birthday Appa</span></header>
 
@@ -254,12 +268,36 @@
             <div id="gift-panel" class="stage-panel">
                 <h3>[ TARGET: OPEN THE MYSTERY BOX ]</h3>
                 <div class="gift-box-wrapper">
-                    <div id="peacock-bubble" style="display:none; color:white; background: #1abc9c; padding: 15px 25px; border-radius: 12px; margin-bottom: 20px; font-weight: bold; border: 2px solid #fff;">
-                        HAPPY BIRTHDAY APPA! 🦚
+                    <div id="peacock-container" class="peacock-reward">
+                        <svg width="120" height="120" viewBox="0 0 100 100">
+                            <path d="M 50 80 L 15 40 A 25 25 0 0 1 40 15 Z" fill="#00a8ff" stroke="#00d2d3" stroke-width="1.5"/>
+                            <path d="M 50 80 L 25 25 A 25 25 0 0 1 60 10 Z" fill="#0097e6" stroke="#00d2d3" stroke-width="1.5"/>
+                            <path d="M 50 80 L 50 10 A 25 25 0 0 1 75 25 Z" fill="#00a8ff" stroke="#00d2d3" stroke-width="1.5"/>
+                            <path d="M 50 80 L 85 40 A 25 25 0 0 0 60 15 Z" fill="#0097e6" stroke="#00d2d3" stroke-width="1.5"/>
+                            <circle cx="28" cy="32" r="4" fill="#ff9f43"/> <circle cx="28" cy="32" r="2" fill="#5f27cd"/>
+                            <circle cx="42" cy="20" r="4" fill="#ff9f43"/> <circle cx="42" cy="20" r="2" fill="#5f27cd"/>
+                            <circle cx="58" cy="20" r="4" fill="#ff9f43"/> <circle cx="58" cy="20" r="2" fill="#5f27cd"/>
+                            <circle cx="72" cy="32" r="4" fill="#ff9f43"/> <circle cx="72" cy="32" r="2" fill="#5f27cd"/>
+                            <path d="M 44 80 Q 40 55 45 45 Q 42 35 50 35 Q 58 35 55 45 Q 60 55 56 80 Z" fill="#5f27cd"/>
+                            <circle cx="50" cy="40" r="8" fill="#5f27cd"/>
+                            <polygon points="48,40 52,40 50,46" fill="#f1c40f"/>
+                            <circle cx="47" cy="38" r="1.5" fill="#fff"/>
+                            <circle cx="53" cy="38" r="1.5" fill="#fff"/>
+                            <line x1="50" y1="32" x2="50" y2="24" stroke="#5f27cd" stroke-width="2"/>
+                            <line x1="48" y1="33" x2="44" y2="26" stroke="#5f27cd" stroke-width="1.5"/>
+                            <line x1="52" y1="33" x2="56" y2="26" stroke="#5f27cd" stroke-width="1.5"/>
+                            <circle cx="50" cy="23" r="2" fill="#00d2d3"/>
+                            <circle cx="44" cy="25" r="1.5" fill="#00d2d3"/>
+                            <circle cx="56" cy="25" r="1.5" fill="#00d2d3"/>
+                        </svg>
+                        <div id="peacock-bubble" style="color:white; background: #1abc9c; padding: 12px 20px; border-radius: 12px; margin-top: 10px; font-weight: bold; border: 2px solid #fff;">
+                            HAPPY BIRTHDAY APPA! 🦚
+                        </div>
                     </div>
+                    
                     <div class="pixel-gift-container" onclick="runGiftUnbox()">
-                        <div id="gift-lid" class="gift-lid" style="width:130px; height:24px; background:#e74c3c; border:3px solid white; border-radius: 4px;"></div>
-                        <div style="width:110px; height:90px; background:#c0392b; border:3px solid white; margin-left:10px; border-top: none; border-radius: 0 0 4px 4px;"></div>
+                        <div id="gift-lid" class="gift-lid"></div>
+                        <div class="gift-body"></div>
                     </div>
                 </div>
             </div>
@@ -274,13 +312,13 @@
             <div id="video-panel" class="stage-panel">
                 <h3>[ EMBED YOUR CANVA PRESENTATION ]</h3>
                 <div class="canva-input-container">
-                    <input type="text" id="canva-url" placeholder="Paste your Canva presentation link here (e.g., https://www.canva.com/design/...)">
+                    <input type="text" id="canva-url" placeholder="Paste your public Canva link here...">
                     <button class="action-btn" onclick="loadCanva()">LOAD LINK</button>
                 </div>
                 <div class="iframe-wrapper">
                     <div id="iframe-placeholder" class="placeholder-message">
                         <span style="font-size: 3rem;">📊</span>
-                        <p>Paste your presentation URL above to reveal this slide frame window.</p>
+                        <p>Paste your link above to display the presentation deck frame window.</p>
                     </div>
                     <iframe id="canva-viewport" src="" allowfullscreen></iframe>
                 </div>
@@ -288,14 +326,14 @@
 
             <div id="game-panel" class="stage-panel">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3>[ CANDY CATCH: SPEED RUN ]</h3>
+                    <h3>[ CANDY CATCH: PRO RUN ]</h3>
                     <div style="font-size: 1.2rem; font-weight: bold; background: #0d2244; padding: 8px 15px; border-radius: 8px; border: 2px solid #f1c40f;">
                         Score: <span id="game-score">0</span>
                     </div>
                 </div>
                 <canvas id="gameCanvas" width="800" height="400" class="canvas-render-frame"></canvas>
                 <div style="text-align: center;">
-                    <button id="start-game" class="action-btn" onclick="initGame()">START SPEED RUN</button>
+                    <button id="start-game" class="action-btn" onclick="initGame()">START ENGINE</button>
                 </div>
             </div>
         </main>
@@ -306,51 +344,52 @@
         let confetti = [];
         let smoke = [];
         
-        /* SHAKE ENGINE */
-        function triggerPeacockShake(duration = 500) {
-            const body = document.getElementById('master-body');
-            body.classList.add('shake-active');
-            setTimeout(() => body.classList.remove('shake-active'), duration);
-        }
-
         /* PANEL SWITCHER */
         function startLevel(id, lvl) {
             document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
             document.getElementById(id).style.display = 'block';
             document.getElementById('side-level').innerText = "LEVEL " + lvl;
             
-            // Kill side loops if walking away
-            gameActive = false;
-            
+            gameActive = false; // Gracefully shut down active game loop loops
             if(id === 'cake-panel') initCake();
         }
 
         /* --- UNBOX ENGINE --- */
         function runGiftUnbox() {
-            triggerPeacockShake(400);
-            document.getElementById('gift-lid').style.transform = 'translateY(-60px) rotate(-25deg)';
-            document.getElementById('gift-lid').style.opacity = '0.5';
-            document.getElementById('peacock-bubble').style.display = 'inline-block';
+            document.getElementById('gift-lid').style.transform = 'translateY(-55px) rotate(-20deg)';
+            document.getElementById('gift-lid').style.opacity = '0';
+            document.getElementById('peacock-container').style.display = 'flex';
         }
 
-        /* --- CANVA INTERFACE LOADER --- */
+        /* --- AUTOMATED CANVA SANITIZER ENGINE --- */
         function loadCanva() {
-            let url = document.getElementById('canva-url').value.trim();
-            if(!url) {
-                alert("Please paste a valid Canva presentation link!");
+            let inputUrl = document.getElementById('canva-url').value.trim();
+            if(!inputUrl) {
+                alert("Please paste your Canva presentation link first!");
                 return;
             }
             
-            // Normalize share links into pure functional embed frames
-            let embedUrl = url;
-            if(embedUrl.includes('/view')) {
-                if(!embedUrl.includes('?embed')) {
-                    embedUrl = embedUrl.replace('/view', '/view?embed');
-                }
-            } else if (!embedUrl.includes('embed')) {
-                alert("If presentation layout loads blank, make sure you are copying the 'Public View Link' from Canva's share option menu!");
+            let embedUrl = inputUrl;
+            
+            // Handle unique canva.link shorts or clean design layout views
+            if (embedUrl.includes("canva.link")) {
+                // If it's a short URL, we alert the format rule or process standard design matching
+                alert("If the link displays an error, please paste the full browser design URL or its shared 'Public View Link'.");
             }
             
+            // Clean up standard link types to force correct embedding parameters
+            if (embedUrl.includes("/design/")) {
+                // Strip existing parameters
+                embedUrl = embedUrl.split('?')[0]; 
+                if (embedUrl.includes("/view")) {
+                    embedUrl = embedUrl.replace("/view", "/view?embed");
+                } else if (embedUrl.includes("/watch")) {
+                    embedUrl = embedUrl.replace("/watch", "/watch?embed");
+                } else {
+                    embedUrl = embedUrl + "/view?embed";
+                }
+            }
+
             document.getElementById('iframe-placeholder').style.display = 'none';
             const view = document.getElementById('canva-viewport');
             view.src = embedUrl;
@@ -375,24 +414,19 @@
         function drawFlame(ctx, x, y, size) {
             if (!candleLit) return;
             ctx.save();
-            
-            // Subtle high-frequency vibration for fire physics
-            let flickerX = (Math.random() - 0.5) * 3;
-            let flickerY = Math.random() * 4;
+            let flickerX = (Math.random() - 0.5) * 2;
+            let flickerY = Math.random() * 3;
             
             ctx.beginPath();
-            // Start at sharp teardrop top point
             ctx.moveTo(x + flickerX, y - size - flickerY);
-            // Left flank curves down beautifully
-            ctx.bezierCurveTo(x - size * 1.5, y - size, x - size, y + size, x, y + size);
-            // Right flank curves back to peak
-            ctx.bezierCurveTo(x + size, y + size, x + size * 1.5, y - size, x + flickerX, y - size - flickerY);
+            ctx.bezierCurveTo(x - size * 1.4, y - size, x - size, y + size, x, y + size);
+            ctx.bezierCurveTo(x + size, y + size, x + size * 1.4, y - size, x + flickerX, y - size - flickerY);
             ctx.closePath();
             
-            let grad = ctx.createRadialGradient(x, y + size/2, 2, x, y, size * 1.5);
+            let grad = ctx.createRadialGradient(x, y + size/2, 1, x, y, size * 1.4);
             grad.addColorStop(0, '#ffffff');
             grad.addColorStop(0.2, '#fff3a1');
-            grad.addColorStop(0.5, '#f1c40f');
+            grad.addColorStop(0.6, '#f1c40f');
             grad.addColorStop(1, 'rgba(231, 76, 60, 0)');
             
             ctx.fillStyle = grad;
@@ -409,30 +443,28 @@
             cCtx.fillStyle = '#e84393'; cCtx.fillRect(cx-80, 255, 160, 55);  
             cCtx.fillStyle = '#f39c12'; cCtx.fillRect(cx-55, 210, 110, 45);  
             
-            // Candle Wick & Stem
+            // Candle Base Setup
             cCtx.fillStyle = '#ffffff'; cCtx.fillRect(cx-4, 175, 8, 35);
-            cCtx.fillStyle = '#2c3e50'; cCtx.fillRect(cx-1, 167, 2, 8); // Wick
+            cCtx.fillStyle = '#2c3e50'; cCtx.fillRect(cx-1, 167, 2, 8); 
             
-            // Candle Fire Layer
             if(candleLit) {
                 drawFlame(cCtx, cx, 155, 14);
             } else {
                 if(Math.random() > 0.6) {
-                    smoke.push({x: cx, y: 162, vx: (Math.random()-0.5)*0.8, vy: -1.2, r: 4, a: 0.8});
+                    smoke.push({x: cx, y: 162, vx: (Math.random()-0.5)*0.6, vy: -1.0, r: 3, a: 0.8});
                 }
             }
 
-            // Render rising smoke trails
             smoke.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; p.a -= 0.008; p.r += 0.08;
+                p.x += p.vx; p.y += p.vy; p.a -= 0.01; p.r += 0.05;
                 cCtx.fillStyle = `rgba(180, 189, 199, ${p.a})`;
                 cCtx.beginPath(); cCtx.arc(p.x, p.y, p.r, 0, Math.PI*2); cCtx.fill();
                 if(p.a <= 0) smoke.splice(i, 1);
             });
 
-            // Global Ambient Confetti Dropping Engine
+            // Ambient Ceiling Drops (Rains purely from layout bounds)
             confetti.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; p.vy += 0.15; // Gravity pull down
+                p.x += p.vx; p.y += p.vy; p.vy += 0.12; 
                 p.rot += p.rotSpeed;
                 
                 cCtx.save();
@@ -460,20 +492,17 @@
                     box.innerText = "BLOW! 💨";
                     candleLit = false;
                     
-                    // Activate Global Screen Shake Engine
-                    triggerPeacockShake(800);
-                    
-                    // Rain down global screen confetti from the top ceiling boundaries
-                    for(let i=0; i<180; i++) {
+                    // Rain down clean global screen boundaries confetti 
+                    for(let i=0; i<160; i++) {
                         confetti.push({
                             x: Math.random() * cCanvas.width, 
-                            y: -30 - (Math.random() * 100), // Stagger entry heights
-                            vx: (Math.random() * 4) - 2, 
-                            vy: (Math.random() * 4) + 3,
+                            y: -20 - (Math.random() * 80), 
+                            vx: (Math.random() * 3.5) - 1.75, 
+                            vy: (Math.random() * 3) + 2.5,
                             c: `hsl(${Math.random() * 360}, 85%, 55%)`,
-                            s: Math.random() * 6 + 6,
+                            s: Math.random() * 5 + 6,
                             rot: Math.random() * Math.PI,
-                            rotSpeed: (Math.random() - 0.5) * 0.2
+                            rotSpeed: (Math.random() - 0.5) * 0.15
                         });
                     }
                 }
@@ -481,29 +510,32 @@
             }, 700);
         }
 
-        /* --- RE-ENGINEERED FAST CANDY GAME ENGINE --- */
+        /* --- RE-BALANCED SMOOTH CANDY GAME ENGINE --- */
         const gCanvas = document.getElementById('gameCanvas');
         const gCtx = gCanvas.getContext('2d');
         let gameActive = false;
         let gameScore = 0;
-        let playerX = 360;
-        let playerWidth = 90;
+        let playerX = 350;
+        let playerWidth = 100;
         let candyArray = [];
         let gameAnimationId;
         
-        // Track Controls
         let keys = {};
-        window.addEventListener('keydown', e => keys[e.key] = true);
-        window.addEventListener('keyup', e => keys[e.key] = false);
+        window.addEventListener('keydown', e => {
+            if(['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+            keys[e.key] = true;
+        });
+        window.addEventListener('keyup', e => {
+            keys[e.key] = false;
+        });
 
         function initGame() {
-            if(gameActive) return;
             gameActive = true;
             gameScore = 0;
             candyArray = [];
-            playerX = 360;
+            playerX = 350;
             document.getElementById('game-score').innerText = gameScore;
-            document.getElementById('start-game').innerText = "RESTART RUN";
+            document.getElementById('start-game').innerText = "RESET GAME ENGINE";
             
             if(gameAnimationId) cancelAnimationFrame(gameAnimationId);
             runGameLoop();
@@ -514,76 +546,67 @@
 
             gCtx.clearRect(0,0, gCanvas.width, gCanvas.height);
 
-            // Handle swift paddle velocity response
-            if(keys['ArrowLeft'] && playerX > 0) playerX -= 12;
-            if(keys['ArrowRight'] && playerX < gCanvas.width - playerWidth) playerX += 12;
+            // Snappy move response: Boosted velocity speed to 16px/frame so player is incredibly fast
+            if(keys['ArrowLeft'] && playerX > 0) playerX -= 16;
+            if(keys['ArrowRight'] && playerX < gCanvas.width - playerWidth) playerX += 16;
 
-            // Player Tray Basket Graphic
+            // Render Tray / Basket
             gCtx.fillStyle = '#1abc9c';
             gCtx.fillRect(playerX, gCanvas.height - 35, playerWidth, 15);
             gCtx.fillStyle = '#16a085';
-            gCtx.fillRect(playerX, gCanvas.height - 20, playerWidth, 5); // Shadow baseline
+            gCtx.fillRect(playerX, gCanvas.height - 20, playerWidth, 5); 
 
-            // Spawning Mechanism: Scaled faster generation rules
-            if(Math.random() < 0.07) { 
+            // Spawn Control: Moderated down slightly so it's clean and playable
+            if(Math.random() < 0.05) { 
                 candyArray.push({
-                    x: Math.random() * (gCanvas.width - 24) + 12,
-                    y: -20,
-                    // Fast Drop speeds between 6.5 and 11.5 pixels per frame!
-                    speed: (Math.random() * 5) + 6.5,
+                    x: Math.random() * (gCanvas.width - 30) + 15,
+                    y: -15,
+                    // Rebalanced drop velocity vector down to manageable 4.5px - 7.5px per frame range
+                    speed: (Math.random() * 3) + 4.5,
                     color: `hsl(${Math.random() * 360}, 90%, 60%)`,
-                    radius: Math.random() * 4 + 10,
+                    radius: 12,
                     pulse: 0
                 });
             }
 
-            // Process Active Candies
+            // Process Candies
             candyArray.forEach((candy, idx) => {
                 candy.y += candy.speed;
-                candy.pulse += 0.1;
+                candy.pulse += 0.15;
 
-                // Draw Sweet Candy Node
                 gCtx.save();
                 gCtx.translate(candy.x, candy.y);
                 gCtx.fillStyle = candy.color;
                 
-                // Candy circular center core
                 gCtx.beginPath();
                 gCtx.arc(0, 0, candy.radius, 0, Math.PI * 2);
                 gCtx.fill();
                 
-                // Classic retro wrap wings
+                // Twist wrappers
                 gCtx.beginPath();
                 gCtx.moveTo(-candy.radius, 0);
                 gCtx.lineTo(-candy.radius - 8, -6 + Math.sin(candy.pulse)*2);
                 gCtx.lineTo(-candy.radius - 8, 6 - Math.sin(candy.pulse)*2);
                 gCtx.closePath();
-                gCtx.fillStyle = candy.color;
                 gCtx.fill();
 
                 gCtx.beginPath();
                 gCtx.moveTo(candy.radius, 0);
                 gCtx.lineTo(candy.radius + 8, -6 + Math.sin(candy.pulse)*2);
                 gCtx.lineTo(candy.radius + 8, 6 - Math.sin(candy.pulse)*2);
-                gCtx.closePath();
                 gCtx.fill();
                 
                 gCtx.restore();
 
-                // Collision detection engine
-                if(candy.y >= gCanvas.height - 45 && candy.y <= gCanvas.height - 20) {
+                // Accurate Platform Top Box Bounds Check Collision
+                if(candy.y >= gCanvas.height - 45 && candy.y <= gCanvas.height - 15) {
                     if(candy.x >= playerX && candy.x <= playerX + playerWidth) {
                         gameScore += 10;
                         document.getElementById('game-score').innerText = gameScore;
                         candyArray.splice(idx, 1);
-                        
-                        // Mini hit vibration feedback flash
-                        gCtx.fillStyle = 'rgba(255,255,255,0.2)';
-                        gCtx.fillRect(0,0,gCanvas.width,gCanvas.height);
                     }
                 }
 
-                // Drop out boundaries rule
                 if(candy.y > gCanvas.height + 20) {
                     candyArray.splice(idx, 1);
                 }
