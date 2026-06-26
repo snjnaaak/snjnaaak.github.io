@@ -19,6 +19,22 @@
             overflow-x: hidden;
         }
 
+        /* VIOLENT UNBOX SCREEN SHAKE ENGINE */
+        @keyframes unbox-shake {
+            0% { transform: translate(4px, 4px) rotate(0deg); }
+            10% { transform: translate(-3px, -5px) rotate(-2deg); }
+            20% { transform: translate(-6px, 0px) rotate(2deg); }
+            30% { transform: translate(6px, 4px) rotate(0deg); }
+            40% { transform: translate(3px, -3px) rotate(2deg); }
+            50% { transform: translate(-3px, 5px) rotate(-2deg); }
+            60% { transform: translate(-6px, 3px) rotate(0deg); }
+            70% { transform: translate(6px, 3px) rotate(-2deg); }
+            80% { transform: translate(-3px, -3px) rotate(2deg); }
+            90% { transform: translate(3px, 5px) rotate(0deg); }
+            100% { transform: translate(3px, -5px) rotate(-2deg); }
+        }
+        .shake-active { animation: unbox-shake 0.1s infinite; }
+
         header { text-align: center; margin-bottom: 25px; }
         .bubble-heading {
             font-size: 3.5rem;
@@ -101,6 +117,31 @@
             position: relative;
         }
 
+        /* --- BACKGROUND BALLOON ENGINE --- */
+        .balloon-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 40px;
+            height: 52px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            opacity: 0.13;
+            animation: floatUp 14s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50vh) translateX(20px); }
+            100% { transform: translateY(-120vh) translateX(-10px); }
+        }
+
         .canvas-render-frame {
             display: block;
             background-color: #020813;
@@ -154,6 +195,10 @@
             border-radius: 12px;
             border: 2px solid #34495e;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         #canva-viewport {
             width: 100%;
@@ -161,11 +206,22 @@
             border: none;
             display: none;
         }
+        .fallback-link-container {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #0d2244;
+            border: 2px solid #e74c3c;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+        .fallback-link-container a {
+            color: #1abc9c;
+            font-weight: bold;
+            text-decoration: underline;
+            font-size: 1.2rem;
+        }
         .placeholder-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             color: #57606f;
             text-align: center;
         }
@@ -195,7 +251,7 @@
             border: 3px solid white;
             border-radius: 4px;
             z-index: 2;
-            transition: all 0.5s ease-out;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .gift-body {
             position: absolute;
@@ -214,10 +270,52 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
+            z-index: 11;
+        }
+        .peacock-launch {
+            display: flex;
+            animation: majesticReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+        }
+
+        @keyframes majesticReveal {
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* SVG Crisp Pixel Styling Rules */
+        .peacock-reward svg {
+            shape-rendering: crispEdges;
+            filter: drop-shadow(4px 6px 0px rgba(0,0,0,0.5));
+        }
+
+        /* Color classes linked directly inside SVG channels */
+        .t1 { fill: #006666; } 
+        .t2 { fill: #00bfa5; } 
+        .t3 { fill: #00e676; } 
+        .b1 { fill: #002266; } 
+        .b2 { fill: #053594; } 
+        .b3 { fill: #2979ff; } 
+        .g1 { fill: #d4af37; } 
+        .g2 { fill: #ffd700; } 
+        .w0 { fill: #ffffff; } 
+        .n0 { fill: #020b18; }
+
+        /* Speech Bubble Below Peacock */
+        .speech-bubble {
+            display: none;
+            background: #ffffff; color: #000; padding: 10px 18px;
+            font-weight: bold; font-size: 1.1rem; border: 3px solid #000;
+            box-shadow: 4px 4px 0px #1abc9c; border-radius: 12px;
+            white-space: nowrap;
+            z-index: 15;
+            margin-top: 15px;
+            text-transform: uppercase;
         }
     </style>
 </head>
-<body>
+<body id="master-body">
+
+    <div class="balloon-container" id="balloons"></div>
 
     <header><span class="bubble-heading">Happy Birthday Appa</span></header>
 
@@ -265,32 +363,55 @@
                 </div>
             </div>
 
-            <div id="gift-panel" class="stage-panel">
+            <div id="gift-panel" class="stage-panel" style="display: block;">
                 <h3>[ TARGET: OPEN THE MYSTERY BOX ]</h3>
                 <div class="gift-box-wrapper">
                     <div id="peacock-container" class="peacock-reward">
-                        <svg width="120" height="120" viewBox="0 0 100 100">
-                            <path d="M 50 80 L 15 40 A 25 25 0 0 1 40 15 Z" fill="#00a8ff" stroke="#00d2d3" stroke-width="1.5"/>
-                            <path d="M 50 80 L 25 25 A 25 25 0 0 1 60 10 Z" fill="#0097e6" stroke="#00d2d3" stroke-width="1.5"/>
-                            <path d="M 50 80 L 50 10 A 25 25 0 0 1 75 25 Z" fill="#00a8ff" stroke="#00d2d3" stroke-width="1.5"/>
-                            <path d="M 50 80 L 85 40 A 25 25 0 0 0 60 15 Z" fill="#0097e6" stroke="#00d2d3" stroke-width="1.5"/>
-                            <circle cx="28" cy="32" r="4" fill="#ff9f43"/> <circle cx="28" cy="32" r="2" fill="#5f27cd"/>
-                            <circle cx="42" cy="20" r="4" fill="#ff9f43"/> <circle cx="42" cy="20" r="2" fill="#5f27cd"/>
-                            <circle cx="58" cy="20" r="4" fill="#ff9f43"/> <circle cx="58" cy="20" r="2" fill="#5f27cd"/>
-                            <circle cx="72" cy="32" r="4" fill="#ff9f43"/> <circle cx="72" cy="32" r="2" fill="#5f27cd"/>
-                            <path d="M 44 80 Q 40 55 45 45 Q 42 35 50 35 Q 58 35 55 45 Q 60 55 56 80 Z" fill="#5f27cd"/>
-                            <circle cx="50" cy="40" r="8" fill="#5f27cd"/>
-                            <polygon points="48,40 52,40 50,46" fill="#f1c40f"/>
-                            <circle cx="47" cy="38" r="1.5" fill="#fff"/>
-                            <circle cx="53" cy="38" r="1.5" fill="#fff"/>
-                            <line x1="50" y1="32" x2="50" y2="24" stroke="#5f27cd" stroke-width="2"/>
-                            <line x1="48" y1="33" x2="44" y2="26" stroke="#5f27cd" stroke-width="1.5"/>
-                            <line x1="52" y1="33" x2="56" y2="26" stroke="#5f27cd" stroke-width="1.5"/>
-                            <circle cx="50" cy="23" r="2" fill="#00d2d3"/>
-                            <circle cx="44" cy="25" r="1.5" fill="#00d2d3"/>
-                            <circle cx="56" cy="25" r="1.5" fill="#00d2d3"/>
+                        <svg viewBox="0 0 31 26" width="280" height="240" style="display: block; margin: 0 auto;">
+                            <rect x="14" y="2" width="3" height="1" class="t1"/>
+                            <rect x="11" y="3" width="9" height="1" class="t1"/>
+                            <rect x="9" y="4" width="13" height="1" class="t1"/>
+                            <rect x="8" y="5" width="15" height="1" class="t1"/>
+                            <rect x="7" y="6" width="17" height="1" class="t1"/>
+                            <rect x="6" y="7" width="19" height="1" class="t1"/>
+                            <rect x="5" y="8" width="21" height="1" class="b3"/>
+                            <rect x="5" y="9" width="21" height="1" class="b3"/>
+                            <rect x="5" y="10" width="21" height="1" class="b3"/>
+                            <rect x="5" y="11" width="21" height="1" class="b2"/>
+                            <rect x="6" y="12" width="19" height="1" class="b2"/>
+                            <rect x="7" y="13" width="17" height="1" class="b2"/>
+
+                            <rect x="15" y="3" width="1" height="1" class="t2"/>
+                            <rect x="12" y="4" width="1" height="1" class="t2"/>
+                            <rect x="18" y="4" width="1" height="1" class="t2"/>
+                            <rect x="10" y="5" width="1" height="1" class="t2"/>
+                            <rect x="20" y="5" width="1" height="1" class="t2"/>
+                            <rect x="9" y="7" width="1" height="1" class="t2"/>
+                            <rect x="21" y="7" width="1" height="1" class="t2"/>
+
+                            <rect x="14" y="4" width="3" height="2" class="g1"/>
+                            <rect x="15" y="5" width="1" height="1" class="b1"/>
+                            <rect x="10" y="6" width="3" height="2" class="g1"/>
+                            <rect x="11" y="7" width="1" height="1" class="b1"/>
+                            <rect x="18" y="6" width="3" height="2" class="g1"/>
+                            <rect x="19" y="7" width="1" height="1" class="b1"/>
+                            <rect x="7" y="9" width="3" height="2" class="g1"/>
+                            <rect x="8" y="10" width="1" height="1" class="b1"/>
+                            <rect x="21" y="9" width="3" height="2" class="g1"/>
+                            <rect x="22" y="10" width="1" height="1" class="b1"/>
+
+                            <rect x="14" y="9" width="3" height="11" class="b1"/>
+                            <rect x="13" y="11" width="5" height="7" class="b1"/>
+
+                            <rect x="14" y="11" width="1" height="1" class="w0"/>
+                            <rect x="16" y="11" width="1" height="1" class="w0"/>
+
+                            <rect x="15" y="12" width="1" height="2" class="g2"/>
+
+                            <rect x="14" y="20" width="1" height="1" class="t2"/>
+                            <rect x="16" y="20" width="1" height="1" class="t2"/>
                         </svg>
-                        <div id="peacock-bubble" style="color:white; background: #1abc9c; padding: 12px 20px; border-radius: 12px; margin-top: 10px; font-weight: bold; border: 2px solid #fff;">
+                        <div id="peacock-bubble" class="speech-bubble">
                             HAPPY BIRTHDAY APPA! 🦚
                         </div>
                     </div>
@@ -312,21 +433,25 @@
             <div id="video-panel" class="stage-panel">
                 <h3>[ EMBED YOUR CANVA PRESENTATION ]</h3>
                 <div class="canva-input-container">
-                    <input type="text" id="canva-url" placeholder="Paste your public Canva link here...">
+                    <input type="text" id="canva-url" placeholder="Paste your link here (If it layout blocks, use the button fallback below!)...">
                     <button class="action-btn" onclick="loadCanva()">LOAD LINK</button>
                 </div>
                 <div class="iframe-wrapper">
                     <div id="iframe-placeholder" class="placeholder-message">
                         <span style="font-size: 3rem;">📊</span>
-                        <p>Paste your link above to display the presentation deck frame window.</p>
+                        <p>If Canva blocks inside frame configurations due to privacy rules, click the fallback link below.</p>
                     </div>
                     <iframe id="canva-viewport" src="" allowfullscreen></iframe>
+                </div>
+                <div id="fallback-container" class="fallback-link-container">
+                    <p style="margin:0 0 10px 0; color:#e74c3c; font-weight:bold;">⚠️ Security Block Bypass Activated:</p>
+                    <a id="fallback-anchor" href="#" target="_blank">[ Open Connected Canva Presentation Project 🔗 ]</a>
                 </div>
             </div>
 
             <div id="game-panel" class="stage-panel">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3>[ CANDY CATCH: PRO RUN ]</h3>
+                    <h3>[ CANDY CATCH: BALANCED ARCADE RUN ]</h3>
                     <div style="font-size: 1.2rem; font-weight: bold; background: #0d2244; padding: 8px 15px; border-radius: 8px; border: 2px solid #f1c40f;">
                         Score: <span id="game-score">0</span>
                     </div>
@@ -343,25 +468,55 @@
         let candleLit = true;
         let confetti = [];
         let smoke = [];
+        let gameActive = false;
         
+        // Background decorative generator
+        function buildBalloons() {
+            const container = document.getElementById('balloons');
+            const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6'];
+            for(let i=0; i<15; i++) {
+                let node = document.createElement('div');
+                node.className = 'balloon';
+                node.style.left = Math.random() * 100 + '%';
+                node.style.background = colors[Math.floor(Math.random() * colors.length)];
+                node.style.animationDelay = Math.random() * 8 + 's';
+                container.appendChild(node);
+            }
+        }
+        buildBalloons();
+
+        /* UNBOX INTENSE ENGINE SHAKE ROUTINE */
+        function triggerPeacockShake(duration = 600) {
+            const body = document.getElementById('master-body');
+            body.classList.add('shake-active');
+            setTimeout(() => body.classList.remove('shake-active'), duration);
+        }
+
         /* PANEL SWITCHER */
         function startLevel(id, lvl) {
             document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
             document.getElementById(id).style.display = 'block';
             document.getElementById('side-level').innerText = "LEVEL " + lvl;
             
-            gameActive = false; // Gracefully shut down active game loop loops
+            gameActive = false; 
             if(id === 'cake-panel') initCake();
         }
 
         /* --- UNBOX ENGINE --- */
         function runGiftUnbox() {
-            document.getElementById('gift-lid').style.transform = 'translateY(-55px) rotate(-20deg)';
+            triggerPeacockShake(700);
+            document.getElementById('gift-lid').style.transform = 'translateY(-70px) rotate(-35deg)';
             document.getElementById('gift-lid').style.opacity = '0';
-            document.getElementById('peacock-container').style.display = 'flex';
+            
+            const reward = document.getElementById('peacock-container');
+            reward.classList.add('peacock-launch');
+            
+            setTimeout(() => {
+                document.getElementById('peacock-bubble').style.display = 'block';
+            }, 600);
         }
 
-        /* --- AUTOMATED CANVA SANITIZER ENGINE --- */
+        /* --- CANVA EMBED BYPASS SANITIZER --- */
         function loadCanva() {
             let inputUrl = document.getElementById('canva-url').value.trim();
             if(!inputUrl) {
@@ -370,16 +525,7 @@
             }
             
             let embedUrl = inputUrl;
-            
-            // Handle unique canva.link shorts or clean design layout views
-            if (embedUrl.includes("canva.link")) {
-                // If it's a short URL, we alert the format rule or process standard design matching
-                alert("If the link displays an error, please paste the full browser design URL or its shared 'Public View Link'.");
-            }
-            
-            // Clean up standard link types to force correct embedding parameters
             if (embedUrl.includes("/design/")) {
-                // Strip existing parameters
                 embedUrl = embedUrl.split('?')[0]; 
                 if (embedUrl.includes("/view")) {
                     embedUrl = embedUrl.replace("/view", "/view?embed");
@@ -394,6 +540,11 @@
             const view = document.getElementById('canva-viewport');
             view.src = embedUrl;
             view.style.display = 'block';
+
+            const fallbackBox = document.getElementById('fallback-container');
+            const fallbackLink = document.getElementById('fallback-anchor');
+            fallbackLink.href = inputUrl;
+            fallbackBox.style.display = 'block';
         }
 
         /* --- CAKE DRAW ENGINE --- */
@@ -438,12 +589,10 @@
             cCtx.clearRect(0,0,800,400);
             const cx = 400;
             
-            // Base tiers
             cCtx.fillStyle = '#0984e3'; cCtx.fillRect(cx-110, 310, 220, 60); 
             cCtx.fillStyle = '#e84393'; cCtx.fillRect(cx-80, 255, 160, 55);  
             cCtx.fillStyle = '#f39c12'; cCtx.fillRect(cx-55, 210, 110, 45);  
             
-            // Candle Base Setup
             cCtx.fillStyle = '#ffffff'; cCtx.fillRect(cx-4, 175, 8, 35);
             cCtx.fillStyle = '#2c3e50'; cCtx.fillRect(cx-1, 167, 2, 8); 
             
@@ -462,7 +611,6 @@
                 if(p.a <= 0) smoke.splice(i, 1);
             });
 
-            // Ambient Ceiling Drops (Rains purely from layout bounds)
             confetti.forEach((p, i) => {
                 p.x += p.vx; p.y += p.vy; p.vy += 0.12; 
                 p.rot += p.rotSpeed;
@@ -492,7 +640,6 @@
                     box.innerText = "BLOW! 💨";
                     candleLit = false;
                     
-                    // Rain down clean global screen boundaries confetti 
                     for(let i=0; i<160; i++) {
                         confetti.push({
                             x: Math.random() * cCanvas.width, 
@@ -510,19 +657,20 @@
             }, 700);
         }
 
-        /* --- RE-BALANCED SMOOTH CANDY GAME ENGINE --- */
+        /* --- ARCADE CANDY CATCH ENGINE --- */
         const gCanvas = document.getElementById('gameCanvas');
         const gCtx = gCanvas.getContext('2d');
-        let gameActive = false;
         let gameScore = 0;
         let playerX = 350;
-        let playerWidth = 100;
+        let playerWidth = 140; 
         let candyArray = [];
         let gameAnimationId;
-        
         let keys = {};
+        
         window.addEventListener('keydown', e => {
-            if(['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault();
+            if(gameActive && ['ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+            }
             keys[e.key] = true;
         });
         window.addEventListener('keyup', e => {
@@ -533,9 +681,9 @@
             gameActive = true;
             gameScore = 0;
             candyArray = [];
-            playerX = 350;
+            playerX = (gCanvas.width - playerWidth) / 2;
             document.getElementById('game-score').innerText = gameScore;
-            document.getElementById('start-game').innerText = "RESET GAME ENGINE";
+            document.getElementById('start-game').innerText = "RESET ENGINE";
             
             if(gameAnimationId) cancelAnimationFrame(gameAnimationId);
             runGameLoop();
@@ -546,33 +694,36 @@
 
             gCtx.clearRect(0,0, gCanvas.width, gCanvas.height);
 
-            // Snappy move response: Boosted velocity speed to 16px/frame so player is incredibly fast
-            if(keys['ArrowLeft'] && playerX > 0) playerX -= 16;
-            if(keys['ArrowRight'] && playerX < gCanvas.width - playerWidth) playerX += 16;
+            if(keys['ArrowLeft'] || keys['a'] || keys['A']) {
+                if(playerX > 0) playerX -= 12;
+            }
+            if(keys['ArrowRight'] || keys['d'] || keys['D']) {
+                if(playerX < gCanvas.width - playerWidth) playerX += 12;
+            }
 
-            // Render Tray / Basket
+            // Tray Design Setup
             gCtx.fillStyle = '#1abc9c';
             gCtx.fillRect(playerX, gCanvas.height - 35, playerWidth, 15);
             gCtx.fillStyle = '#16a085';
             gCtx.fillRect(playerX, gCanvas.height - 20, playerWidth, 5); 
 
-            // Spawn Control: Moderated down slightly so it's clean and playable
-            if(Math.random() < 0.05) { 
+            // Paced Spawner Rates
+            if(Math.random() < 0.025) { 
                 candyArray.push({
-                    x: Math.random() * (gCanvas.width - 30) + 15,
-                    y: -15,
-                    // Rebalanced drop velocity vector down to manageable 4.5px - 7.5px per frame range
-                    speed: (Math.random() * 3) + 4.5,
-                    color: `hsl(${Math.random() * 360}, 90%, 60%)`,
+                    x: Math.random() * (gCanvas.width - 60) + 30,
+                    y: -20,
+                    speed: (Math.random() * 2) + 3.2, 
+                    color: `hsl(${Math.random() * 360}, 95%, 60%)`,
                     radius: 12,
                     pulse: 0
                 });
             }
 
-            // Process Candies
-            candyArray.forEach((candy, idx) => {
+            // Handle active list configurations in reverse layout safely
+            for (let idx = candyArray.length - 1; idx >= 0; idx--) {
+                let candy = candyArray[idx];
                 candy.y += candy.speed;
-                candy.pulse += 0.15;
+                candy.pulse += 0.1;
 
                 gCtx.save();
                 gCtx.translate(candy.x, candy.y);
@@ -582,7 +733,6 @@
                 gCtx.arc(0, 0, candy.radius, 0, Math.PI * 2);
                 gCtx.fill();
                 
-                // Twist wrappers
                 gCtx.beginPath();
                 gCtx.moveTo(-candy.radius, 0);
                 gCtx.lineTo(-candy.radius - 8, -6 + Math.sin(candy.pulse)*2);
@@ -594,23 +744,25 @@
                 gCtx.moveTo(candy.radius, 0);
                 gCtx.lineTo(candy.radius + 8, -6 + Math.sin(candy.pulse)*2);
                 gCtx.lineTo(candy.radius + 8, 6 - Math.sin(candy.pulse)*2);
+                gCtx.closePath();
                 gCtx.fill();
                 
                 gCtx.restore();
 
-                // Accurate Platform Top Box Bounds Check Collision
+                // Target Catch Points
                 if(candy.y >= gCanvas.height - 45 && candy.y <= gCanvas.height - 15) {
                     if(candy.x >= playerX && candy.x <= playerX + playerWidth) {
                         gameScore += 10;
                         document.getElementById('game-score').innerText = gameScore;
                         candyArray.splice(idx, 1);
+                        continue;
                     }
                 }
 
-                if(candy.y > gCanvas.height + 20) {
+                if(candy.y > gCanvas.height + 30) {
                     candyArray.splice(idx, 1);
                 }
-            });
+            }
 
             gameAnimationId = requestAnimationFrame(runGameLoop);
         }
