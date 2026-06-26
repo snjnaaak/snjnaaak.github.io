@@ -97,7 +97,7 @@
             gap: 25px;
         }
 
-        /* --- TALL VERTICAL OPTIONS GRID (Length < Width) --- */
+        /* --- TALL VERTICAL OPTIONS GRID --- */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -119,7 +119,7 @@
             box-shadow: 0px 6px 0px #000;
             transition: all 0.2s ease-in-out;
             box-sizing: border-box;
-            aspect-ratio: 4 / 5; /* Forces vertical card shape */
+            aspect-ratio: 4 / 5;
             text-align: center;
         }
 
@@ -156,7 +156,7 @@
             padding: 30px;
             border-radius: 24px;
             position: relative;
-            min-height: 550px;
+            min-height: 580px;
             box-sizing: border-box;
         }
 
@@ -281,7 +281,6 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* SVG Crisp Pixel Styling Rules */
         .peacock-svg-container svg {
             shape-rendering: crispEdges;
             filter: drop-shadow(4px 6px 0px rgba(0,0,0,0.5));
@@ -298,7 +297,6 @@
         .w0 { fill: #ffffff; } 
         .n0 { fill: #020b18; }
 
-        /* Speech Bubble Below Peacock */
         .speech-bubble {
             display: none;
             background: #ffffff; color: #000; padding: 10px 18px;
@@ -310,85 +308,47 @@
             text-transform: uppercase;
         }
 
-        /* --- PRETTIER CAKE DESIGN --- */
-        .cake-artwork {
-            margin: 30px auto 10px auto;
-            position: relative;
-            height: 240px;
-            width: 240px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        .cake-tier {
-            border: 3px solid #fff;
-            border-radius: 8px 8px 3px 3px;
-            box-shadow: 4px 4px 0px #000;
-            position: relative;
-            overflow: hidden;
-        }
-        .tier-3 { width: 120px; height: 50px; background: #f39c12; z-index: 3; }
-        .tier-2 { width: 170px; height: 55px; background: #e84393; z-index: 2; margin-top: -3px; }
-        .tier-1 { width: 220px; height: 65px; background: #0984e3; z-index: 1; margin-top: -3px; }
-        
-        /* Frosting Ribbons & Drips */
-        .frosting-rim { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 14px; 
-            background: #fff; 
-            border-bottom: 3px dashed rgba(0,0,0,0.15);
-        }
-        
-        /* Decorative Pixel Sprinkles */
-        .sprinkles::before {
-            content: '';
-            position: absolute;
-            top: 18px; left: 15px; width: 6px; height: 4px; background: #e74c3c;
-            box-shadow: 25px 8px #ffd700, 50px -2px #2979ff, 75px 6px #00e676, 90px 2px #e84393, 35px 14px #fff;
+        /* --- CANVAS VIEWPANE LAYOUT TWEAKS --- */
+        .canvas-render-frame {
+            display: block;
+            background-color: #020813;
+            border: 3px solid #1abc9c;
+            margin: 15px auto;
+            border-radius: 16px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
 
-        /* Candle Anchored Correctly Touching Cake */
-        .candle-stick { 
-            width: 10px; height: 38px; 
-            background: linear-gradient(90deg, #e74c3c, #fff); 
-            border: 2px solid #fff; 
-            position: absolute; 
-            top: -36px; left: 50%; 
-            transform: translateX(-50%); 
-            z-index: 10; 
+        /* Expanded Game Area Dimensions */
+        .game-viewport-large {
+            width: 850px;
+            height: 440px;
         }
-        .candle-flame { 
-            width: 14px; height: 22px; 
-            background: linear-gradient(to bottom, #ffea00, #e74c3c); 
-            border-radius: 50% 50% 35% 35%; 
-            position: absolute; 
-            top: -57px; left: 50%; 
-            transform: translateX(-50%); 
-            box-shadow: 0 0 15px #ff9f43; 
-            animation: wiggle 0.5s infinite alternate; 
-            z-index: 11;
-            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-        }
-        @keyframes wiggle { 0% { transform: translateX(-50%) rotate(-3deg); } 100% { transform: translateX(-50%) rotate(4deg); } }
-        
+
         .countdown-display {
             font-size: 2rem;
             font-weight: bold;
             color: #e74c3c;
             text-align: center;
             height: 40px;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         /* --- VIDEO ELEMENT CONTAINER --- */
         .video-container-wrapper { margin: 20px auto 0 auto; width: 100%; min-height: 240px; }
         .canva-placeholder { border: 3px dashed #f1c40f; padding: 40px 20px; background: #09172e; text-align: center; border-radius: 24px; }
 
-        /* --- GAME ENGINE OVERLAYS --- */
-        .game-canvas-area { width: 100%; max-width: 380px; height: 260px; background-color: #020813; border: 3px solid #1abc9c; margin: 15px auto; position: relative; overflow: hidden; border-radius: 16px; }
-        #falling-item { position: absolute; top: -40px; left: 50%; font-size: 1.8rem; pointer-events: none; }
-        #player-basket { position: absolute; bottom: 10px; left: 160px; font-size: 2rem; user-select: none; }
-        .game-screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 10, 22, 0.95); align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+        .game-screen-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 10, 22, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            border-radius: 16px;
+            z-index: 20;
+        }
     </style>
 </head>
 <body>
@@ -531,56 +491,82 @@
             </div>
 
             <div id="cake-panel" class="stage-panel">
-                <h3 style="color: #1abc9c; text-transform: uppercase; margin: 0;">[ TARGET: EXTINGUISH LAYER CANDLE ]</h3>
-                <div class="cake-artwork">
-                    <div id="cake-flame" class="candle-flame"></div>
-                    <div class="candle-stick"></div>
-                    
-                    <div class="cake-tier tier-3 sprinkles"><div class="frosting-rim"></div></div>
-                    <div class="cake-tier tier-2 sprinkles"><div class="frosting-rim"></div></div>
-                    <div class="cake-tier tier-1 sprinkles"><div class="frosting-rim"></div></div>
+                <h3 style="color: #1abc9c; text-transform: uppercase; margin: 0;">[ TARGET: EXTINGUISH CANDLE & BLAST CONFETTI ]</h3>
+                <div style="position: relative; text-align: center;">
+                    <canvas id="cakeCanvas" width="500" height="340" class="canvas-render-frame"></canvas>
                 </div>
                 <div id="countdown-box" class="countdown-display"></div>
-                <button id="blow-trigger" class="action-btn" onclick="runCakeBlowCountdown()">BLOW CANDLE</button>
+                <div style="text-align: center;">
+                    <button id="blow-trigger" class="action-btn" onclick="runCakeBlowCountdown()">BLOW CANDLE</button>
+                </div>
             </div>
 
             <div id="video-panel" class="stage-panel">
                 <h3 style="color: #f1c40f; text-transform: uppercase; margin: 0;">[ LEVEL 3: TIMELINE MEMORIES ]</h3>
                 <div class="video-container-wrapper">
                     <div class="canva-placeholder">
-                        [ Paste your Canva Video Embed Code / Link Here Later ]
+                        <p>[ Your Embedded Canva workspace is active below ]</p>
+                        <a href="PASTE_YOUR_CANVA_LINK_HERE" target="_blank" style="color: #1abc9c; font-weight: bold; text-decoration: underline;">Open Connected Canva Presentation Project 🔗</a>
                     </div>
                 </div>
             </div>
 
             <div id="stats-panel" class="stage-panel">
                 <h3 style="color: #1abc9c; text-transform: uppercase; margin: 0;">[ LVL 4: CANDY CATCH ENGINE ]</h3>
-                <div class="game-canvas-area" id="canvas-game-box">
-                    <div id="falling-item">🍬</div>
-                    <div id="player-basket">🛒</div>
-
-                    <div id="win-screen" class="game-screen">
-                        <div style="color: #1abc9c; font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;">STAGE COMPLETED!<br>Promoted to the age of 46! 🎉</div>
+                <div style="position: relative; width: 850px; margin: 15px auto;">
+                    <canvas id="candyCanvas" width="850" height="440" class="canvas-render-frame"></canvas>
+                    
+                    <div id="win-screen" class="game-screen-overlay" style="display: none;">
+                        <div style="color: #1abc9c; font-size: 1.6rem; font-weight: bold; margin-bottom: 15px;">STAGE COMPLETED!<br>Promoted to the age of 46! 🎉</div>
                         <button class="action-btn" onclick="resetMiniGameState()">PLAY AGAIN</button>
                     </div>
-                    <div id="lose-screen" class="game-screen">
-                        <div style="color: #e74c3c; font-size: 1.4rem; font-weight: bold; margin-bottom: 15px;">MISSION FAILED!</div>
+                    <div id="lose-screen" class="game-screen-overlay" style="display: none;">
+                        <div style="color: #e74c3c; font-size: 1.6rem; font-weight: bold; margin-bottom: 15px;">MISSION FAILED!</div>
                         <button class="action-btn" onclick="initMiniGame()">TRY AGAIN</button>
                     </div>
                 </div>
-                <button id="start-game-btn" class="action-btn" onclick="initMiniGame()">START ENGINE</button>
+                <div style="text-align: center;">
+                    <button id="start-game-btn" class="action-btn" onclick="initMiniGame()">START ENGINE</button>
+                </div>
             </div>
 
         </main>
     </div>
 
     <script>
+        // --- CORE PERFORMANCE CONFIGS ---
         let score = 0, timeLeft = 15;
-        let gameInterval, timerInterval;
-        let itemX = 180, itemY = -40, basketX = 160;
-        let isDragging = false;
-        const candyPool = ['🍬', '🍭', '🍫', '🍩'];
+        let gameLoopInterval, gameTimerInterval;
+        let activePanelId = 'gift-panel';
 
+        // --- PEACOCK SCREEN SHAKE ENGINE ---
+        const PeacockShake = {
+            intensity: 0,
+            duration: 0,
+            offsetX: 0,
+            offsetY: 0,
+            trigger(intensity, duration) {
+                this.intensity = intensity;
+                this.duration = duration;
+            },
+            update() {
+                if (this.duration > 0) {
+                    this.offsetX = (Math.random() - 0.5) * this.intensity;
+                    this.offsetY = (Math.random() - 0.5) * this.intensity;
+                    this.duration--;
+                } else {
+                    this.offsetX = 0;
+                    this.offsetY = 0;
+                }
+                // Apply vibration matrices across active workspace nodes
+                const activePanel = document.getElementById(activePanelId);
+                if (activePanel) {
+                    activePanel.style.transform = `translate(${this.offsetX}px, ${this.offsetY}px)`;
+                }
+            }
+        };
+
+        // --- AMBIENT FLOATING BACKGROUNDS ---
         function initBalloons() {
             const room = document.getElementById('balloon-room');
             if (!room) return;
@@ -596,10 +582,15 @@
         }
         window.addEventListener('DOMContentLoaded', initBalloons);
 
+        // --- MAIN ROUTING LOGIC ---
         function startLevel(panelId, levelNum) {
-            document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
+            document.querySelectorAll('.stage-panel').forEach(p => {
+                p.style.display = 'none';
+                p.style.transform = 'none';
+            });
             stopGameLoops();
             
+            activePanelId = panelId;
             document.getElementById('sidebar-level-status').innerText = "LEVEL " + levelNum;
             const panel = document.getElementById(panelId);
             if (panel) {
@@ -614,14 +605,11 @@
                 document.getElementById('gift-instruction').innerText = "[ TARGET: OPEN THE MYSTERY BOX ]";
             }
             if (panelId === 'cake-panel') {
-                const flame = document.getElementById('cake-flame');
-                flame.style.display = 'block';
-                flame.style.opacity = '1';
-                flame.style.transform = 'translateX(-50%) scale(1)';
-                document.getElementById('countdown-box').innerText = "";
-                document.getElementById('blow-trigger').style.display = 'inline-block';
+                initCakeCanvas();
             }
-            if (panelId === 'stats-panel') { resetMiniGameState(); }
+            if (panelId === 'stats-panel') { 
+                resetMiniGameState(); 
+            }
         }
 
         function runGiftUnbox() {
@@ -630,6 +618,97 @@
             const peacock = document.getElementById('peacock-render');
             peacock.classList.add('peacock-launch');
             setTimeout(() => { document.getElementById('peacock-bubble').style.display = 'block'; }, 600);
+        }
+
+        // --- LEVEL 2: CAKE CANVAS ENGINE ENGINE CODE ---
+        const cakeCanvas = document.getElementById('cakeCanvas');
+        const cakeCtx = cakeCanvas.getContext('2d');
+        let cakeTimer = 0;
+        let candleLit = true;
+        let confettiParticles = [];
+        let smokeParticles = [];
+        let cakeAnimationId;
+
+        function initCakeCanvas() {
+            cancelAnimationFrame(cakeAnimationId);
+            candleLit = true;
+            confettiParticles = [];
+            smokeParticles = [];
+            document.getElementById('countdown-box').innerText = "";
+            document.getElementById('blow-trigger').style.display = 'inline-block';
+            runCakeLoop();
+        }
+
+        function runCakeLoop() {
+            cakeCtx.clearRect(0, 0, cakeCanvas.width, cakeCanvas.height);
+            PeacockShake.update();
+
+            const cX = cakeCanvas.width / 2;
+
+            // Render Cake Layers (Perfectly aligned horizontally around center)
+            // Tier 1 (Base)
+            cakeCtx.fillStyle = '#0984e3';
+            cakeCtx.fillRect(cX - 110, 250, 220, 65);
+            // Tier 2
+            cakeCtx.fillStyle = '#e84393';
+            cakeCtx.fillRect(cX - 85, 195, 170, 55);
+            // Tier 3
+            cakeCtx.fillStyle = '#f39c12';
+            cakeCtx.fillRect(cX - 60, 145, 120, 50);
+
+            // Render Frosting / Sprinkles Decorously
+            cakeCtx.fillStyle = '#ffffff';
+            cakeCtx.fillRect(cX - 110, 250, 220, 10);
+            cakeCtx.fillRect(cX - 85, 195, 170, 10);
+            cakeCtx.fillRect(cX - 60, 145, 120, 10);
+
+            // Aligned Candle Assembly Stick
+            cakeCtx.fillStyle = '#e74c3c';
+            cakeCtx.fillRect(cX - 5, 107, 10, 38);
+            cakeCtx.fillStyle = '#ffffff';
+            cakeCtx.fillRect(cX - 2, 107, 4, 38);
+
+            if (candleLit) {
+                // Flickering Flame Logic
+                cakeCtx.fillStyle = Math.random() > 0.5 ? '#ffea00' : '#e74c3c';
+                cakeCtx.beginPath();
+                cakeCtx.arc(cX, 92 + Math.sin(cakeTimer * 0.4) * 2, 8, 0, Math.PI * 2);
+                cakeCtx.fill();
+            } else {
+                // Continuous Structural Smoke System emitting on extinguished candle tip
+                if (Math.random() < 0.3) {
+                    smokeParticles.push({
+                        x: cX,
+                        y: 105,
+                        vx: (Math.random() - 0.5) * 1.2,
+                        vy: -Math.random() * 1.5 - 0.5,
+                        alpha: 0.7
+                    });
+                }
+            }
+
+            // Update & Process Smoke System
+            for (let i = smokeParticles.length - 1; i >= 0; i--) {
+                let p = smokeParticles[i];
+                p.x += p.vx; p.y += p.vy; p.alpha -= 0.007;
+                cakeCtx.fillStyle = `rgba(220, 220, 220, ${p.alpha})`;
+                cakeCtx.beginPath();
+                cakeCtx.arc(p.x, p.y, 5 + (0.7 - p.alpha) * 12, 0, Math.PI * 2);
+                cakeCtx.fill();
+                if (p.alpha <= 0) smokeParticles.splice(i, 1);
+            }
+
+            // Update & Process Splash Confetti System
+            for (let i = confettiParticles.length - 1; i >= 0; i--) {
+                let p = confettiParticles[i];
+                p.x += p.vx; p.y += p.vy; p.vy += p.gravity;
+                cakeCtx.fillStyle = p.color;
+                cakeCtx.fillRect(p.x, p.y, p.size, p.size);
+                if (p.y > cakeCanvas.height) confettiParticles.splice(i, 1);
+            }
+
+            cakeTimer++;
+            cakeAnimationId = requestAnimationFrame(runCakeLoop);
         }
 
         function runCakeBlowCountdown() {
@@ -643,91 +722,172 @@
                 if (count > 0) {
                     countdownBox.innerText = count;
                 } else if (count === 0) {
-                    countdownBox.innerText = "BLOW!";
-                    // Extinguish slowly over 1.5 seconds
-                    const flame = document.getElementById('cake-flame');
-                    flame.style.opacity = '0';
-                    flame.style.transform = 'translateX(-50%) scale(0)';
+                    countdownBox.innerText = "BLOW! 🎉";
+                    candleLit = false;
+
+                    // 1. Trigger High-Intensity Peacock Screen Shake Matrix Engine
+                    PeacockShake.trigger(20, 35);
+
+                    // 2. Explode Detailed Confetti Streamers
+                    for (let i = 0; i < 120; i++) {
+                        confettiParticles.push({
+                            x: cakeCanvas.width / 2,
+                            y: 105,
+                            vx: (Math.random() - 0.5) * 14,
+                            vy: (Math.random() - 1.8) * 10,
+                            color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+                            size: Math.random() * 6 + 4,
+                            gravity: 0.22
+                        });
+                    }
                     clearInterval(countInterval);
                 }
             }, 1000);
         }
 
-        // --- MINI GAME ENGINE ---
-        const canvasBox = document.getElementById('canvas-game-box');
-        const basketElement = document.getElementById('player-basket');
+        // --- LEVEL 4: EXPANDED CANDY CATCH HTML5 CANVAS ENGINE ---
+        const candyCanvas = document.getElementById('candyCanvas');
+        const candyCtx = candyCanvas.getContext('2d');
+        const candyPool = ['🍬', '🍭', '🍫', '🍩'];
+        
+        let candyBasket = { x: 385, y: 390, width: 90, height: 20 };
+        let activeCandies = [];
+        let canvasGameActive = false;
+        let isInputActive = false;
 
-        canvasBox.addEventListener('mousedown', (e) => { isDragging = true; handleInputMove(e); });
-        window.addEventListener('mouseup', () => { isDragging = false; });
-        canvasBox.addEventListener('mousemove', (e) => { if (isDragging) handleInputMove(e); });
-        canvasBox.addEventListener('touchstart', (e) => { isDragging = true; handleInputMove(e.touches[0]); });
-        window.addEventListener('touchend', () => { isDragging = false; });
-        canvasBox.addEventListener('touchmove', (e) => { if (isDragging) handleInputMove(e.touches[0]); });
+        // Initialize Canvas Interactions Inside the Box viewport Boundaries
+        candyCanvas.addEventListener('mousedown', (e) => { isInputActive = true; trackingInputMove(e); });
+        window.addEventListener('mouseup', () => { isInputActive = false; });
+        candyCanvas.addEventListener('mousemove', (e) => { if (isInputActive) trackingInputMove(e); });
+        candyCanvas.addEventListener('touchstart', (e) => { isInputActive = true; trackingInputMove(e.touches[0]); });
+        window.addEventListener('touchend', () => { isInputActive = false; });
+        candyCanvas.addEventListener('touchmove', (e) => { if (isInputActive) trackingInputMove(e.touches[0]); });
 
-        function handleInputMove(e) {
-            const rect = canvasBox.getBoundingClientRect();
-            let relX = e.clientX - rect.left - 25;
-            if (relX < 5) relX = 5;
-            if (relX > 325) relX = 325;
-            basketX = relX;
-            basketElement.style.left = basketX + "px";
+        function trackingInputMove(e) {
+            const rect = candyCanvas.getBoundingClientRect();
+            let relativeX = e.clientX - rect.left - (candyBasket.width / 2);
+            if (relativeX < 10) relativeX = 10;
+            if (relativeX > candyCanvas.width - candyBasket.width - 10) relativeX = candyCanvas.width - candyBasket.width - 10;
+            candyBasket.x = relativeX;
         }
 
-        function stopGameLoops() { clearInterval(gameInterval); clearInterval(timerInterval); }
+        function stopGameLoops() {
+            clearInterval(gameLoopInterval);
+            clearInterval(gameTimerInterval);
+            canvasGameActive = false;
+        }
 
         function resetMiniGameState() {
             stopGameLoops();
-            isDragging = false;
+            isInputActive = false;
             document.getElementById('start-game-btn').style.display = 'inline-block';
             document.getElementById('win-screen').style.display = 'none';
             document.getElementById('lose-screen').style.display = 'none';
             document.getElementById('sidebar-score-status').innerText = "0 CANDIES";
-            document.getElementById('falling-item').style.top = "-40px";
-            basketX = 160; basketElement.style.left = "160px";
+            
+            activeCandies = [];
+            candyBasket.x = (candyCanvas.width / 2) - (candyBasket.width / 2);
             score = 0; timeLeft = 15;
+            renderCandyInterfaceStatic();
+        }
+
+        function renderCandyInterfaceStatic() {
+            candyCtx.clearRect(0, 0, candyCanvas.width, candyCanvas.height);
+            // Draw Expanded Basket Frame
+            candyCtx.fillStyle = '#ff7675';
+            candyCtx.fillRect(candyBasket.x, candyBasket.y, candyBasket.width, candyBasket.height);
+            // Decorative line on basket
+            candyCtx.fillStyle = '#ffffff';
+            candyCtx.fillRect(candyBasket.x, candyBasket.y, candyBasket.width, 4);
         }
 
         function initMiniGame() {
             document.getElementById('start-game-btn').style.display = 'none';
             document.getElementById('win-screen').style.display = 'none';
             document.getElementById('lose-screen').style.display = 'none';
-            score = 0; timeLeft = 15; itemY = -40;
-            generateCandyDrop();
+            
+            score = 0; 
+            timeLeft = 15; 
+            activeCandies = [];
+            canvasGameActive = true;
+            generateNewCandyWave();
 
-            gameInterval = setInterval(() => {
-                itemY += 5;
-                document.getElementById('falling-item').style.top = itemY + "px";
-                if (itemY >= 200 && itemY <= 230) {
-                    if (itemX >= basketX - 20 && itemX <= basketX + 40) {
-                        score++;
-                        document.getElementById('sidebar-score-status').innerText = score + " CANDIES";
-                        if (score >= 5) { endGame(true); return; }
-                        generateCandyDrop();
+            // Core Engine Physics System Tick
+            gameLoopInterval = setInterval(() => {
+                candyCtx.clearRect(0, 0, candyCanvas.width, candyCanvas.height);
+                PeacockShake.update();
+
+                // Draw Basket
+                candyCtx.fillStyle = '#ff7675';
+                candyCtx.fillRect(candyBasket.x, candyBasket.y, candyBasket.width, candyBasket.height);
+                candyCtx.fillStyle = '#ffffff';
+                candyCtx.fillRect(candyBasket.x, candyBasket.y, candyBasket.width, 4);
+
+                // Process Candy Dropping Vectors
+                for (let i = activeCandies.length - 1; i >= 0; i--) {
+                    let c = activeCandies[i];
+                    c.y += c.speed;
+
+                    // Render Game Item
+                    candyCtx.font = "24px Arial";
+                    candyCtx.fillText(c.char, c.x, c.y);
+
+                    // Basket Intersection Detection Engine
+                    if (c.y >= candyBasket.y - 10 && c.y <= candyBasket.y + candyBasket.height) {
+                        if (c.x >= candyBasket.x - 15 && c.x <= candyBasket.x + candyBasket.width + 5) {
+                            score++;
+                            document.getElementById('sidebar-score-status').innerText = score + " CANDIES";
+                            
+                            // Trigger impact vibration through the Peacock Module
+                            PeacockShake.trigger(8, 8);
+
+                            activeCandies.splice(i, 1);
+                            generateNewCandyWave();
+                            
+                            if (score >= 5) { 
+                                triggerMatchEnd(true); 
+                                return; 
+                            }
+                            continue;
+                        }
+                    }
+
+                    // Recycle / Destroy missed objects
+                    if (c.y > candyCanvas.height + 20) {
+                        activeCandies.splice(i, 1);
+                        generateNewCandyWave();
                     }
                 }
-                if (itemY > 260) { generateCandyDrop(); }
             }, 30);
 
-            timerInterval = setInterval(() => {
+            // Timer Engine Tick
+            gameTimerInterval = setInterval(() => {
                 timeLeft--;
-                if (timeLeft <= 0 && score < 5) { endGame(false); }
+                if (timeLeft <= 0 && score < 5) { 
+                    triggerMatchEnd(false); 
+                }
             }, 1000);
         }
 
-        function generateCandyDrop() {
-            itemY = -40;
-            itemX = Math.floor(Math.random() * 300) + 10;
-            const itemElement = document.getElementById('falling-item');
-            itemElement.innerText = candyPool[Math.floor(Math.random() * candyPool.length)];
-            itemElement.style.left = itemX + "px";
-            itemElement.style.top = itemY + "px";
+        function generateNewCandyWave() {
+            if (activeCandies.length < 2) {
+                activeCandies.push({
+                    x: Math.floor(Math.random() * (candyCanvas.width - 60)) + 30,
+                    y: -30,
+                    speed: Math.random() * 3 + 4,
+                    char: candyPool[Math.floor(Math.random() * candyPool.length)]
+                });
+            }
         }
 
-        function endGame(isWin) {
+        function triggerMatchEnd(isWin) {
             stopGameLoops();
-            isDragging = false;
-            if (isWin) { document.getElementById('win-screen').style.display = 'flex'; }
-            else { document.getElementById('lose-screen').style.display = 'flex'; }
+            isInputActive = false;
+            if (isWin) { 
+                document.getElementById('win-screen').style.display = 'flex'; 
+            } else { 
+                document.getElementById('lose-screen').style.display = 'flex'; 
+            }
         }
     </script>
 </body>
