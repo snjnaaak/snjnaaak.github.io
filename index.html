@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday, Appa!</title>
     <style>
-        /* --- GLOBAL RETRO ENVIRONMENT --- */
+        /* --- GLOBAL ENVIRONMENT --- */
         body {
             font-family: 'Courier New', Courier, monospace;
             background-color: #030a16;
@@ -19,28 +19,34 @@
             overflow-x: hidden;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 10;
+        /* HARDWARE SCREEN SHAKE ENGINE */
+        @keyframes peacock-shake {
+            0% { transform: translate(3px, 3px) rotate(0deg); }
+            10% { transform: translate(-2px, -4px) rotate(-1.5deg); }
+            20% { transform: translate(-5px, 0px) rotate(1.5deg); }
+            30% { transform: translate(5px, 3px) rotate(0deg); }
+            40% { transform: translate(2px, -2px) rotate(1.5deg); }
+            50% { transform: translate(-2px, 4px) rotate(-1.5deg); }
+            60% { transform: translate(-5px, 2px) rotate(0deg); }
+            70% { transform: translate(5px, 2px) rotate(-1.5deg); }
+            80% { transform: translate(-2px, -2px) rotate(1.5deg); }
+            90% { transform: translate(2px, 4px) rotate(0deg); }
+            100% { transform: translate(2px, -4px) rotate(-1.5deg); }
         }
+        .shake-active { animation: peacock-shake 0.15s infinite; }
 
+        header { text-align: center; margin-bottom: 25px; }
         .bubble-heading {
             font-size: 3.5rem;
             font-family: 'Arial Black', Impact, sans-serif;
             text-transform: uppercase;
             font-weight: 900;
-            letter-spacing: 2px;
-            margin: 10px 0;
-            display: inline-block;
             background: linear-gradient(to bottom, #fff3a1 0%, #f1c40f 50%, #d4af37 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(4px 4px 0px #000);
         }
 
-        /* --- DASHBOARD LAYOUT ENGINE --- */
         .dashboard-container {
             display: flex;
             flex-direction: row;
@@ -49,22 +55,18 @@
             margin: 0 auto;
             width: 100%;
             flex: 1;
-            position: relative;
-            z-index: 10;
         }
 
-        /* Left Stats Panel Sidebar */
+        /* Left Sidebar */
         .sidebar-panel {
             width: 280px;
             background: #09172e;
             border: 3px solid #34495e;
             border-radius: 24px;
             padding: 20px;
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
         }
 
         .stat-box {
@@ -72,98 +74,55 @@
             border: 2px solid #1abc9c;
             border-radius: 12px;
             padding: 12px;
-            text-align: left;
         }
 
-        .stat-title {
-            font-size: 0.8rem;
-            color: #1abc9c;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+        .stat-title { font-size: 0.8rem; color: #1abc9c; text-transform: uppercase; font-weight: bold; }
+        .stat-value { font-size: 1.4rem; font-weight: bold; color: #fff; }
 
-        .stat-value {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #fff;
-        }
+        /* Workspace Area */
+        .main-content-flow { flex: 1; display: flex; flex-direction: column; gap: 25px; }
 
-        /* Main Workspace Content Area */
-        .main-content-flow {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        /* --- TALL VERTICAL OPTIONS GRID --- */
+        /* Navigation Grid */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
-            width: 100%;
         }
 
         .menu-card {
             background-color: #0c1f3d;
             border: 4px solid #f1c40f;
             border-radius: 24px;
-            padding: 30px 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
-            cursor: pointer;
-            box-shadow: 0px 6px 0px #000;
-            transition: all 0.2s ease-in-out;
-            box-sizing: border-box;
             aspect-ratio: 4 / 5;
-            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
         }
+        .menu-card:hover { transform: translateY(-5px); background: #122e5c; }
+        .card-icon { font-size: 3rem; margin-bottom: 10px; }
+        .card-title { font-weight: bold; text-transform: uppercase; font-size: 1rem; text-align: center; }
+        .level-tag { color: #f1c40f; font-size: 0.8rem; margin-top: auto; }
 
-        .menu-card:hover {
-            background-color: #122e5c;
-            transform: translateY(-3px);
-            box-shadow: 0px 9px 0px #000;
-        }
-
-        .menu-card:active {
-            transform: translateY(3px);
-            box-shadow: 0px 3px 0px #000;
-        }
-
-        .card-icon { font-size: 3rem; }
-        
-        .card-text-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-        }
-
-        .card-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; color: #fff; }
-        .level-tag { font-size: 0.8rem; color: #f1c40f; letter-spacing: 1px; font-weight: bold; }
-
-        /* --- ACTIVE DISPLAY PANELS --- */
+        /* Active Display Windows */
         .stage-panel {
             display: none;
             background-color: #061329;
             border: 4px solid #fff;
-            box-shadow: 10px 10px 0px #000;
             padding: 30px;
             border-radius: 24px;
-            position: relative;
             min-height: 580px;
-            box-sizing: border-box;
+            position: relative;
         }
 
-        .animate-pop { animation: pixelPop 0.25s forwards; }
-        @keyframes pixelPop {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+        .canvas-render-frame {
+            display: block;
+            background-color: #020813;
+            border: 3px solid #1abc9c;
+            margin: 15px auto;
+            border-radius: 16px;
         }
 
         .action-btn {
@@ -173,194 +132,82 @@
             padding: 12px 28px;
             font-size: 1rem;
             font-weight: bold;
-            text-transform: uppercase;
             cursor: pointer;
-            box-shadow: 4px 4px 0px #000;
-            margin-top: 20px;
             border-radius: 12px;
             font-family: inherit;
+            box-shadow: 4px 4px 0px #000;
         }
         .action-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #000;
+            box-shadow: 1px 1px 0px #000;
+            transform: translate(3px, 3px);
         }
 
-        /* --- BACKGROUND BALLOON ENGINE --- */
-        .balloon-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
+        /* Canva Utility Bar */
+        .canva-input-container {
+            background: #09172e;
+            border: 3px dashed #f1c40f;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .canva-input-container input {
+            width: 75%;
+            padding: 14px;
+            background: #030a16;
+            border: 2px solid #1abc9c;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            margin-right: 10px;
+            border-radius: 8px;
+        }
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: #020813;
+            border-radius: 12px;
+            border: 2px solid #34495e;
             overflow: hidden;
         }
-        .balloon {
-            position: absolute;
-            bottom: -150px;
-            width: 40px;
-            height: 52px;
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            opacity: 0.13;
-            animation: floatUp 14s linear infinite;
+        #canva-viewport {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
         }
-        @keyframes floatUp {
-            0% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-50vh) translateX(20px); }
-            100% { transform: translateY(-120vh) translateX(-10px); }
+        .placeholder-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #57606f;
+            text-align: center;
         }
 
-        /* --- MYSTERY BOX & SVG PEACOCK CONTAINER --- */
-        .gift-box-wrapper { 
-            position: relative; 
-            height: 480px; 
-            margin-top: 20px; 
+        /* Mystery Box Elements */
+        .gift-box-wrapper {
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .pixel-gift-container {
-            width: 120px;
-            height: 120px;
-            position: relative;
-            cursor: pointer;
-            margin-bottom: 10px;
-            z-index: 12;
-        }
-
-        .gift-base {
-            width: 100px;
-            height: 85px;
-            background: #e74c3c;
-            border: 4px solid #fff;
-            position: absolute;
-            bottom: 0;
-            left: 10px;
-            box-shadow: inset -12px 0px 0px rgba(0,0,0,0.2), 4px 4px 0px #000;
-        }
-
-        .gift-base::before, .gift-lid::before {
-            content: ''; position: absolute; top: 0; left: 38px;
-            width: 20px; height: 100%; background: #f1c40f;
-            border-left: 4px solid #fff; border-right: 4px solid #fff;
-        }
-
-        .gift-lid {
-            width: 120px;
-            height: 28px;
-            background: #e74c3c;
-            border: 4px solid #fff;
-            position: absolute;
-            top: 4px;
-            left: 0;
-            box-shadow: inset -12px 0px 0px rgba(0,0,0,0.2), 4px 4px 0px #000;
-            z-index: 14;
-        }
-
-        .lid-exploded {
-            animation: lidFlyOff 0.6s ease-out forwards;
-        }
-        @keyframes lidFlyOff {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-140px) translateX(-120px) rotate(-70deg); opacity: 0; }
-        }
-
-        .peacock-svg-container {
-            display: none;
-            margin-bottom: 20px;
-            z-index: 11;
-        }
-
-        .peacock-launch {
-            display: block;
-            animation: majesticReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
-        }
-
-        @keyframes majesticReveal {
-            0% { transform: scale(0.3); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .peacock-svg-container svg {
-            shape-rendering: crispEdges;
-            filter: drop-shadow(4px 6px 0px rgba(0,0,0,0.5));
-        }
-
-        .t1 { fill: #006666; } 
-        .t2 { fill: #00bfa5; } 
-        .t3 { fill: #00e676; } 
-        .b1 { fill: #002266; } 
-        .b2 { fill: #053594; } 
-        .b3 { fill: #2979ff; } 
-        .g1 { fill: #d4af37; } 
-        .g2 { fill: #ffd700; } 
-        .w0 { fill: #ffffff; } 
-        .n0 { fill: #020b18; }
-
-        .speech-bubble {
-            display: none;
-            background: #ffffff; color: #000; padding: 10px 18px;
-            font-weight: bold; font-size: 1.1rem; border: 3px solid #000;
-            box-shadow: 4px 4px 0px #1abc9c; border-radius: 12px;
-            white-space: nowrap;
-            z-index: 15;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        /* --- CANVAS VIEWPANE LAYOUT TWEAKS --- */
-        .canvas-render-frame {
-            display: block;
-            background-color: #020813;
-            border: 3px solid #1abc9c;
-            margin: 15px auto;
-            border-radius: 16px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-        }
-
-        /* Expanded Game Area Dimensions */
-        .game-viewport-large {
-            width: 850px;
-            height: 440px;
-        }
-
-        .countdown-display {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #e74c3c;
-            text-align: center;
-            height: 40px;
-            margin-top: 10px;
-        }
-
-        /* --- VIDEO ELEMENT CONTAINER --- */
-        .video-container-wrapper { margin: 20px auto 0 auto; width: 100%; min-height: 240px; }
-        .canva-placeholder { border: 3px dashed #f1c40f; padding: 40px 20px; background: #09172e; text-align: center; border-radius: 24px; }
-
-        .game-screen-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 10, 22, 0.95);
-            display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            border-radius: 16px;
-            z-index: 20;
+            margin-top: 40px;
+        }
+        .pixel-gift-container {
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .gift-lid {
+            transition: all 0.4s ease-out;
         }
     </style>
 </head>
-<body>
+<body id="master-body">
 
-    <div class="balloon-container" id="balloon-room"></div>
-
-    <header>
-        <span class="bubble-heading">Happy Birthday Appa</span>
-    </header>
+    <header><span class="bubble-heading">Happy Birthday Appa</span></header>
 
     <div class="dashboard-container">
-        
         <aside class="sidebar-panel">
             <div class="stat-box">
                 <div class="stat-title">Current User</div>
@@ -368,526 +215,381 @@
             </div>
             <div class="stat-box">
                 <div class="stat-title">Current Level</div>
-                <div class="stat-value" id="sidebar-level-status">LEVEL 1</div>
+                <div class="stat-value" id="side-level">LEVEL 1</div>
             </div>
             <div class="stat-box">
-                <div class="stat-title">Game Performance</div>
-                <div class="stat-value" id="sidebar-score-status">0 CANDIES</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-title">System Status</div>
-                <div class="stat-value" style="color: #1abc9c; font-size: 1rem;">READY TO PARTY</div>
+                <div class="stat-title">System Monitoring</div>
+                <div style="color: #1abc9c; font-size: 0.8rem; line-height: 1.4;">
+                    [OK] GEYSER OFF<br>
+                    [OK] MAIN GATE LOCKED<br>
+                    [OK] AC TURNED OFF
+                </div>
             </div>
         </aside>
 
         <main class="main-content-flow">
-            
             <div class="grid-container">
                 <div class="menu-card" onclick="startLevel('gift-panel', 1)">
                     <div class="card-icon">🎁</div>
-                    <div class="card-text-wrapper">
-                        <div class="card-title">Mystery Box</div>
-                        <span class="level-tag">[ LVL 1 ]</span>
-                    </div>
+                    <div class="card-title">Mystery Box</div>
+                    <span class="level-tag">[ LVL 1 ]</span>
                 </div>
                 <div class="menu-card" onclick="startLevel('cake-panel', 2)">
                     <div class="card-icon">🎂</div>
-                    <div class="card-text-wrapper">
-                        <div class="card-title">Cake Blast</div>
-                        <span class="level-tag">[ LVL 2 ]</span>
-                    </div>
+                    <div class="card-title">Cake Blast</div>
+                    <span class="level-tag">[ LVL 2 ]</span>
                 </div>
                 <div class="menu-card" onclick="startLevel('video-panel', 3)">
                     <div class="card-icon">🎬</div>
-                    <div class="card-text-wrapper">
-                        <div class="card-title">Special Film</div>
-                        <span class="level-tag">[ LVL 3 ]</span>
-                    </div>
+                    <div class="card-title">Special Presentation</div>
+                    <span class="level-tag">[ LVL 3 ]</span>
                 </div>
-                <div class="menu-card" onclick="startLevel('stats-panel', 4)">
+                <div class="menu-card" onclick="startLevel('game-panel', 4)">
                     <div class="card-icon">🎮</div>
-                    <div class="card-text-wrapper">
-                        <div class="card-title">Candy Rush</div>
-                        <span class="level-tag">[ LVL 4 ]</span>
-                    </div>
+                    <div class="card-title">Candy Catch Pro</div>
+                    <span class="level-tag">[ LVL 4 ]</span>
                 </div>
             </div>
 
             <div id="gift-panel" class="stage-panel">
-                <h3 id="gift-instruction" style="color: #f1c40f; text-transform: uppercase; margin: 0;">[ TARGET: OPEN THE MYSTERY BOX ]</h3>
+                <h3>[ TARGET: OPEN THE MYSTERY BOX ]</h3>
                 <div class="gift-box-wrapper">
-                    
-                    <div id="peacock-render" class="peacock-svg-container">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 26" width="280" height="240">
-                            <rect x="14" y="2" width="3" height="1" class="t1"/>
-                            <rect x="13" y="3" width="5" height="1" class="t2"/>
-                            <rect x="12" y="4" width="7" height="1" class="t3"/>
-                            <rect x="14" y="4" width="3" height="1" class="g2"/>
-                            <rect x="15" y="4" width="1" height="1" class="b2"/>
-                            
-                            <rect x="8" y="4" width="3" height="1" class="t1"/>
-                            <rect x="7" y="5" width="5" height="1" class="t2"/>
-                            <rect x="20" y="4" width="3" height="1" class="t1"/>
-                            <rect x="19" y="5" width="5" height="1" class="t2"/>
-                            
-                            <rect x="6" y="6" width="7" height="1" class="t3"/>
-                            <rect x="8" y="6" width="3" height="1" class="g2"/>
-                            <rect x="9" y="6" width="1" height="1" class="b2"/>
-                            <rect x="18" y="6" width="7" height="1" class="t3"/>
-                            <rect x="20" y="6" width="3" height="1" class="g2"/>
-                            <rect x="21" y="6" width="1" height="1" class="b2"/>
-                            
-                            <rect x="3" y="7" width="3" height="1" class="t1"/>
-                            <rect x="2" y="8" width="5" height="1" class="t2"/>
-                            <rect x="1" y="9" width="7" height="1" class="t3"/>
-                            <rect x="3" y="9" width="3" height="1" class="g2"/>
-                            <rect x="4" y="9" width="1" height="1" class="b2"/>
-                            
-                            <rect x="25" y="7" width="3" height="1" class="t1"/>
-                            <rect x="24" y="8" width="5" height="1" class="t2"/>
-                            <rect x="23" y="9" width="7" height="1" class="t3"/>
-                            <rect x="25" y="9" width="3" height="1" class="g2"/>
-                            <rect x="26" y="9" width="1" height="1" class="b2"/>
-                            
-                            <rect x="1" y="10" width="29" height="1" class="t2"/>
-                            <rect x="0" y="11" width="31" height="1" class="t3"/>
-                            <rect x="2" y="11" width="3" height="1" class="g2"/> <rect x="3" y="11" width="1" height="1" class="b2"/>
-                            <rect x="26" y="11" width="3" height="1" class="g2"/> <rect x="27" y="11" width="1" height="1" class="b2"/>
-                            
-                            <rect x="0" y="12" width="31" height="1" class="t1"/>
-                            <rect x="1" y="13" width="29" height="1" class="t2"/>
-                            
-                            <rect x="13" y="7" width="1" height="1" class="b3"/>
-                            <rect x="15" y="6" width="1" height="1" class="b3"/>
-                            <rect x="17" y="7" width="1" height="1" class="b3"/>
-                            <rect x="14" y="8" width="3" height="1" class="b1"/>
-                            <rect x="14" y="9" width="4" height="1" class="b2"/>
-                            <rect x="14" y="10" width="2" height="1" class="b2"/> 
-                            <rect x="16" y="10" width="2" height="1" class="w0"/> 
-                            <rect x="16" y="10" width="1" height="1" class="n0"/> 
-                            <rect x="18" y="10" width="2" height="1" class="g2"/> 
-                            <rect x="14" y="11" width="4" height="1" class="b2"/>
-                            <rect x="14" y="12" width="3" height="1" class="b2"/>
-                            <rect x="13" y="13" width="5" height="1" class="b2"/>
-                            <rect x="12" y="14" width="7" height="1" class="b2"/>
-                            <rect x="12" y="15" width="7" height="1" class="b3"/> 
-                            <rect x="13" y="16" width="5" height="1" class="b2"/>
-                            <rect x="14" y="17" width="3" height="1" class="b1"/>
-                            
-                            <rect x="14" y="18" width="1" height="3" class="g1"/>
-                            <rect x="16" y="18" width="1" height="3" class="g1"/>
-                            <rect x="13" y="21" width="2" height="1" class="g2"/>
-                            <rect x="16" y="21" width="2" height="1" class="g2"/>
-                        </svg>
+                    <div id="peacock-bubble" style="display:none; color:white; background: #1abc9c; padding: 15px 25px; border-radius: 12px; margin-bottom: 20px; font-weight: bold; border: 2px solid #fff;">
+                        HAPPY BIRTHDAY APPA! 🦚
                     </div>
-
-                    <div id="peacock-bubble" class="speech-bubble">HAPPY BIRTHDAY TO YOU, APPA! 🦚</div>
-                    
-                    <div id="clickable-box" class="pixel-gift-container" onclick="runGiftUnbox()">
-                        <div id="gift-lid-element" class="gift-lid"></div>
-                        <div class="gift-base"></div>
+                    <div class="pixel-gift-container" onclick="runGiftUnbox()">
+                        <div id="gift-lid" class="gift-lid" style="width:130px; height:24px; background:#e74c3c; border:3px solid white; border-radius: 4px;"></div>
+                        <div style="width:110px; height:90px; background:#c0392b; border:3px solid white; margin-left:10px; border-top: none; border-radius: 0 0 4px 4px;"></div>
                     </div>
                 </div>
             </div>
 
             <div id="cake-panel" class="stage-panel">
-                <h3 style="color: #1abc9c; text-transform: uppercase; margin: 0;">[ TARGET: EXTINGUISH CANDLE & BLAST CONFETTI ]</h3>
-                <div style="position: relative; text-align: center;">
-                    <canvas id="cakeCanvas" width="500" height="340" class="canvas-render-frame"></canvas>
-                </div>
-                <div id="countdown-box" class="countdown-display"></div>
-                <div style="text-align: center;">
-                    <button id="blow-trigger" class="action-btn" onclick="runCakeBlowCountdown()">BLOW CANDLE</button>
-                </div>
+                <h3 style="color: #1abc9c; text-transform: uppercase;">[ BLOW OUT THE CANDLE ]</h3>
+                <canvas id="cakeCanvas" width="800" height="400" class="canvas-render-frame"></canvas>
+                <div id="countdown-box" style="text-align:center; font-size: 2.5rem; font-weight: bold; height: 50px; margin-bottom: 10px; color: #f1c40f;"></div>
+                <div style="text-align: center;"><button id="blow-btn" class="action-btn" onclick="runCakeBlow()">BLOW CANDLE</button></div>
             </div>
 
             <div id="video-panel" class="stage-panel">
-                <h3 style="color: #f1c40f; text-transform: uppercase; margin: 0;">[ LEVEL 3: TIMELINE MEMORIES ]</h3>
-                <div class="video-container-wrapper">
-                    <div class="canva-placeholder">
-                        <p>[ Your Embedded Canva workspace is active below ]</p>
-                        <a href="PASTE_YOUR_CANVA_LINK_HERE" target="_blank" style="color: #1abc9c; font-weight: bold; text-decoration: underline;">Open Connected Canva Presentation Project 🔗</a>
+                <h3>[ EMBED YOUR CANVA PRESENTATION ]</h3>
+                <div class="canva-input-container">
+                    <input type="text" id="canva-url" placeholder="Paste your Canva presentation link here (e.g., https://www.canva.com/design/...)">
+                    <button class="action-btn" onclick="loadCanva()">LOAD LINK</button>
+                </div>
+                <div class="iframe-wrapper">
+                    <div id="iframe-placeholder" class="placeholder-message">
+                        <span style="font-size: 3rem;">📊</span>
+                        <p>Paste your presentation URL above to reveal this slide frame window.</p>
                     </div>
+                    <iframe id="canva-viewport" src="" allowfullscreen></iframe>
                 </div>
             </div>
 
-            <div id="stats-panel" class="stage-panel">
-                <h3 style="color: #1abc9c; text-transform: uppercase; margin: 0;">[ LVL 4: CANDY CATCH ENGINE ]</h3>
-                <div style="position: relative; width: 850px; margin: 15px auto;">
-                    <canvas id="candyCanvas" width="850" height="440" class="canvas-render-frame"></canvas>
-                    
-                    <div id="win-screen" class="game-screen-overlay" style="display: none;">
-                        <div style="color: #1abc9c; font-size: 1.6rem; font-weight: bold; margin-bottom: 15px;">STAGE COMPLETED!<br>Promoted to the age of 46! 🎉</div>
-                        <button class="action-btn" onclick="resetMiniGameState()">PLAY AGAIN</button>
-                    </div>
-                    <div id="lose-screen" class="game-screen-overlay" style="display: none;">
-                        <div style="color: #e74c3c; font-size: 1.6rem; font-weight: bold; margin-bottom: 15px;">MISSION FAILED!</div>
-                        <button class="action-btn" onclick="initMiniGame()">TRY AGAIN</button>
+            <div id="game-panel" class="stage-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3>[ CANDY CATCH: SPEED RUN ]</h3>
+                    <div style="font-size: 1.2rem; font-weight: bold; background: #0d2244; padding: 8px 15px; border-radius: 8px; border: 2px solid #f1c40f;">
+                        Score: <span id="game-score">0</span>
                     </div>
                 </div>
+                <canvas id="gameCanvas" width="800" height="400" class="canvas-render-frame"></canvas>
                 <div style="text-align: center;">
-                    <button id="start-game-btn" class="action-btn" onclick="initMiniGame()">START ENGINE</button>
+                    <button id="start-game" class="action-btn" onclick="initGame()">START SPEED RUN</button>
                 </div>
             </div>
-
         </main>
     </div>
 
     <script>
-        // --- CORE PERFORMANCE CONFIGS ---
-        let score = 0, timeLeft = 15;
-        let gameLoopInterval, gameTimerInterval;
-        let activePanelId = 'gift-panel';
-
-        // --- PEACOCK SCREEN SHAKE ENGINE ---
-        const PeacockShake = {
-            intensity: 0,
-            duration: 0,
-            offsetX: 0,
-            offsetY: 0,
-            trigger(intensity, duration) {
-                this.intensity = intensity;
-                this.duration = duration;
-            },
-            update() {
-                if (this.duration > 0) {
-                    this.offsetX = (Math.random() - 0.5) * this.intensity;
-                    this.offsetY = (Math.random() - 0.5) * this.intensity;
-                    this.duration--;
-                } else {
-                    this.offsetX = 0;
-                    this.offsetY = 0;
-                }
-                // Apply vibration matrices across active workspace nodes
-                const activePanel = document.getElementById(activePanelId);
-                if (activePanel) {
-                    activePanel.style.transform = `translate(${this.offsetX}px, ${this.offsetY}px)`;
-                }
-            }
-        };
-
-        // --- AMBIENT FLOATING BACKGROUNDS ---
-        function initBalloons() {
-            const room = document.getElementById('balloon-room');
-            if (!room) return;
-            const colors = ['#e74c3c', '#1abc9c', '#f1c40f', '#3498db'];
-            for(let i=0; i<12; i++) {
-                const b = document.createElement('div');
-                b.className = 'balloon';
-                b.style.left = Math.random() * 95 + '%';
-                b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                b.style.animationDelay = (Math.random() * 6) + 's';
-                room.appendChild(b);
-            }
-        }
-        window.addEventListener('DOMContentLoaded', initBalloons);
-
-        // --- MAIN ROUTING LOGIC ---
-        function startLevel(panelId, levelNum) {
-            document.querySelectorAll('.stage-panel').forEach(p => {
-                p.style.display = 'none';
-                p.style.transform = 'none';
-            });
-            stopGameLoops();
-            
-            activePanelId = panelId;
-            document.getElementById('sidebar-level-status').innerText = "LEVEL " + levelNum;
-            const panel = document.getElementById(panelId);
-            if (panel) {
-                panel.style.display = 'block';
-                panel.classList.add('animate-pop');
-            }
-
-            if (panelId === 'gift-panel') {
-                document.getElementById('gift-lid-element').classList.remove('lid-exploded');
-                document.getElementById('peacock-render').classList.remove('peacock-launch');
-                document.getElementById('peacock-bubble').style.display = 'none';
-                document.getElementById('gift-instruction').innerText = "[ TARGET: OPEN THE MYSTERY BOX ]";
-            }
-            if (panelId === 'cake-panel') {
-                initCakeCanvas();
-            }
-            if (panelId === 'stats-panel') { 
-                resetMiniGameState(); 
-            }
-        }
-
-        function runGiftUnbox() {
-            document.getElementById('gift-instruction').innerText = "STAGE COMPLETE! ✔️";
-            document.getElementById('gift-lid-element').classList.add('lid-exploded');
-            const peacock = document.getElementById('peacock-render');
-            peacock.classList.add('peacock-launch');
-            setTimeout(() => { document.getElementById('peacock-bubble').style.display = 'block'; }, 600);
-        }
-
-        // --- LEVEL 2: CAKE CANVAS ENGINE ENGINE CODE ---
-        const cakeCanvas = document.getElementById('cakeCanvas');
-        const cakeCtx = cakeCanvas.getContext('2d');
-        let cakeTimer = 0;
         let candleLit = true;
-        let confettiParticles = [];
-        let smokeParticles = [];
+        let confetti = [];
+        let smoke = [];
+        
+        /* SHAKE ENGINE */
+        function triggerPeacockShake(duration = 500) {
+            const body = document.getElementById('master-body');
+            body.classList.add('shake-active');
+            setTimeout(() => body.classList.remove('shake-active'), duration);
+        }
+
+        /* PANEL SWITCHER */
+        function startLevel(id, lvl) {
+            document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            document.getElementById('side-level').innerText = "LEVEL " + lvl;
+            
+            // Kill side loops if walking away
+            gameActive = false;
+            
+            if(id === 'cake-panel') initCake();
+        }
+
+        /* --- UNBOX ENGINE --- */
+        function runGiftUnbox() {
+            triggerPeacockShake(400);
+            document.getElementById('gift-lid').style.transform = 'translateY(-60px) rotate(-25deg)';
+            document.getElementById('gift-lid').style.opacity = '0.5';
+            document.getElementById('peacock-bubble').style.display = 'inline-block';
+        }
+
+        /* --- CANVA INTERFACE LOADER --- */
+        function loadCanva() {
+            let url = document.getElementById('canva-url').value.trim();
+            if(!url) {
+                alert("Please paste a valid Canva presentation link!");
+                return;
+            }
+            
+            // Normalize share links into pure functional embed frames
+            let embedUrl = url;
+            if(embedUrl.includes('/view')) {
+                if(!embedUrl.includes('?embed')) {
+                    embedUrl = embedUrl.replace('/view', '/view?embed');
+                }
+            } else if (!embedUrl.includes('embed')) {
+                alert("If presentation layout loads blank, make sure you are copying the 'Public View Link' from Canva's share option menu!");
+            }
+            
+            document.getElementById('iframe-placeholder').style.display = 'none';
+            const view = document.getElementById('canva-viewport');
+            view.src = embedUrl;
+            view.style.display = 'block';
+        }
+
+        /* --- CAKE DRAW ENGINE --- */
+        const cCanvas = document.getElementById('cakeCanvas');
+        const cCtx = cCanvas.getContext('2d');
         let cakeAnimationId;
 
-        function initCakeCanvas() {
-            cancelAnimationFrame(cakeAnimationId);
+        function initCake() {
             candleLit = true;
-            confettiParticles = [];
-            smokeParticles = [];
+            confetti = [];
+            smoke = [];
+            document.getElementById('blow-btn').style.display = 'inline-block';
             document.getElementById('countdown-box').innerText = "";
-            document.getElementById('blow-trigger').style.display = 'inline-block';
-            runCakeLoop();
+            if(cakeAnimationId) cancelAnimationFrame(cakeAnimationId);
+            drawCakeLoop();
         }
 
-        function runCakeLoop() {
-            cakeCtx.clearRect(0, 0, cakeCanvas.width, cakeCanvas.height);
-            PeacockShake.update();
+        function drawFlame(ctx, x, y, size) {
+            if (!candleLit) return;
+            ctx.save();
+            
+            // Subtle high-frequency vibration for fire physics
+            let flickerX = (Math.random() - 0.5) * 3;
+            let flickerY = Math.random() * 4;
+            
+            ctx.beginPath();
+            // Start at sharp teardrop top point
+            ctx.moveTo(x + flickerX, y - size - flickerY);
+            // Left flank curves down beautifully
+            ctx.bezierCurveTo(x - size * 1.5, y - size, x - size, y + size, x, y + size);
+            // Right flank curves back to peak
+            ctx.bezierCurveTo(x + size, y + size, x + size * 1.5, y - size, x + flickerX, y - size - flickerY);
+            ctx.closePath();
+            
+            let grad = ctx.createRadialGradient(x, y + size/2, 2, x, y, size * 1.5);
+            grad.addColorStop(0, '#ffffff');
+            grad.addColorStop(0.2, '#fff3a1');
+            grad.addColorStop(0.5, '#f1c40f');
+            grad.addColorStop(1, 'rgba(231, 76, 60, 0)');
+            
+            ctx.fillStyle = grad;
+            ctx.fill();
+            ctx.restore();
+        }
 
-            const cX = cakeCanvas.width / 2;
-
-            // Render Cake Layers (Perfectly aligned horizontally around center)
-            // Tier 1 (Base)
-            cakeCtx.fillStyle = '#0984e3';
-            cakeCtx.fillRect(cX - 110, 250, 220, 65);
-            // Tier 2
-            cakeCtx.fillStyle = '#e84393';
-            cakeCtx.fillRect(cX - 85, 195, 170, 55);
-            // Tier 3
-            cakeCtx.fillStyle = '#f39c12';
-            cakeCtx.fillRect(cX - 60, 145, 120, 50);
-
-            // Render Frosting / Sprinkles Decorously
-            cakeCtx.fillStyle = '#ffffff';
-            cakeCtx.fillRect(cX - 110, 250, 220, 10);
-            cakeCtx.fillRect(cX - 85, 195, 170, 10);
-            cakeCtx.fillRect(cX - 60, 145, 120, 10);
-
-            // Aligned Candle Assembly Stick
-            cakeCtx.fillStyle = '#e74c3c';
-            cakeCtx.fillRect(cX - 5, 107, 10, 38);
-            cakeCtx.fillStyle = '#ffffff';
-            cakeCtx.fillRect(cX - 2, 107, 4, 38);
-
-            if (candleLit) {
-                // Flickering Flame Logic
-                cakeCtx.fillStyle = Math.random() > 0.5 ? '#ffea00' : '#e74c3c';
-                cakeCtx.beginPath();
-                cakeCtx.arc(cX, 92 + Math.sin(cakeTimer * 0.4) * 2, 8, 0, Math.PI * 2);
-                cakeCtx.fill();
+        function drawCakeLoop() {
+            cCtx.clearRect(0,0,800,400);
+            const cx = 400;
+            
+            // Base tiers
+            cCtx.fillStyle = '#0984e3'; cCtx.fillRect(cx-110, 310, 220, 60); 
+            cCtx.fillStyle = '#e84393'; cCtx.fillRect(cx-80, 255, 160, 55);  
+            cCtx.fillStyle = '#f39c12'; cCtx.fillRect(cx-55, 210, 110, 45);  
+            
+            // Candle Wick & Stem
+            cCtx.fillStyle = '#ffffff'; cCtx.fillRect(cx-4, 175, 8, 35);
+            cCtx.fillStyle = '#2c3e50'; cCtx.fillRect(cx-1, 167, 2, 8); // Wick
+            
+            // Candle Fire Layer
+            if(candleLit) {
+                drawFlame(cCtx, cx, 155, 14);
             } else {
-                // Continuous Structural Smoke System emitting on extinguished candle tip
-                if (Math.random() < 0.3) {
-                    smokeParticles.push({
-                        x: cX,
-                        y: 105,
-                        vx: (Math.random() - 0.5) * 1.2,
-                        vy: -Math.random() * 1.5 - 0.5,
-                        alpha: 0.7
-                    });
+                if(Math.random() > 0.6) {
+                    smoke.push({x: cx, y: 162, vx: (Math.random()-0.5)*0.8, vy: -1.2, r: 4, a: 0.8});
                 }
             }
 
-            // Update & Process Smoke System
-            for (let i = smokeParticles.length - 1; i >= 0; i--) {
-                let p = smokeParticles[i];
-                p.x += p.vx; p.y += p.vy; p.alpha -= 0.007;
-                cakeCtx.fillStyle = `rgba(220, 220, 220, ${p.alpha})`;
-                cakeCtx.beginPath();
-                cakeCtx.arc(p.x, p.y, 5 + (0.7 - p.alpha) * 12, 0, Math.PI * 2);
-                cakeCtx.fill();
-                if (p.alpha <= 0) smokeParticles.splice(i, 1);
-            }
+            // Render rising smoke trails
+            smoke.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy; p.a -= 0.008; p.r += 0.08;
+                cCtx.fillStyle = `rgba(180, 189, 199, ${p.a})`;
+                cCtx.beginPath(); cCtx.arc(p.x, p.y, p.r, 0, Math.PI*2); cCtx.fill();
+                if(p.a <= 0) smoke.splice(i, 1);
+            });
 
-            // Update & Process Splash Confetti System
-            for (let i = confettiParticles.length - 1; i >= 0; i--) {
-                let p = confettiParticles[i];
-                p.x += p.vx; p.y += p.vy; p.vy += p.gravity;
-                cakeCtx.fillStyle = p.color;
-                cakeCtx.fillRect(p.x, p.y, p.size, p.size);
-                if (p.y > cakeCanvas.height) confettiParticles.splice(i, 1);
-            }
+            // Global Ambient Confetti Dropping Engine
+            confetti.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy; p.vy += 0.15; // Gravity pull down
+                p.rot += p.rotSpeed;
+                
+                cCtx.save();
+                cCtx.translate(p.x, p.y);
+                cCtx.rotate(p.rot);
+                cCtx.fillStyle = p.c;
+                cCtx.fillRect(-p.s/2, -p.s/2, p.s, p.s);
+                cCtx.restore();
+                
+                if(p.y > 410) confetti.splice(i, 1);
+            });
 
-            cakeTimer++;
-            cakeAnimationId = requestAnimationFrame(runCakeLoop);
+            cakeAnimationId = requestAnimationFrame(drawCakeLoop);
         }
 
-        function runCakeBlowCountdown() {
-            document.getElementById('blow-trigger').style.display = 'none';
-            const countdownBox = document.getElementById('countdown-box');
+        function runCakeBlow() {
+            document.getElementById('blow-btn').style.display = 'none';
             let count = 3;
-            countdownBox.innerText = count;
-
-            let countInterval = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    countdownBox.innerText = count;
-                } else if (count === 0) {
-                    countdownBox.innerText = "BLOW! 🎉";
+            const box = document.getElementById('countdown-box');
+            
+            let timer = setInterval(() => {
+                box.innerText = count;
+                if(count <= 0) {
+                    clearInterval(timer);
+                    box.innerText = "BLOW! 💨";
                     candleLit = false;
-
-                    // 1. Trigger High-Intensity Peacock Screen Shake Matrix Engine
-                    PeacockShake.trigger(20, 35);
-
-                    // 2. Explode Detailed Confetti Streamers
-                    for (let i = 0; i < 120; i++) {
-                        confettiParticles.push({
-                            x: cakeCanvas.width / 2,
-                            y: 105,
-                            vx: (Math.random() - 0.5) * 14,
-                            vy: (Math.random() - 1.8) * 10,
-                            color: `hsl(${Math.random() * 360}, 100%, 60%)`,
-                            size: Math.random() * 6 + 4,
-                            gravity: 0.22
+                    
+                    // Activate Global Screen Shake Engine
+                    triggerPeacockShake(800);
+                    
+                    // Rain down global screen confetti from the top ceiling boundaries
+                    for(let i=0; i<180; i++) {
+                        confetti.push({
+                            x: Math.random() * cCanvas.width, 
+                            y: -30 - (Math.random() * 100), // Stagger entry heights
+                            vx: (Math.random() * 4) - 2, 
+                            vy: (Math.random() * 4) + 3,
+                            c: `hsl(${Math.random() * 360}, 85%, 55%)`,
+                            s: Math.random() * 6 + 6,
+                            rot: Math.random() * Math.PI,
+                            rotSpeed: (Math.random() - 0.5) * 0.2
                         });
                     }
-                    clearInterval(countInterval);
                 }
-            }, 1000);
+                count--;
+            }, 700);
         }
 
-        // --- LEVEL 4: EXPANDED CANDY CATCH HTML5 CANVAS ENGINE ---
-        const candyCanvas = document.getElementById('candyCanvas');
-        const candyCtx = candyCanvas.getContext('2d');
-        const candyPool = ['🍬', '🍭', '🍫', '🍩'];
+        /* --- RE-ENGINEERED FAST CANDY GAME ENGINE --- */
+        const gCanvas = document.getElementById('gameCanvas');
+        const gCtx = gCanvas.getContext('2d');
+        let gameActive = false;
+        let gameScore = 0;
+        let playerX = 360;
+        let playerWidth = 90;
+        let candyArray = [];
+        let gameAnimationId;
         
-        let candyBasket = { x: 385, y: 390, width: 90, height: 20 };
-        let activeCandies = [];
-        let canvasGameActive = false;
-        let isInputActive = false;
+        // Track Controls
+        let keys = {};
+        window.addEventListener('keydown', e => keys[e.key] = true);
+        window.addEventListener('keyup', e => keys[e.key] = false);
 
-        // Initialize Canvas Interactions Inside the Box viewport Boundaries
-        candyCanvas.addEventListener('mousedown', (e) => { isInputActive = true; trackingInputMove(e); });
-        window.addEventListener('mouseup', () => { isInputActive = false; });
-        candyCanvas.addEventListener('mousemove', (e) => { if (isInputActive) trackingInputMove(e); });
-        candyCanvas.addEventListener('touchstart', (e) => { isInputActive = true; trackingInputMove(e.touches[0]); });
-        window.addEventListener('touchend', () => { isInputActive = false; });
-        candyCanvas.addEventListener('touchmove', (e) => { if (isInputActive) trackingInputMove(e.touches[0]); });
-
-        function trackingInputMove(e) {
-            const rect = candyCanvas.getBoundingClientRect();
-            let relativeX = e.clientX - rect.left - (candyBasket.width / 2);
-            if (relativeX < 10) relativeX = 10;
-            if (relativeX > candyCanvas.width - candyBasket.width - 10) relativeX = candyCanvas.width - candyBasket.width - 10;
-            candyBasket.x = relativeX;
-        }
-
-        function stopGameLoops() {
-            clearInterval(gameLoopInterval);
-            clearInterval(gameTimerInterval);
-            canvasGameActive = false;
-        }
-
-        function resetMiniGameState() {
-            stopGameLoops();
-            isInputActive = false;
-            document.getElementById('start-game-btn').style.display = 'inline-block';
-            document.getElementById('win-screen').style.display = 'none';
-            document.getElementById('lose-screen').style.display = 'none';
-            document.getElementById('sidebar-score-status').innerText = "0 CANDIES";
+        function initGame() {
+            if(gameActive) return;
+            gameActive = true;
+            gameScore = 0;
+            candyArray = [];
+            playerX = 360;
+            document.getElementById('game-score').innerText = gameScore;
+            document.getElementById('start-game').innerText = "RESTART RUN";
             
-            activeCandies = [];
-            candyBasket.x = (candyCanvas.width / 2) - (candyBasket.width / 2);
-            score = 0; timeLeft = 15;
-            renderCandyInterfaceStatic();
+            if(gameAnimationId) cancelAnimationFrame(gameAnimationId);
+            runGameLoop();
         }
 
-        function renderCandyInterfaceStatic() {
-            candyCtx.clearRect(0, 0, candyCanvas.width, candyCanvas.height);
-            // Draw Expanded Basket Frame
-            candyCtx.fillStyle = '#ff7675';
-            candyCtx.fillRect(candyBasket.x, candyBasket.y, candyBasket.width, candyBasket.height);
-            // Decorative line on basket
-            candyCtx.fillStyle = '#ffffff';
-            candyCtx.fillRect(candyBasket.x, candyBasket.y, candyBasket.width, 4);
-        }
+        function runGameLoop() {
+            if(!gameActive) return;
 
-        function initMiniGame() {
-            document.getElementById('start-game-btn').style.display = 'none';
-            document.getElementById('win-screen').style.display = 'none';
-            document.getElementById('lose-screen').style.display = 'none';
-            
-            score = 0; 
-            timeLeft = 15; 
-            activeCandies = [];
-            canvasGameActive = true;
-            generateNewCandyWave();
+            gCtx.clearRect(0,0, gCanvas.width, gCanvas.height);
 
-            // Core Engine Physics System Tick
-            gameLoopInterval = setInterval(() => {
-                candyCtx.clearRect(0, 0, candyCanvas.width, candyCanvas.height);
-                PeacockShake.update();
+            // Handle swift paddle velocity response
+            if(keys['ArrowLeft'] && playerX > 0) playerX -= 12;
+            if(keys['ArrowRight'] && playerX < gCanvas.width - playerWidth) playerX += 12;
 
-                // Draw Basket
-                candyCtx.fillStyle = '#ff7675';
-                candyCtx.fillRect(candyBasket.x, candyBasket.y, candyBasket.width, candyBasket.height);
-                candyCtx.fillStyle = '#ffffff';
-                candyCtx.fillRect(candyBasket.x, candyBasket.y, candyBasket.width, 4);
+            // Player Tray Basket Graphic
+            gCtx.fillStyle = '#1abc9c';
+            gCtx.fillRect(playerX, gCanvas.height - 35, playerWidth, 15);
+            gCtx.fillStyle = '#16a085';
+            gCtx.fillRect(playerX, gCanvas.height - 20, playerWidth, 5); // Shadow baseline
 
-                // Process Candy Dropping Vectors
-                for (let i = activeCandies.length - 1; i >= 0; i--) {
-                    let c = activeCandies[i];
-                    c.y += c.speed;
-
-                    // Render Game Item
-                    candyCtx.font = "24px Arial";
-                    candyCtx.fillText(c.char, c.x, c.y);
-
-                    // Basket Intersection Detection Engine
-                    if (c.y >= candyBasket.y - 10 && c.y <= candyBasket.y + candyBasket.height) {
-                        if (c.x >= candyBasket.x - 15 && c.x <= candyBasket.x + candyBasket.width + 5) {
-                            score++;
-                            document.getElementById('sidebar-score-status').innerText = score + " CANDIES";
-                            
-                            // Trigger impact vibration through the Peacock Module
-                            PeacockShake.trigger(8, 8);
-
-                            activeCandies.splice(i, 1);
-                            generateNewCandyWave();
-                            
-                            if (score >= 5) { 
-                                triggerMatchEnd(true); 
-                                return; 
-                            }
-                            continue;
-                        }
-                    }
-
-                    // Recycle / Destroy missed objects
-                    if (c.y > candyCanvas.height + 20) {
-                        activeCandies.splice(i, 1);
-                        generateNewCandyWave();
-                    }
-                }
-            }, 30);
-
-            // Timer Engine Tick
-            gameTimerInterval = setInterval(() => {
-                timeLeft--;
-                if (timeLeft <= 0 && score < 5) { 
-                    triggerMatchEnd(false); 
-                }
-            }, 1000);
-        }
-
-        function generateNewCandyWave() {
-            if (activeCandies.length < 2) {
-                activeCandies.push({
-                    x: Math.floor(Math.random() * (candyCanvas.width - 60)) + 30,
-                    y: -30,
-                    speed: Math.random() * 3 + 4,
-                    char: candyPool[Math.floor(Math.random() * candyPool.length)]
+            // Spawning Mechanism: Scaled faster generation rules
+            if(Math.random() < 0.07) { 
+                candyArray.push({
+                    x: Math.random() * (gCanvas.width - 24) + 12,
+                    y: -20,
+                    // Fast Drop speeds between 6.5 and 11.5 pixels per frame!
+                    speed: (Math.random() * 5) + 6.5,
+                    color: `hsl(${Math.random() * 360}, 90%, 60%)`,
+                    radius: Math.random() * 4 + 10,
+                    pulse: 0
                 });
             }
-        }
 
-        function triggerMatchEnd(isWin) {
-            stopGameLoops();
-            isInputActive = false;
-            if (isWin) { 
-                document.getElementById('win-screen').style.display = 'flex'; 
-            } else { 
-                document.getElementById('lose-screen').style.display = 'flex'; 
-            }
+            // Process Active Candies
+            candyArray.forEach((candy, idx) => {
+                candy.y += candy.speed;
+                candy.pulse += 0.1;
+
+                // Draw Sweet Candy Node
+                gCtx.save();
+                gCtx.translate(candy.x, candy.y);
+                gCtx.fillStyle = candy.color;
+                
+                // Candy circular center core
+                gCtx.beginPath();
+                gCtx.arc(0, 0, candy.radius, 0, Math.PI * 2);
+                gCtx.fill();
+                
+                // Classic retro wrap wings
+                gCtx.beginPath();
+                gCtx.moveTo(-candy.radius, 0);
+                gCtx.lineTo(-candy.radius - 8, -6 + Math.sin(candy.pulse)*2);
+                gCtx.lineTo(-candy.radius - 8, 6 - Math.sin(candy.pulse)*2);
+                gCtx.closePath();
+                gCtx.fillStyle = candy.color;
+                gCtx.fill();
+
+                gCtx.beginPath();
+                gCtx.moveTo(candy.radius, 0);
+                gCtx.lineTo(candy.radius + 8, -6 + Math.sin(candy.pulse)*2);
+                gCtx.lineTo(candy.radius + 8, 6 - Math.sin(candy.pulse)*2);
+                gCtx.closePath();
+                gCtx.fill();
+                
+                gCtx.restore();
+
+                // Collision detection engine
+                if(candy.y >= gCanvas.height - 45 && candy.y <= gCanvas.height - 20) {
+                    if(candy.x >= playerX && candy.x <= playerX + playerWidth) {
+                        gameScore += 10;
+                        document.getElementById('game-score').innerText = gameScore;
+                        candyArray.splice(idx, 1);
+                        
+                        // Mini hit vibration feedback flash
+                        gCtx.fillStyle = 'rgba(255,255,255,0.2)';
+                        gCtx.fillRect(0,0,gCanvas.width,gCanvas.height);
+                    }
+                }
+
+                // Drop out boundaries rule
+                if(candy.y > gCanvas.height + 20) {
+                    candyArray.splice(idx, 1);
+                }
+            });
+
+            gameAnimationId = requestAnimationFrame(runGameLoop);
         }
     </script>
 </body>
