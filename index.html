@@ -19,19 +19,14 @@
             overflow-x: hidden;
         }
 
-        /* VIOLENT UNBOX SCREEN SHAKE ENGINE */
+        /* SUBTLE UNBOX SCREEN SHAKE ENGINE */
         @keyframes unbox-shake {
-            0% { transform: translate(4px, 4px) rotate(0deg); }
-            10% { transform: translate(-3px, -5px) rotate(-2deg); }
-            20% { transform: translate(-6px, 0px) rotate(2deg); }
-            30% { transform: translate(6px, 4px) rotate(0deg); }
-            40% { transform: translate(3px, -3px) rotate(2deg); }
-            50% { transform: translate(-3px, 5px) rotate(-2deg); }
-            60% { transform: translate(-6px, 3px) rotate(0deg); }
-            70% { transform: translate(6px, 3px) rotate(-2deg); }
-            80% { transform: translate(-3px, -3px) rotate(2deg); }
-            90% { transform: translate(3px, 5px) rotate(0deg); }
-            100% { transform: translate(3px, -5px) rotate(-2deg); }
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-1px, -1px) rotate(-0.5deg); }
+            40% { transform: translate(-1px, 1px) rotate(0.5deg); }
+            60% { transform: translate(1px, -1px) rotate(0deg); }
+            80% { transform: translate(-1px, 1px) rotate(-0.5deg); }
+            100% { transform: translate(1px, 1px) rotate(0.5deg); }
         }
         .shake-active { animation: unbox-shake 0.1s infinite; }
 
@@ -67,6 +62,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            box-sizing: border-box;
         }
 
         .stat-box {
@@ -80,7 +76,7 @@
         .stat-value { font-size: 1.4rem; font-weight: bold; color: #fff; }
 
         /* Workspace Area */
-        .main-content-flow { flex: 1; display: flex; flex-direction: column; gap: 25px; }
+        .main-content-flow { flex: 1; display: flex; flex-direction: column; gap: 25px; min-width: 0; }
 
         /* Navigation Grid */
         .grid-container {
@@ -115,6 +111,7 @@
             border-radius: 24px;
             min-height: 580px;
             position: relative;
+            box-sizing: border-box;
         }
 
         /* --- BACKGROUND BALLOON ENGINE --- */
@@ -148,6 +145,7 @@
             border: 3px solid #1abc9c;
             margin: 15px auto;
             border-radius: 16px;
+            max-width: 100%;
         }
 
         .action-btn {
@@ -226,81 +224,277 @@
             text-align: center;
         }
 
-        /* Mystery Box Elements */
+        /* Mystery Box Elements Improvement */
         .gift-box-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-top: 40px;
-        }
-        .pixel-gift-container {
-            cursor: pointer;
             margin-top: 20px;
             position: relative;
-            width: 150px;
-            height: 120px;
+            min-height: 420px;
         }
+
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pixel-gift-container {
+            cursor: pointer;
+            margin-top: auto;
+            position: relative;
+            width: 250px;
+            height: 200px;
+            animation: gentle-bounce 2s ease-in-out infinite;
+            transition: all 0.3s;
+        }
+        .pixel-gift-container.opened {
+            animation: none;
+            cursor: default;
+        }
+
         .gift-lid {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 150px;
-            height: 25px;
-            background: #e74c3c;
+            left: -5px;
+            width: 260px;
+            height: 40px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             border: 3px solid white;
-            border-radius: 4px;
-            z-index: 2;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 6px;
+            z-index: 5;
+            box-shadow: inset 0 4px 0 rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.4);
+            transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+
+        /* Ribbon and Bow on Lid */
+        .gift-lid::before {
+            content: '';
+            position: absolute;
+            left: 115px;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #f1c40f, #d4af37);
+            border-left: 2px solid #fff;
+            border-right: 2px solid #fff;
+        }
+
+        .gift-bow {
+            position: absolute;
+            top: -25px;
+            left: 95px;
+            width: 70px;
+            height: 25px;
+            z-index: 6;
+            transition: all 0.7s ease;
+        }
+        .gift-bow::before, .gift-bow::after {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 25px;
+            background: linear-gradient(135deg, #ffd700, #f1c40f);
+            border: 2px solid #fff;
+            border-radius: 50%;
+        }
+        .gift-bow::before { left: 0; transform: rotate(-20deg); }
+        .gift-bow::after { right: 0; transform: rotate(20deg); }
+
         .gift-body {
             position: absolute;
             bottom: 0;
-            left: 10px;
-            width: 130px;
-            height: 95px;
-            background: #c0392b;
+            left: 0;
+            width: 250px;
+            height: 165px;
+            background: linear-gradient(135deg, #c0392b, #962d22);
             border: 3px solid white;
             border-top: none;
-            border-radius: 0 0 4px 4px;
-            z-index: 1;
+            border-radius: 0 0 8px 8px;
+            z-index: 3;
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.3), 0 8px 16px rgba(0,0,0,0.5);
         }
+
+        /* Vertical Ribbon on Body */
+        .gift-body::before {
+            content: '';
+            position: absolute;
+            left: 110px;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #f1c40f, #d4af37);
+            border-left: 2px solid #fff;
+            border-right: 2px solid #fff;
+        }
+
+        /* Gold Sparkle and Glow behind Peacock */
+        .peacock-glow {
+            position: absolute;
+            top: 40px;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(26, 188, 156, 0.4) 0%, rgba(0,0,0,0) 70%);
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 1s ease;
+            pointer-events: none;
+        }
+        .peacock-glow.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
         .peacock-reward {
             display: none;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
-            z-index: 11;
+            position: absolute;
+            top: 20px;
+            z-index: 4;
         }
+        
         .peacock-launch {
             display: flex;
-            animation: majesticReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+            animation: majesticReveal 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
         }
 
         @keyframes majesticReveal {
-            0% { transform: scale(0.3); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { transform: translateY(150px) scale(0.2); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
         }
 
-        /* SVG Crisp Pixel Styling Rules */
-        .peacock-reward svg {
-            shape-rendering: crispEdges;
-            filter: drop-shadow(4px 6px 0px rgba(0,0,0,0.5));
+        /* Advanced CSS Transform Animated Artwork for Peacock */
+        .peacock-art-wrap {
+            position: relative;
+            width: 280px;
+            height: 240px;
         }
 
-        /* Color classes linked directly inside SVG channels */
-        .t1 { fill: #006666; } 
-        .t2 { fill: #00bfa5; } 
-        .t3 { fill: #00e676; } 
-        .b1 { fill: #002266; } 
-        .b2 { fill: #053594; } 
-        .b3 { fill: #2979ff; } 
-        .g1 { fill: #d4af37; } 
-        .g2 { fill: #ffd700; } 
-        .w0 { fill: #ffffff; } 
-        .n0 { fill: #020b18; }
+        .peacock-tail-feather {
+            position: absolute;
+            bottom: 40px;
+            left: 140px;
+            width: 20px;
+            height: 120px;
+            background: linear-gradient(to top, #006666, #00bfa5, #ffd700);
+            border-radius: 50% 50% 0 0;
+            transform-origin: bottom center;
+            border: 1px solid #fff;
+            box-shadow: 0 0 10px rgba(0,230,118,0.5);
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
 
-        /* Speech Bubble Below Peacock */
+        /* Body breathing and head blinking animations */
+        @keyframes peacock-breath {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03) translateY(-2px); }
+        }
+        .peacock-main-body {
+            position: absolute;
+            bottom: 30px;
+            left: 115px;
+            width: 50px;
+            height: 90px;
+            background: linear-gradient(to bottom, #2979ff, #053594);
+            border: 2px solid #fff;
+            border-radius: 30px 30px 20px 20px;
+            z-index: 5;
+            animation: peacock-breath 3s ease-in-out infinite;
+        }
+
+        .peacock-neck {
+            position: absolute;
+            top: -40px;
+            left: 12px;
+            width: 22px;
+            height: 60px;
+            background: #2979ff;
+            border: 2px solid #fff;
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .peacock-head {
+            position: absolute;
+            top: -65px;
+            left: 7px;
+            width: 32px;
+            height: 32px;
+            background: #2979ff;
+            border: 2px solid #fff;
+            border-radius: 50%;
+        }
+
+        @keyframes peacock-blink {
+            0%, 45%, 55%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.1); }
+        }
+        .peacock-eye {
+            position: absolute;
+            top: 8px;
+            right: 6px;
+            width: 6px;
+            height: 6px;
+            background: #020b18;
+            border-radius: 50%;
+            animation: peacock-blink 4s infinite;
+        }
+        .peacock-eye::before {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .peacock-beak {
+            position: absolute;
+            top: 12px;
+            right: -12px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 14px solid #ffd700;
+        }
+
+        .peacock-crest {
+            position: absolute;
+            top: -15px;
+            left: 12px;
+            width: 4px;
+            height: 15px;
+            background: #ffd700;
+        }
+        .peacock-crest::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -2px;
+            width: 8px;
+            height: 6px;
+            background: #00bfa5;
+            border-radius: 50%;
+        }
+
+        .peacock-wing {
+            position: absolute;
+            top: 25px;
+            width: 15px;
+            height: 45px;
+            background: #053594;
+            border: 1px solid #fff;
+            border-radius: 50% 50% 20% 20%;
+        }
+        .peacock-wing.left { left: -8px; transform: rotate(15deg); }
+        .peacock-wing.right { right: -8px; transform: rotate(-15deg); }
+
         .speech-bubble {
             display: none;
             background: #ffffff; color: #000; padding: 10px 18px;
@@ -309,6 +503,57 @@
             white-space: nowrap;
             z-index: 15;
             margin-top: 15px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .speech-bubble.pop-in {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Candy Catch Layout Containers */
+        .arcade-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #09172e;
+            padding: 15px 25px;
+            border-radius: 16px;
+            border: 2px solid #34495e;
+            margin-bottom: 10px;
+        }
+        .hud-element {
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: #0d2244;
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: 2px solid #f1c40f;
+        }
+        .hearts-display {
+            color: #e74c3c;
+            letter-spacing: 2px;
+        }
+
+        .game-display-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 10, 22, 0.85);
+            border-radius: 24px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            text-align: center;
+        }
+        .game-overlay-title {
+            font-size: 3rem;
+            font-family: 'Arial Black', Impact, sans-serif;
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
     </style>
@@ -366,58 +611,31 @@
             <div id="gift-panel" class="stage-panel" style="display: block;">
                 <h3>[ TARGET: OPEN THE MYSTERY BOX ]</h3>
                 <div class="gift-box-wrapper">
+                    <div id="peacock-glow-field" class="peacock-glow"></div>
+                    
                     <div id="peacock-container" class="peacock-reward">
-                        <svg viewBox="0 0 31 26" width="280" height="240" style="display: block; margin: 0 auto;">
-                            <rect x="14" y="2" width="3" height="1" class="t1"/>
-                            <rect x="11" y="3" width="9" height="1" class="t1"/>
-                            <rect x="9" y="4" width="13" height="1" class="t1"/>
-                            <rect x="8" y="5" width="15" height="1" class="t1"/>
-                            <rect x="7" y="6" width="17" height="1" class="t1"/>
-                            <rect x="6" y="7" width="19" height="1" class="t1"/>
-                            <rect x="5" y="8" width="21" height="1" class="b3"/>
-                            <rect x="5" y="9" width="21" height="1" class="b3"/>
-                            <rect x="5" y="10" width="21" height="1" class="b3"/>
-                            <rect x="5" y="11" width="21" height="1" class="b2"/>
-                            <rect x="6" y="12" width="19" height="1" class="b2"/>
-                            <rect x="7" y="13" width="17" height="1" class="b2"/>
-
-                            <rect x="15" y="3" width="1" height="1" class="t2"/>
-                            <rect x="12" y="4" width="1" height="1" class="t2"/>
-                            <rect x="18" y="4" width="1" height="1" class="t2"/>
-                            <rect x="10" y="5" width="1" height="1" class="t2"/>
-                            <rect x="20" y="5" width="1" height="1" class="t2"/>
-                            <rect x="9" y="7" width="1" height="1" class="t2"/>
-                            <rect x="21" y="7" width="1" height="1" class="t2"/>
-
-                            <rect x="14" y="4" width="3" height="2" class="g1"/>
-                            <rect x="15" y="5" width="1" height="1" class="b1"/>
-                            <rect x="10" y="6" width="3" height="2" class="g1"/>
-                            <rect x="11" y="7" width="1" height="1" class="b1"/>
-                            <rect x="18" y="6" width="3" height="2" class="g1"/>
-                            <rect x="19" y="7" width="1" height="1" class="b1"/>
-                            <rect x="7" y="9" width="3" height="2" class="g1"/>
-                            <rect x="8" y="10" width="1" height="1" class="b1"/>
-                            <rect x="21" y="9" width="3" height="2" class="g1"/>
-                            <rect x="22" y="10" width="1" height="1" class="b1"/>
-
-                            <rect x="14" y="9" width="3" height="11" class="b1"/>
-                            <rect x="13" y="11" width="5" height="7" class="b1"/>
-
-                            <rect x="14" y="11" width="1" height="1" class="w0"/>
-                            <rect x="16" y="11" width="1" height="1" class="w0"/>
-
-                            <rect x="15" y="12" width="1" height="2" class="g2"/>
-
-                            <rect x="14" y="20" width="1" height="1" class="t2"/>
-                            <rect x="16" y="20" width="1" height="1" class="t2"/>
-                        </svg>
+                        <div class="peacock-art-wrap" id="peacock-fan-feathers">
+                            <div class="peacock-main-body">
+                                <div class="peacock-wing left"></div>
+                                <div class="peacock-wing right"></div>
+                                <div class="peacock-neck">
+                                    <div class="peacock-head">
+                                        <div class="peacock-crest"></div>
+                                        <div class="peacock-eye"></div>
+                                        <div class="peacock-beak"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div id="peacock-bubble" class="speech-bubble">
                             HAPPY BIRTHDAY APPA! 🦚
                         </div>
                     </div>
                     
-                    <div class="pixel-gift-container" onclick="runGiftUnbox()">
-                        <div id="gift-lid" class="gift-lid"></div>
+                    <div id="interactive-box-container" class="pixel-gift-container" onclick="runGiftUnbox()">
+                        <div id="gift-lid" class="gift-lid">
+                            <div class="gift-bow"></div>
+                        </div>
                         <div class="gift-body"></div>
                     </div>
                 </div>
@@ -450,14 +668,21 @@
             </div>
 
             <div id="game-panel" class="stage-panel">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3>[ CANDY CATCH: BALANCED ARCADE RUN ]</h3>
-                    <div style="font-size: 1.2rem; font-weight: bold; background: #0d2244; padding: 8px 15px; border-radius: 8px; border: 2px solid #f1c40f;">
-                        Score: <span id="game-score">0</span>
+                <div class="arcade-hud">
+                    <div class="hud-element">Score: <span id="game-score">0</span> / 100</div>
+                    <div class="hud-element">Lives: <span id="game-hearts" class="hearts-display">❤️❤️❤️❤️</span></div>
+                </div>
+                
+                <div style="position: relative; margin: 0 auto; width: 800px; max-width: 100%;">
+                    <canvas id="gameCanvas" width="800" height="400" class="canvas-render-frame"></canvas>
+                    
+                    <div id="game-overplay-screen" class="game-display-overlay">
+                        <div id="game-overlay-text" class="game-overlay-title">GAME OVER</div>
+                        <button class="action-btn" onclick="initGame()">PLAY AGAIN</button>
                     </div>
                 </div>
-                <canvas id="gameCanvas" width="800" height="400" class="canvas-render-frame"></canvas>
-                <div style="text-align: center;">
+
+                <div style="text-align: center; margin-top: 15px;">
                     <button id="start-game" class="action-btn" onclick="initGame()">START ENGINE</button>
                 </div>
             </div>
@@ -469,10 +694,12 @@
         let confetti = [];
         let smoke = [];
         let gameActive = false;
+        let boxOpenedThisSession = false;
         
-        // Background decorative generator
+        // Background decorative balloon setup
         function buildBalloons() {
             const container = document.getElementById('balloons');
+            container.innerHTML = '';
             const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6'];
             for(let i=0; i<15; i++) {
                 let node = document.createElement('div');
@@ -485,35 +712,136 @@
         }
         buildBalloons();
 
-        /* UNBOX INTENSE ENGINE SHAKE ROUTINE */
-        function triggerPeacockShake(duration = 600) {
+        /* SUBTLE SCREEN SHAKE ROUTINE */
+        function triggerPeacockShake(duration = 500) {
             const body = document.getElementById('master-body');
             body.classList.add('shake-active');
             setTimeout(() => body.classList.remove('shake-active'), duration);
         }
 
-        /* PANEL SWITCHER */
+        /* GENERATE PEACOCK TRANSFORMS STRUCTURALLY */
+        function createPeacockFeathers() {
+            const wrap = document.getElementById('peacock-fan-feathers');
+            // Remove existing feathers if any to prevent duplication
+            wrap.querySelectorAll('.peacock-tail-feather').forEach(f => f.remove());
+            
+            const featherCount = 13;
+            for(let i = 0; i < featherCount; i++) {
+                let feather = document.createElement('div');
+                feather.className = 'peacock-tail-feather';
+                feather.style.transform = 'rotate(0deg)';
+                wrap.insertBefore(feather, wrap.firstChild);
+            }
+        }
+        createPeacockFeathers();
+
+        /* PANEL SWITCHER WITH RESET LOGIC */
         function startLevel(id, lvl) {
             document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
             document.getElementById(id).style.display = 'block';
             document.getElementById('side-level').innerText = "LEVEL " + lvl;
             
+            // Clean active engine running parameters safely
             gameActive = false; 
-            if(id === 'cake-panel') initCake();
+            document.getElementById('game-overplay-screen').style.display = 'none';
+
+            if(id === 'gift-panel') {
+                resetMysteryBox();
+            }
+            if(id === 'cake-panel') {
+                initCake();
+            }
         }
 
-        /* --- UNBOX ENGINE --- */
-        function runGiftUnbox() {
-            triggerPeacockShake(700);
-            document.getElementById('gift-lid').style.transform = 'translateY(-70px) rotate(-35deg)';
-            document.getElementById('gift-lid').style.opacity = '0';
+        /* --- MYSTERY BOX ENGINE & RESET ROUTINE --- */
+        function resetMysteryBox() {
+            boxOpenedThisSession = false;
+            const container = document.getElementById('interactive-box-container');
+            container.classList.remove('opened');
+            container.style.animation = 'gentle-bounce 2s ease-in-out infinite';
             
+            const lid = document.getElementById('gift-lid');
+            lid.style.transform = 'none';
+            lid.style.opacity = '1';
+            
+            document.getElementById('peacock-glow-field').classList.remove('active');
+            
+            const reward = document.getElementById('peacock-container');
+            reward.classList.remove('peacock-launch');
+            
+            const bubble = document.getElementById('peacock-bubble');
+            bubble.classList.remove('pop-in');
+
+            // Fold feathers back completely
+            const feathers = document.querySelectorAll('.peacock-tail-feather');
+            feathers.forEach(f => {
+                f.style.transform = 'rotate(0deg)';
+            });
+        }
+
+        function runGiftUnbox() {
+            if (boxOpenedThisSession) return;
+            boxOpenedThisSession = true;
+
+            const container = document.getElementById('interactive-box-container');
+            container.classList.add('opened');
+            container.style.animation = 'none';
+
+            triggerPeacockShake(500);
+            
+            // Pop lid away dramatically
+            const lid = document.getElementById('gift-lid');
+            lid.style.transform = 'translateY(-140px) rotate(-45deg) scale(0.9)';
+            lid.style.opacity = '0';
+            
+            // Activate core canvas engine confetti bursts from box zone coords
+            const targetPanel = document.getElementById('gift-panel');
+            
+            // Rise peacock out of the chest
             const reward = document.getElementById('peacock-container');
             reward.classList.add('peacock-launch');
             
+            // Activate background glow engine setup
+            document.getElementById('peacock-glow-field').classList.add('active');
+
+            // Smooth unfold tail feather fan array calculation logic
             setTimeout(() => {
-                document.getElementById('peacock-bubble').style.display = 'block';
-            }, 600);
+                const feathers = document.querySelectorAll('.peacock-tail-feather');
+                const total = feathers.length;
+                feathers.forEach((f, idx) => {
+                    const mid = (total - 1) / 2;
+                    const angle = (idx - mid) * 14; // Sweeping balanced fan arc positioning
+                    f.style.transform = `rotate(${angle}deg) translateY(-15px)`;
+                });
+            }, 300);
+            
+            // Speech bubble pop synchronization
+            setTimeout(() => {
+                document.getElementById('peacock-bubble').classList.add('pop-in');
+            }, 800);
+
+            // Trigger level-relative temporary decorative splash elements inside main animation array loop
+            triggerBoxExplosionConfetti();
+        }
+
+        function triggerBoxExplosionConfetti() {
+            // Re-route temporary cake graphics layer loop logic to render custom side pops dynamically
+            if (!cakeAnimationId) {
+                initCake();
+                candleLit = false;
+            }
+            for(let i=0; i<100; i++) {
+                confetti.push({
+                    x: 400 + (Math.random() - 0.5) * 150, 
+                    y: 250, 
+                    vx: (Math.random() * 7) - 3.5, 
+                    vy: (Math.random() * -8) - 4,
+                    c: `hsl(${Math.random() * 360}, 95%, 65%)`,
+                    s: Math.random() * 6 + 6,
+                    rot: Math.random() * Math.PI,
+                    rotSpeed: (Math.random() - 0.5) * 0.2
+                });
+            }
         }
 
         /* --- CANVA EMBED BYPASS SANITIZER --- */
@@ -599,20 +927,22 @@
             if(candleLit) {
                 drawFlame(cCtx, cx, 155, 14);
             } else {
-                if(Math.random() > 0.6) {
-                    smoke.push({x: cx, y: 162, vx: (Math.random()-0.5)*0.6, vy: -1.0, r: 3, a: 0.8});
+                if(Math.random() > 0.5) {
+                    smoke.push({x: cx, y: 162, vx: (Math.random()-0.5)*0.8, vy: -1.2, r: 2.5, a: 0.85});
                 }
             }
 
-            smoke.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; p.a -= 0.01; p.r += 0.05;
-                cCtx.fillStyle = `rgba(180, 189, 199, ${p.a})`;
+            for (let i = smoke.length - 1; i >= 0; i--) {
+                let p = smoke[i];
+                p.x += p.vx; p.y += p.vy; p.a -= 0.012; p.r += 0.07;
+                cCtx.fillStyle = `rgba(200, 207, 214, ${p.a})`;
                 cCtx.beginPath(); cCtx.arc(p.x, p.y, p.r, 0, Math.PI*2); cCtx.fill();
                 if(p.a <= 0) smoke.splice(i, 1);
-            });
+            }
 
-            confetti.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; p.vy += 0.12; 
+            for (let i = confetti.length - 1; i >= 0; i--) {
+                let p = confetti[i];
+                p.x += p.vx; p.y += p.vy; p.vy += 0.14; 
                 p.rot += p.rotSpeed;
                 
                 cCtx.save();
@@ -622,8 +952,8 @@
                 cCtx.fillRect(-p.s/2, -p.s/2, p.s, p.s);
                 cCtx.restore();
                 
-                if(p.y > 410) confetti.splice(i, 1);
-            });
+                if(p.y > 420) confetti.splice(i, 1);
+            }
 
             cakeAnimationId = requestAnimationFrame(drawCakeLoop);
         }
@@ -640,16 +970,16 @@
                     box.innerText = "BLOW! 💨";
                     candleLit = false;
                     
-                    for(let i=0; i<160; i++) {
+                    for(let i=0; i<180; i++) {
                         confetti.push({
                             x: Math.random() * cCanvas.width, 
                             y: -20 - (Math.random() * 80), 
-                            vx: (Math.random() * 3.5) - 1.75, 
-                            vy: (Math.random() * 3) + 2.5,
-                            c: `hsl(${Math.random() * 360}, 85%, 55%)`,
-                            s: Math.random() * 5 + 6,
+                            vx: (Math.random() * 4) - 2, 
+                            vy: (Math.random() * 3) + 3,
+                            c: `hsl(${Math.random() * 360}, 90%, 60%)`,
+                            s: Math.random() * 6 + 6,
                             rot: Math.random() * Math.PI,
-                            rotSpeed: (Math.random() - 0.5) * 0.15
+                            rotSpeed: (Math.random() - 0.5) * 0.2
                         });
                     }
                 }
@@ -657,18 +987,26 @@
             }, 700);
         }
 
-        /* --- ARCADE CANDY CATCH ENGINE --- */
+        /* --- REWRITTEN CANDY CATCH ARCADE ENGINE --- */
         const gCanvas = document.getElementById('gameCanvas');
         const gCtx = gCanvas.getContext('2d');
         let gameScore = 0;
-        let playerX = 350;
-        let playerWidth = 140; 
-        let candyArray = [];
+        let gameLives = 4;
+        let playerX = 330;
+        const playerWidth = 140;
+        const playerHeight = 45;
+        let fallingObjects = [];
+        let particles = [];
+        let flashAlpha = 0;
         let gameAnimationId;
         let keys = {};
         
+        // Track interactive tracking inputs smoothly
+        let targetPlayerX = 330;
+
+        // Hook Input Listeners safely
         window.addEventListener('keydown', e => {
-            if(gameActive && ['ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            if(gameActive && ['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
                 e.preventDefault();
             }
             keys[e.key] = true;
@@ -677,90 +1015,298 @@
             keys[e.key] = false;
         });
 
+        // Mouse and Trackpad Control Setup
+        gCanvas.addEventListener('mousemove', e => {
+            if(!gameActive) return;
+            const rect = gCanvas.getBoundingClientRect();
+            const rootX = e.clientX - rect.left;
+            // Map actual canvas scale matrix coordinates correctly
+            const scaleX = gCanvas.width / rect.width;
+            targetPlayerX = (rootX * scaleX) - (playerWidth / 2);
+        });
+
+        // Touch Control Engine Setup
+        gCanvas.addEventListener('touchmove', e => {
+            if(!gameActive) return;
+            e.preventDefault();
+            const rect = gCanvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            const rootX = touch.clientX - rect.left;
+            const scaleX = gCanvas.width / rect.width;
+            targetPlayerX = (rootX * scaleX) - (playerWidth / 2);
+        }, { passive: false });
+
         function initGame() {
             gameActive = true;
             gameScore = 0;
-            candyArray = [];
+            gameLives = 4;
+            fallingObjects = [];
+            particles = [];
+            flashAlpha = 0;
             playerX = (gCanvas.width - playerWidth) / 2;
+            targetPlayerX = playerX;
+            
             document.getElementById('game-score').innerText = gameScore;
+            updateHeartsDisplay();
+            
+            document.getElementById('game-overplay-screen').style.display = 'none';
             document.getElementById('start-game').innerText = "RESET ENGINE";
             
             if(gameAnimationId) cancelAnimationFrame(gameAnimationId);
             runGameLoop();
         }
 
+        function updateHeartsDisplay() {
+            let heartString = '';
+            for(let i=0; i<4; i++) {
+                heartString += (i < gameLives) ? '❤️' : '🖤';
+            }
+            document.getElementById('game-hearts').innerText = heartString;
+        }
+
+        function spawnBlastParticles(x, y, colorStr, count=15) {
+            for(let i=0; i<count; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: (Math.random() - 0.5) * 8,
+                    size: Math.random() * 4 + 4,
+                    alpha: 1,
+                    color: colorStr
+                });
+            }
+        }
+
+        function triggerEndState(isWin) {
+            gameActive = false;
+            const overlay = document.getElementById('game-overplay-screen');
+            const txt = document.getElementById('game-overlay-text');
+            
+            if(isWin) {
+                txt.innerText = "🎉 HAPPY BIRTHDAY APPA! 🎉\nMission Complete";
+                txt.style.color = "#f1c40f";
+                // Max out decorative celebration bursts across viewport coords
+                spawnBlastParticles(400, 200, '#ffd700', 80);
+                spawnBlastParticles(200, 150, '#1abc9c', 60);
+                spawnBlastParticles(600, 150, '#2979ff', 60);
+            } else {
+                txt.innerText = "GAME OVER";
+                txt.style.color = "#e74c3c";
+            }
+            overlay.style.display = 'flex';
+        }
+
+        function drawBasket(ctx, x, y, w, h) {
+            ctx.save();
+            // Drop outer shadow
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+            ctx.shadowBlur = 6;
+            ctx.shadowOffsetY = 4;
+
+            // Base outer rim rim profile
+            let grad = ctx.createLinearGradient(x, y, x, y + h);
+            grad.addColorStop(0, '#d35400');
+            grad.addColorStop(1, '#a04000');
+            ctx.fillStyle = grad;
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + w, y);
+            ctx.lineTo(x + w - 15, y + h);
+            ctx.lineTo(x + 15, y + h);
+            ctx.closePath();
+            ctx.fill();
+
+            // Woven decorative lines pattern mesh
+            ctx.strokeStyle = '#e67e22';
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 0; ctx.shadowOffsetY = 0; // Clear shadow for weave mesh
+            
+            // Draw horizontal weave rails
+            for(let r = y + 8; r < y + h; r += 10) {
+                ctx.beginPath();
+                ctx.moveTo(x + (r - y)*0.3, r);
+                ctx.lineTo(x + w - (r - y)*0.3, r);
+                ctx.stroke();
+            }
+            
+            // Basket top rim highlight bar accent
+            ctx.fillStyle = '#e67e22';
+            ctx.fillRect(x - 4, y, w + 8, 7);
+            ctx.restore();
+        }
+
         function runGameLoop() {
             if(!gameActive) return;
 
-            gCtx.clearRect(0,0, gCanvas.width, gCanvas.height);
-
+            // Handle Input Processing with high-performance linear interpolation updates
             if(keys['ArrowLeft'] || keys['a'] || keys['A']) {
-                if(playerX > 0) playerX -= 12;
+                targetPlayerX -= 14;
             }
             if(keys['ArrowRight'] || keys['d'] || keys['D']) {
-                if(playerX < gCanvas.width - playerWidth) playerX += 12;
+                targetPlayerX += 14;
             }
 
-            // Tray Design Setup
-            gCtx.fillStyle = '#1abc9c';
-            gCtx.fillRect(playerX, gCanvas.height - 35, playerWidth, 15);
-            gCtx.fillStyle = '#16a085';
-            gCtx.fillRect(playerX, gCanvas.height - 20, playerWidth, 5); 
+            // Boundary constraints clamp engine
+            if (targetPlayerX < 0) targetPlayerX = 0;
+            if (targetPlayerX > gCanvas.width - playerWidth) targetPlayerX = gCanvas.width - playerWidth;
 
-            // Paced Spawner Rates
-            if(Math.random() < 0.025) { 
-                candyArray.push({
+            // Interpolate toward destination position vector smoothly
+            playerX += (targetPlayerX - playerX) * 0.35;
+
+            gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+
+            // Dynamic background tracking damage flash update sequence
+            if(flashAlpha > 0) {
+                gCtx.fillStyle = `rgba(231, 76, 60, ${flashAlpha})`;
+                gCtx.fillRect(0,0,gCanvas.width,gCanvas.height);
+                flashAlpha -= 0.05;
+            }
+
+            // Draw player basket
+            drawBasket(gCtx, playerX, gCanvas.height - playerHeight - 10, playerWidth, playerHeight);
+
+            // Dynamically scale dropping rate coefficients based directly upon running score tiers
+            let speedMod = 1.0 + (gameScore / 100) * 0.6;
+            let spawnRate = 0.02 + (gameScore / 100) * 0.015;
+
+            if(Math.random() < spawnRate) {
+                let isBomb = Math.random() < 0.32; // Balanced random distribution
+                fallingObjects.push({
                     x: Math.random() * (gCanvas.width - 60) + 30,
-                    y: -20,
-                    speed: (Math.random() * 2) + 3.2, 
-                    color: `hsl(${Math.random() * 360}, 95%, 60%)`,
-                    radius: 12,
+                    y: -30,
+                    isBomb: isBomb,
+                    speed: ((Math.random() * 2) + 3) * speedMod,
+                    color: isBomb ? '#2c3e50' : `hsl(${Math.random() * 360}, 95%, 60%)`,
+                    radius: isBomb ? 15 : 12,
                     pulse: 0
                 });
             }
 
-            // Handle active list configurations in reverse layout safely
-            for (let idx = candyArray.length - 1; idx >= 0; idx--) {
-                let candy = candyArray[idx];
-                candy.y += candy.speed;
-                candy.pulse += 0.1;
+            // Update & Process Active Items lists
+            for (let idx = fallingObjects.length - 1; idx >= 0; idx--) {
+                let obj = fallingObjects[idx];
+                obj.y += obj.speed;
+                obj.pulse += 0.15;
 
                 gCtx.save();
-                gCtx.translate(candy.x, candy.y);
-                gCtx.fillStyle = candy.color;
-                
-                gCtx.beginPath();
-                gCtx.arc(0, 0, candy.radius, 0, Math.PI * 2);
-                gCtx.fill();
-                
-                gCtx.beginPath();
-                gCtx.moveTo(-candy.radius, 0);
-                gCtx.lineTo(-candy.radius - 8, -6 + Math.sin(candy.pulse)*2);
-                gCtx.lineTo(-candy.radius - 8, 6 - Math.sin(candy.pulse)*2);
-                gCtx.closePath();
-                gCtx.fill();
+                gCtx.shadowColor = 'rgba(0,0,0,0.3)';
+                gCtx.shadowBlur = 4;
+                gCtx.shadowOffsetY = 3;
 
-                gCtx.beginPath();
-                gCtx.moveTo(candy.radius, 0);
-                gCtx.lineTo(candy.radius + 8, -6 + Math.sin(candy.pulse)*2);
-                gCtx.lineTo(candy.radius + 8, 6 - Math.sin(candy.pulse)*2);
-                gCtx.closePath();
-                gCtx.fill();
-                
+                if(obj.isBomb) {
+                    // Draw specialized black fuse bomb structure style
+                    gCtx.fillStyle = '#111111';
+                    gCtx.beginPath();
+                    gCtx.arc(obj.x, obj.y, obj.radius, 0, Math.PI*2);
+                    gCtx.fill();
+
+                    // Fuse drawing path
+                    gCtx.strokeStyle = '#d35400';
+                    gCtx.lineWidth = 3;
+                    gCtx.beginPath();
+                    gCtx.moveTo(obj.x, obj.y - obj.radius);
+                    gCtx.quadraticCurveTo(obj.x + 8, obj.y - obj.radius - 10, obj.x + 5, obj.y - obj.radius - 18);
+                    gCtx.stroke();
+
+                    // Spark particle flare drawing
+                    gCtx.fillStyle = (Math.sin(obj.pulse*3) > 0) ? '#f1c40f' : '#e74c3c';
+                    gCtx.beginPath();
+                    gCtx.arc(obj.x + 5, obj.y - obj.radius - 18, 4, 0, Math.PI*2);
+                    gCtx.fill();
+                } else {
+                    // Render premium styled candy mesh with wrapped side loops
+                    gCtx.translate(obj.x, obj.y);
+                    gCtx.fillStyle = obj.color;
+                    
+                    // Central sphere core configuration
+                    gCtx.beginPath();
+                    gCtx.arc(0, 0, obj.radius, 0, Math.PI * 2);
+                    gCtx.fill();
+                    
+                    // Left Side Tie Frame
+                    gCtx.beginPath();
+                    gCtx.moveTo(-obj.radius, 0);
+                    gCtx.lineTo(-obj.radius - 9, -7 + Math.sin(obj.pulse)*2);
+                    gCtx.lineTo(-obj.radius - 9, 7 - Math.sin(obj.pulse)*2);
+                    gCtx.closePath();
+                    gCtx.fill();
+
+                    // Right Side Tie Frame
+                    gCtx.beginPath();
+                    gCtx.moveTo(obj.radius, 0);
+                    gCtx.lineTo(obj.radius + 9, -7 + Math.sin(obj.pulse)*2);
+                    gCtx.lineTo(obj.radius + 9, 7 - Math.sin(obj.pulse)*2);
+                    gCtx.closePath();
+                    gCtx.fill();
+                }
                 gCtx.restore();
 
-                // Target Catch Points
-                if(candy.y >= gCanvas.height - 45 && candy.y <= gCanvas.height - 15) {
-                    if(candy.x >= playerX && candy.x <= playerX + playerWidth) {
-                        gameScore += 10;
-                        document.getElementById('game-score').innerText = gameScore;
-                        candyArray.splice(idx, 1);
+                // Advanced bounding box collision tracking zone engine
+                const basketTopY = gCanvas.height - playerHeight - 10;
+                if(obj.y >= basketTopY - 5 && obj.y <= basketTopY + 15) {
+                    if(obj.x >= playerX - 5 && obj.x <= playerX + playerWidth + 5) {
+                        // Impact registered successfully
+                        if(obj.isBomb) {
+                            spawnBlastParticles(obj.x, obj.y, '#e74c3c', 25);
+                            flashAlpha = 0.45; // Execute small red structural background camera flash layout update
+                            gameLives--;
+                            updateHeartsDisplay();
+                        } else {
+                            spawnBlastParticles(obj.x, obj.y, obj.color, 10);
+                            gameScore += 10;
+                            document.getElementById('game-score').innerText = gameScore;
+                        }
+
+                        fallingObjects.splice(idx, 1);
+
+                        // Scan state conditions immediately after mutations are safe
+                        if(gameLives <= 0) {
+                            triggerEndState(false);
+                            return;
+                        }
+                        if(gameScore >= 100) {
+                            gameScore = 100; // Force exact ceiling clamping profile rule match
+                            document.getElementById('game-score').innerText = gameScore;
+                            triggerEndState(true);
+                            return;
+                        }
                         continue;
                     }
                 }
 
-                if(candy.y > gCanvas.height + 30) {
-                    candyArray.splice(idx, 1);
+                // Missed object detection checks out of frame limits safely
+                if(obj.y > gCanvas.height + 25) {
+                    if(!obj.isBomb) {
+                        // Regular candy drops cause penalty lives drops directly
+                        gameLives--;
+                        updateHeartsDisplay();
+                        if(gameLives <= 0) {
+                            triggerEndState(false);
+                            return;
+                        }
+                    }
+                    fallingObjects.splice(idx, 1);
+                }
+            }
+
+            // Particle Physics Updates Processing Array
+            for(let pIdx = particles.length - 1; pIdx >= 0; pIdx--) {
+                let p = particles[pIdx];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= 0.02;
+                gCtx.save();
+                gCtx.globalAlpha = p.alpha;
+                gCtx.fillStyle = p.color;
+                gCtx.beginPath();
+                gCtx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                gCtx.fill();
+                gCtx.restore();
+
+                if(p.alpha <= 0) {
+                    particles.splice(pIdx, 1);
                 }
             }
 
