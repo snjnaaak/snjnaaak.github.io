@@ -237,34 +237,29 @@
             background: #09172e;
             border: 3px dashed #f1c40f;
             border-radius: 16px;
-            padding: 20px;
+            padding: 30px;
             text-align: center;
             margin: 20px 0;
         }
-        .video-message-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 25px;
-            color: #ffffff;
-        }
         
-        /* --- RESPONSIVE IFRAME CONTAINER --- */
-        .video-responsive-wrap {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            border-radius: 12px;
+        /* --- USER-EDITABLE CANVA INPUT FIELD STYLES --- */
+        .canva-input-field {
+            width: 100%;
+            max-width: 450px;
+            padding: 14px;
+            font-size: 1rem;
+            background-color: #020813;
             border: 2px solid #34495e;
+            color: #ffffff;
+            border-radius: 8px;
+            font-family: inherit;
+            box-sizing: border-box;
             margin-bottom: 20px;
+            transition: border-color 0.3s ease;
         }
-        .video-responsive-wrap iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: 0;
+        .canva-input-field:focus {
+            border-color: #f1c40f;
+            outline: none;
         }
 
         /* --- LUXURIOUS MYSTERY BOX RE-DESIGN --- */
@@ -413,7 +408,7 @@
             animation: master-glow-pulse 4s ease-in-out infinite alternate;
         }
 
-        /* --- FIXED: NATURAL RISING REVEAL ANIMATION MATRIX (NO DISPLAY:NONE) --- */
+        /* --- FIXED: NATURAL RISING REVEAL ANIMATION MATRIX (STABLE BODY MOVEMENT) --- */
         @keyframes majesticRiseReveal {
             0% { transform: translateY(180px) scale(0.3); opacity: 0; }
             65% { transform: translateY(-15px) scale(1.02); opacity: 1; }
@@ -502,9 +497,10 @@
             box-shadow: 0 0 8px rgba(255,215,0,0.6);
         }
 
+        /* --- STABLE BODY SYSTEM (NO PENDULUM SWING) --- */
         @keyframes body-breath {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.04) translate(-50%, -2px); }
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.03) translateY(-3px); }
         }
         .peacock-main-body {
             position: absolute;
@@ -537,7 +533,7 @@
 
         @keyframes head-tilt {
             0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(-5deg) translateY(-1px); }
+            50% { transform: rotate(-4deg) translateY(-1px); }
         }
         .peacock-head {
             position: absolute;
@@ -705,6 +701,7 @@
             font-family: 'Arial Black', Impact, sans-serif;
             margin-bottom: 20px;
             text-transform: uppercase;
+            line-height: 1.4;
         }
 
         #fireworksCanvas {
@@ -934,13 +931,14 @@
             </div>
 
             <div id="video-panel" class="stage-panel">
-                <h3>[ EMBED YOUR PRESENTATION ]</h3>
+                <h3>[ SPECIAL PRESENTATION ]</h3>
                 <div class="video-container-clean">
-                    <div id="video-embed-wrap" class="video-responsive-wrap">
-                        <iframe id="canva-frame" src="https://www.canva.com/design/DAF3S_v2v7M/watch?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+                    <div style="margin: 10px auto 5px auto;">
+                        <input type="text" id="canva-input" class="canva-input-field" placeholder="Paste Canva video link here...">
                     </div>
-                    <div class="video-message-text">❤️ A heartfelt presentation for you</div>
-                    <a id="video-fallback-btn" href="https://www.canva.com/design/DAF3S_v2v7M/watch?embed" target="_blank" class="action-btn" style="text-decoration: none; display: inline-block;">🎥 Open Video Link</a>
+                    <div style="text-align: center; margin-bottom: 10px;">
+                        <button id="open-canva-btn" class="action-btn" onclick="openCustomCanvaLink()">Open Canva Video</button>
+                    </div>
                 </div>
             </div>
 
@@ -1104,7 +1102,6 @@
                 initCake();
             }
             if(id === 'video-panel') {
-                checkCanvaLink();
                 if (!completedStages.video) {
                     completedStages.video = true;
                     unlockNextLevel(3);
@@ -1112,7 +1109,6 @@
             }
         }
 
-        /* --- FIXED: MOVED TIMEOUT TO ANIMATIONEND & RESTORED REVERSIBLE ATTRIBUTES --- */
         function resetMysteryBox() {
             boxOpenedThisSession = false;
 
@@ -1176,7 +1172,6 @@
             triggerBoxExplosionConfetti();
         }
 
-        // FIXED: Idle animation triggers exactly when the launch transition finishes
         document.getElementById('peacock-container').addEventListener('animationend', function(e) {
             if (e.animationName === 'majesticRiseReveal') {
                 this.classList.add('peacock-idle-active');
@@ -1319,17 +1314,14 @@
             }, 700);
         }
 
-        /* --- FIXED: CANVA VALIDATION ENGINE --- */
-        function checkCanvaLink() {
-            const frame = document.getElementById('canva-frame');
-            const wrap = document.getElementById('video-embed-wrap');
-            
-            // Asynchronous verification check against restriction metrics
-            fetch(frame.src, { method: 'HEAD', mode: 'no-cors' })
-            .catch(() => {
-                // Remove broken iframe layout trace cleanly if embed is blocked or unresolvable
-                wrap.style.display = 'none';
-            });
+        /* --- FIXED: USER EDITABLE CANVA OPERATION HANDLER --- */
+        function openCustomCanvaLink() {
+            const linkVal = document.getElementById('canva-input').value.trim();
+            if(!linkVal) {
+                alert("Please paste the Canva link first.");
+            } else {
+                window.open(linkVal, '_blank');
+            }
         }
 
         /* --- CANDY CATCH ARCADE ENGINE --- */
@@ -1417,14 +1409,14 @@
             }
         }
 
+        /* --- FIXED: CANDY CATCH OVERLAY UPDATED WITH SCROLL DOWN INDICATOR --- */
         function triggerEndState(isWin) {
             gameActive = false;
             const overlay = document.getElementById('game-overplay-screen');
             const txt = document.getElementById('game-overlay-text');
             
             if(isWin) {
-                txt.innerText = "🎉 STAGE COMPLETE 🎉";
-                txt.style.color = "#f1c40f";
+                txt.innerHTML = "Stage Complete!<br><span style='font-size: 1.6rem; color: #2ecc71; font-family: inherit; display: block; margin-top: 12px; text-transform: uppercase;'>Scroll down</span>";
                 spawnBlastParticles(400, 200, '#ffd700', 80);
                 
                 if (!completedStages.game) {
