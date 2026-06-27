@@ -381,7 +381,7 @@
             animation: ribbon-sparkle 3s ease-in-out infinite;
         }
 
-        /* --- FIXED: GLOW RADIUS OPTIMIZATION --- */
+        /* --- GLOW RADIUS OPTIMIZATION --- */
         @keyframes master-glow-pulse {
             0%, 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.85; filter: blur(20px); }
             50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; filter: blur(30px); }
@@ -408,7 +408,7 @@
             animation: master-glow-pulse 4s ease-in-out infinite alternate;
         }
 
-        /* --- FIXED: NATURAL RISING REVEAL ANIMATION MATRIX (STABLE BODY MOVEMENT) --- */
+        /* --- NATURAL RISING REVEAL ANIMATION MATRIX (STABLE BODY MOVEMENT) --- */
         @keyframes majesticRiseReveal {
             0% { transform: translateY(180px) scale(0.3); opacity: 0; }
             65% { transform: translateY(-15px) scale(1.02); opacity: 1; }
@@ -687,7 +687,7 @@
         .game-display-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 10, 22, 0.85);
+            background: rgba(3, 10, 22, 0.9);
             border-radius: 24px;
             display: none;
             flex-direction: column;
@@ -695,13 +695,16 @@
             justify-content: center;
             z-index: 10;
             text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .game-overlay-title {
-            font-size: 3rem;
+            font-size: 2.2rem;
             font-family: 'Arial Black', Impact, sans-serif;
             margin-bottom: 20px;
             text-transform: uppercase;
             line-height: 1.4;
+            color: #ffd700;
         }
 
         #fireworksCanvas {
@@ -987,6 +990,30 @@
     </div>
 
     <script>
+        /* --- AUDIO FX ENGINE CONTAINER --- */
+        const sounds = {
+            click: new Audio('audio/click.mp3'),
+            open: new Audio('audio/open.mp3'),
+            sparkle: new Audio('audio/sparkle.mp3'),
+            bubble: new Audio('audio/bubble.mp3'),
+            candle: new Audio('audio/candle.mp3'),
+            confetti: new Audio('audio/confetti.mp3'),
+            catch: new Audio('audio/catch.mp3'),
+            bomb: new Audio('audio/bomb.mp3'),
+            life: new Audio('audio/life.mp3'),
+            victory: new Audio('audio/victory.mp3'),
+            final: new Audio('audio/final.mp3')
+        };
+
+        function playSound(name) {
+            if (sounds[name]) {
+                sounds[name].currentTime = 0;
+                sounds[name].play().catch(() => {
+                    /* Standby for explicit layout user interaction per framework rule */
+                });
+            }
+        }
+
         let candleLit = true;
         let confetti = [];
         let smoke = [];
@@ -1087,6 +1114,7 @@
                 triggerPeacockShake();
                 return;
             }
+            playSound('click');
 
             document.querySelectorAll('.stage-panel').forEach(p => p.style.display = 'none');
             document.getElementById(id).style.display = 'block';
@@ -1138,6 +1166,12 @@
             if (boxOpenedThisSession) return;
             boxOpenedThisSession = true;
 
+            playSound('click');
+            
+            setTimeout(() => {
+                playSound('open');
+            }, 150);
+
             const container = document.getElementById('interactive-box-container');
             container.classList.add('opened');
             container.style.animation = 'none';
@@ -1154,6 +1188,7 @@
             document.getElementById('peacock-glow-field').classList.add('active');
 
             setTimeout(() => {
+                playSound('sparkle');
                 const feathers = document.querySelectorAll('.peacock-tail-feather');
                 feathers.forEach(f => {
                     const targetRot = f.style.getPropertyValue('--rot');
@@ -1162,6 +1197,7 @@
             }, 350);
             
             setTimeout(() => {
+                playSound('bubble');
                 document.getElementById('peacock-bubble').classList.add('pop-in');
                 if (!completedStages.box) {
                     completedStages.box = true;
@@ -1183,6 +1219,7 @@
                 initCake();
                 candleLit = false;
             }
+            playSound('confetti');
             for(let i=0; i<120; i++) {
                 confetti.push({
                     x: 400 + (Math.random() - 0.5) * 120, 
@@ -1281,6 +1318,7 @@
         }
 
         function runCakeBlow() {
+            playSound('click');
             document.getElementById('blow-btn').style.display = 'none';
             let count = 3;
             const box = document.getElementById('countdown-box');
@@ -1291,12 +1329,14 @@
                     clearInterval(timer);
                     box.innerText = "BLOW! 💨";
                     candleLit = false;
+                    playSound('candle');
                     
                     if (!completedStages.cake) {
                         completedStages.cake = true;
                         unlockNextLevel(2);
                     }
                     
+                    playSound('confetti');
                     for(let i=0; i<180; i++) {
                         confetti.push({
                             x: Math.random() * cCanvas.width, 
@@ -1314,8 +1354,8 @@
             }, 700);
         }
 
-        /* --- FIXED: USER EDITABLE CANVA OPERATION HANDLER --- */
         function openCustomCanvaLink() {
+            playSound('click');
             const linkVal = document.getElementById('canva-input').value.trim();
             if(!linkVal) {
                 alert("Please paste the Canva link first.");
@@ -1368,6 +1408,7 @@
         }, { passive: false });
 
         function initGame() {
+            playSound('click');
             gameActive = true;
             gameScore = 0;
             gameLives = 4;
@@ -1409,14 +1450,16 @@
             }
         }
 
-        /* --- FIXED: CANDY CATCH OVERLAY UPDATED WITH SCROLL DOWN INDICATOR --- */
         function triggerEndState(isWin) {
             gameActive = false;
             const overlay = document.getElementById('game-overplay-screen');
             const txt = document.getElementById('game-overlay-text');
             
             if(isWin) {
-                txt.innerHTML = "Stage Complete!<br><span style='font-size: 1.6rem; color: #2ecc71; font-family: inherit; display: block; margin-top: 12px; text-transform: uppercase;'>Scroll down</span>";
+                playSound('victory');
+                txt.innerHTML = `🎉 HAPPY BIRTHDAY APPA! 🎉<br>
+                                 <span style="color: #f1c40f; font-size: 1.8rem; display: block; margin: 8px 0;">MISSION COMPLETE!</span>
+                                 <span style="color: #2ecc71; font-size: 1.4rem; display: block; text-transform: uppercase; letter-spacing: 2px;">⬇️ Scroll Down ⬇️</span>`;
                 spawnBlastParticles(400, 200, '#ffd700', 80);
                 
                 if (!completedStages.game) {
@@ -1465,6 +1508,48 @@
             ctx.restore();
         }
 
+        /* --- CARTOON BOMB RENDERING SUB-ENGINE --- */
+        function drawCartoonBomb(ctx, x, y, radius, pulse) {
+            ctx.save();
+            
+            // 1. Fuse Segment (Curves out from top of the bomb)
+            ctx.strokeStyle = '#d35400';
+            ctx.lineWidth = 3.5;
+            ctx.beginPath();
+            ctx.moveTo(x, y - radius + 2);
+            ctx.quadraticCurveTo(x + 10, y - radius - 12, x + 6, y - radius - 22);
+            ctx.stroke();
+
+            // 2. Spark Effect (Flickers at the tip of the fuse)
+            ctx.fillStyle = (Math.sin(pulse * 4) > 0) ? '#ffb703' : '#ff4d4d';
+            ctx.beginPath();
+            ctx.arc(x + 6, y - radius - 22, 5 + Math.sin(pulse) * 1.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 3. Metallic Bomb Collar
+            ctx.fillStyle = '#555';
+            ctx.fillRect(x - 6, y - radius - 3, 12, 5);
+
+            // 4. Main Spherical Bomb Body
+            let bodyGrad = ctx.createRadialGradient(x - radius * 0.3, y - radius * 0.3, 2, x, y, radius);
+            bodyGrad.addColorStop(0, '#434343');
+            bodyGrad.addColorStop(0.4, '#1a1a1a');
+            bodyGrad.addColorStop(1, '#0d0d0d');
+            
+            ctx.fillStyle = bodyGrad;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 5. Stylized Glossy Highlight Accent
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.beginPath();
+            ctx.arc(x - radius * 0.35, y - radius * 0.35, radius * 0.3, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
         function runGameLoop() {
             if(!gameActive) return;
 
@@ -1501,8 +1586,8 @@
                     isBomb: isBomb,
                     speed: ((Math.random() * 2) + 3) * speedMod,
                     color: isBomb ? '#2c3e50' : `hsl(${Math.random() * 360}, 95%, 60%)`,
-                    radius: isBomb ? 15 : 12,
-                    pulse: 0
+                    radius: isBomb ? 18 : 12, // Slightly larger radius for beautiful bomb detailing
+                    pulse: Math.random() * 10
                 });
             }
 
@@ -1517,22 +1602,7 @@
                 gCtx.shadowOffsetY = 3;
 
                 if(obj.isBomb) {
-                    gCtx.fillStyle = '#111111';
-                    gCtx.beginPath();
-                    gCtx.arc(obj.x, obj.y, obj.radius, 0, Math.PI*2);
-                    gCtx.fill();
-
-                    gCtx.strokeStyle = '#d35400';
-                    gCtx.lineWidth = 3;
-                    gCtx.beginPath();
-                    gCtx.moveTo(obj.x, obj.y - obj.radius);
-                    gCtx.quadraticCurveTo(obj.x + 8, obj.y - obj.radius - 10, obj.x + 5, obj.y - obj.radius - 18);
-                    gCtx.stroke();
-
-                    gCtx.fillStyle = (Math.sin(obj.pulse*3) > 0) ? '#f1c40f' : '#e74c3c';
-                    gCtx.beginPath();
-                    gCtx.arc(obj.x + 5, obj.y - obj.radius - 18, 4, 0, Math.PI*2);
-                    gCtx.fill();
+                    drawCartoonBomb(gCtx, obj.x, obj.y, obj.radius, obj.pulse);
                 } else {
                     gCtx.translate(obj.x, obj.y);
                     gCtx.fillStyle = obj.color;
@@ -1561,11 +1631,14 @@
                 if(obj.y >= basketTopY - 5 && obj.y <= basketTopY + 15) {
                     if(obj.x >= playerX - 5 && obj.x <= playerX + playerWidth + 5) {
                         if(obj.isBomb) {
+                            playSound('bomb');
+                            setTimeout(() => { playSound('life'); }, 120);
                             spawnBlastParticles(obj.x, obj.y, '#e74c3c', 25);
                             flashAlpha = 0.45;
                             gameLives--;
                             updateHeartsDisplay();
                         } else {
+                            playSound('catch');
                             spawnBlastParticles(obj.x, obj.y, obj.color, 10);
                             gameScore += 10;
                             document.getElementById('game-score').innerText = gameScore;
@@ -1665,6 +1738,7 @@
                 fCtx.fill();
 
                 if (fw.y <= fw.targetY) {
+                    playSound('confetti');
                     spawnFireworkBurst(fw.x, fw.y);
                     fireworksList.splice(i, 1);
                 }
@@ -1705,6 +1779,7 @@
             document.getElementById('finale-banner').style.display = 'block';
             
             setTimeout(() => {
+                playSound('final');
                 document.getElementById('achievement-certificate').style.display = 'block';
             }, 1000);
 
