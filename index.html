@@ -990,68 +990,196 @@
     </div>
 
     <script>
-        /* --- AUDIO FX ENGINE CONTAINER & PRELOADER --- */
-        const sounds = {
-            click: new Audio('audio/click.mp3'),
-            open: new Audio('audio/open.mp3'),
-            sparkle: new Audio('audio/sparkle.mp3'),
-            bubble: new Audio('audio/bubble.mp3'),
-            candle: new Audio('audio/candle.mp3'),
-            confetti: new Audio('audio/confetti.mp3'),
-            catch: new Audio('audio/catch.mp3'),
-            bomb: new Audio('audio/bomb.mp3'),
-            life: new Audio('audio/life.mp3'),
-            victory: new Audio('audio/victory.mp3'),
-            final: new Audio('audio/final.mp3')
+        /* --- WEB AUDIO API SYNTHESIZER ENGINE --- */
+        let audioCtx = null;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                console.log("Web Audio Context initialized successfully.");
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume().then(() => {
+                    console.log("Web Audio Context resumed via user gesture.");
+                });
+            }
+        }
+        window.addEventListener('click', initAudioContext);
+        window.addEventListener('touchstart', initAudioContext);
+
+        const soundGenerators = {
+            click: (ctx) => {
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.05);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(); osc.stop(ctx.currentTime + 0.06);
+            },
+            open: (ctx) => {
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(150, ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(350, ctx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(); osc.stop(ctx.currentTime + 0.21);
+            },
+            sparkle: (ctx) => {
+                let now = ctx.currentTime;
+                for (let i = 0; i < 5; i++) {
+                    let osc = ctx.createOscillator();
+                    let gain = ctx.createGain();
+                    osc.type = 'square';
+                    let freq = 800 + (i * 300);
+                    osc.frequency.setValueAtTime(freq, now + (i * 0.05));
+                    gain.gain.setValueAtTime(0.03, now + (i * 0.05));
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.05) + 0.1);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(now + (i * 0.05)); osc.stop(now + (i * 0.05) + 0.11);
+                }
+            },
+            bubble: (ctx) => {
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(300, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(); osc.stop(ctx.currentTime + 0.16);
+            },
+            candle: (ctx) => {
+                // Generate simulated white noise for wind/blowing sound
+                let bufferSize = ctx.sampleRate * 0.4;
+                let buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                let data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                let noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+                let filter = ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(400, ctx.currentTime);
+                filter.frequency.linearRampToValueAtTime(200, ctx.currentTime + 0.4);
+                let gain = ctx.createGain();
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
+                noise.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+                noise.start(); noise.stop(ctx.currentTime + 0.41);
+            },
+            confetti: (ctx) => {
+                let now = ctx.currentTime;
+                for (let i = 0; i < 8; i++) {
+                    let osc = ctx.createOscillator();
+                    let gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(500 + Math.random() * 500, now + i * 0.03);
+                    gain.gain.setValueAtTime(0.08, now + i * 0.03);
+                    gain.gain.linearRampToValueAtTime(0, now + i * 0.03 + 0.08);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(now + i * 0.03); osc.stop(now + i * 0.03 + 0.09);
+                }
+            },
+            catch: (ctx) => {
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5 note
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(); osc.stop(ctx.currentTime + 0.13);
+            },
+            bomb: (ctx) => {
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(40, ctx.currentTime + 0.35);
+                let filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(300, ctx.currentTime);
+                gain.gain.setValueAtTime(0.4, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+                osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+                osc.start(); osc.stop(ctx.currentTime + 0.36);
+            },
+            life: (ctx) => {
+                let now = ctx.currentTime;
+                let notes = [330, 392, 659, 523, 587, 784]; // Arpeggiated sequence
+                notes.forEach((freq, idx) => {
+                    let osc = ctx.createOscillator();
+                    let gain = ctx.createGain();
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(freq, now + (idx * 0.06));
+                    gain.gain.setValueAtTime(0.05, now + (idx * 0.06));
+                    gain.gain.linearRampToValueAtTime(0, now + (idx * 0.06) + 0.08);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(now + (idx * 0.06)); osc.stop(now + (idx * 0.06) + 0.09);
+                });
+            },
+            victory: (ctx) => {
+                let now = ctx.currentTime;
+                let chord = [261.63, 329.63, 392.00, 523.25]; // C Major chord burst
+                chord.forEach(freq => {
+                    let osc = ctx.createOscillator();
+                    let gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now);
+                    osc.frequency.exponentialRampToValueAtTime(freq * 2, now + 0.5);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(); osc.stop(now + 0.51);
+                });
+            },
+            final: (ctx) => {
+                let now = ctx.currentTime;
+                let progression = [
+                    [261.63, 329.63, 392.00], // C
+                    [349.23, 440.00, 523.25], // F
+                    [392.00, 493.88, 587.33], // G
+                    [523.25, 659.25, 783.99]  // C high
+                ];
+                progression.forEach((chord, step) => {
+                    chord.forEach(freq => {
+                        let osc = ctx.createOscillator();
+                        let gain = ctx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + (step * 0.25));
+                        gain.gain.setValueAtTime(0.08, now + (step * 0.25));
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + (step * 0.25) + 0.3);
+                        osc.connect(gain); gain.connect(ctx.destination);
+                        osc.start(now + (step * 0.25)); osc.stop(now + (step * 0.25) + 0.31);
+                    });
+                });
+            }
         };
 
-        // Preload sounds explicitly and verify elements
-        Object.keys(sounds).forEach(key => {
-            sounds[key].preload = "auto";
-            sounds[key].load();
-        });
-
-        let audioUnlocked = false;
-
-        // Core global unlocker triggered on first real touch/click to defeat modern web app sandbox autoplay blocks
-        function unlockAudioTracks() {
-            if (audioUnlocked) return;
-            console.log("Initializing audio element unlock sequences...");
-            
-            Object.keys(sounds).forEach(key => {
-                const audio = sounds[key];
-                // Play a brief micro-fraction of audio muted/low to unlock the track node
-                const originalVolume = audio.volume;
-                audio.volume = 0;
-                audio.play()
-                    .then(() => {
-                        audio.pause();
-                        audio.currentTime = 0;
-                        audio.volume = originalVolume;
-                    })
-                    .catch(err => {
-                        console.warn(`Initial unlock standby for track [${key}] failed. Path check needed:`, err);
-                    });
-            });
-            audioUnlocked = true;
-            window.removeEventListener('click', unlockAudioTracks);
-            window.removeEventListener('touchstart', unlockAudioTracks);
-        }
-        window.addEventListener('click', unlockAudioTracks);
-        window.addEventListener('touchstart', unlockAudioTracks);
-
         function playSound(name) {
-            if (sounds[name]) {
-                sounds[name].currentTime = 0;
-                sounds[name].play()
-                    .then(() => {
-                        console.log(`Successfully playing sound track: [${name}]`);
-                    })
-                    .catch(err => {
-                        console.warn(`Playback block on sound: [${name}]. Verify path 'audio/${name}.mp3' exists! Reason:`, err);
-                    });
+            initAudioContext();
+            if (audioCtx) {
+                if (soundGenerators[name]) {
+                    try {
+                        soundGenerators[name](audioCtx);
+                        console.log(`Synthesized real-time sound effect: [${name}]`);
+                    } catch (err) {
+                        console.warn(`Web Audio API compilation mismatch on element [${name}]:`, err);
+                    }
+                } else {
+                    console.error(`Missing synthesizer definition matrix rule for: [${name}]`);
+                }
             } else {
-                console.error(`Requested missing audio signature mapping element: [${name}]`);
+                console.warn(`Sound requested before context operational context ready: [${name}]`);
             }
         }
 
@@ -1553,7 +1681,7 @@
         function drawCartoonBomb(ctx, x, y, radius, pulse) {
             ctx.save();
             
-            // 1. Fuse Segment (Curves out from top of the bomb)
+            // 1. Fuse Segment
             ctx.strokeStyle = '#d35400';
             ctx.lineWidth = 3.5;
             ctx.beginPath();
@@ -1561,7 +1689,7 @@
             ctx.quadraticCurveTo(x + 10, y - radius - 12, x + 6, y - radius - 22);
             ctx.stroke();
 
-            // 2. Spark Effect (Flickers at the tip of the fuse)
+            // 2. Spark Effect
             ctx.fillStyle = (Math.sin(pulse * 4) > 0) ? '#ffb703' : '#ff4d4d';
             ctx.beginPath();
             ctx.arc(x + 6, y - radius - 22, 5 + Math.sin(pulse) * 1.5, 0, Math.PI * 2);
@@ -1617,17 +1745,15 @@
             drawBasket(gCtx, playerX, gCanvas.height - playerHeight - 10, playerWidth, playerHeight);
 
             // --- PROGRESSIVE BALANCING SYSTEM ---
-            let bombRatio = 0.20; // Default Early Game (0 - 39 Points)
+            let bombRatio = 0.20; 
             let speedMod = 1.0;
             let spawnRate = 0.025;
 
             if (gameScore >= 40 && gameScore < 70) {
-                // Mid Game
                 bombRatio = 0.33; 
                 speedMod = 1.35;
                 spawnRate = 0.038;
             } else if (gameScore >= 70) {
-                // Late Game / Boss Stretch
                 bombRatio = 0.48; 
                 speedMod = 1.75;
                 spawnRate = 0.052;
