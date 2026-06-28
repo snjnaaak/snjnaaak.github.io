@@ -990,7 +990,7 @@
     </div>
 
     <script>
-        /* --- AUDIO FX ENGINE CONTAINER --- */
+        /* --- AUDIO FX ENGINE CONTAINER & PRELOADER --- */
         const sounds = {
             click: new Audio('audio/click.mp3'),
             open: new Audio('audio/open.mp3'),
@@ -1005,12 +1005,53 @@
             final: new Audio('audio/final.mp3')
         };
 
+        // Preload sounds explicitly and verify elements
+        Object.keys(sounds).forEach(key => {
+            sounds[key].preload = "auto";
+            sounds[key].load();
+        });
+
+        let audioUnlocked = false;
+
+        // Core global unlocker triggered on first real touch/click to defeat modern web app sandbox autoplay blocks
+        function unlockAudioTracks() {
+            if (audioUnlocked) return;
+            console.log("Initializing audio element unlock sequences...");
+            
+            Object.keys(sounds).forEach(key => {
+                const audio = sounds[key];
+                // Play a brief micro-fraction of audio muted/low to unlock the track node
+                const originalVolume = audio.volume;
+                audio.volume = 0;
+                audio.play()
+                    .then(() => {
+                        audio.pause();
+                        audio.currentTime = 0;
+                        audio.volume = originalVolume;
+                    })
+                    .catch(err => {
+                        console.warn(`Initial unlock standby for track [${key}] failed. Path check needed:`, err);
+                    });
+            });
+            audioUnlocked = true;
+            window.removeEventListener('click', unlockAudioTracks);
+            window.removeEventListener('touchstart', unlockAudioTracks);
+        }
+        window.addEventListener('click', unlockAudioTracks);
+        window.addEventListener('touchstart', unlockAudioTracks);
+
         function playSound(name) {
             if (sounds[name]) {
                 sounds[name].currentTime = 0;
-                sounds[name].play().catch(() => {
-                    /* Standby for explicit layout user interaction per framework rule */
-                });
+                sounds[name].play()
+                    .then(() => {
+                        console.log(`Successfully playing sound track: [${name}]`);
+                    })
+                    .catch(err => {
+                        console.warn(`Playback block on sound: [${name}]. Verify path 'audio/${name}.mp3' exists! Reason:`, err);
+                    });
+            } else {
+                console.error(`Requested missing audio signature mapping element: [${name}]`);
             }
         }
 
@@ -1575,18 +1616,32 @@
 
             drawBasket(gCtx, playerX, gCanvas.height - playerHeight - 10, playerWidth, playerHeight);
 
-            let speedMod = 1.0 + (gameScore / 100) * 0.6;
-            let spawnRate = 0.025 + (gameScore / 100) * 0.015;
+            // --- PROGRESSIVE BALANCING SYSTEM ---
+            let bombRatio = 0.20; // Default Early Game (0 - 39 Points)
+            let speedMod = 1.0;
+            let spawnRate = 0.025;
+
+            if (gameScore >= 40 && gameScore < 70) {
+                // Mid Game
+                bombRatio = 0.33; 
+                speedMod = 1.35;
+                spawnRate = 0.038;
+            } else if (gameScore >= 70) {
+                // Late Game / Boss Stretch
+                bombRatio = 0.48; 
+                speedMod = 1.75;
+                spawnRate = 0.052;
+            }
 
             if(Math.random() < spawnRate) {
-                let isBomb = Math.random() < 0.18; 
+                let isBomb = Math.random() < bombRatio; 
                 fallingObjects.push({
                     x: Math.random() * (gCanvas.width - 60) + 30,
                     y: -30,
                     isBomb: isBomb,
-                    speed: ((Math.random() * 2) + 3) * speedMod,
+                    speed: ((Math.random() * 2) + 3.5) * speedMod,
                     color: isBomb ? '#2c3e50' : `hsl(${Math.random() * 360}, 95%, 60%)`,
-                    radius: isBomb ? 18 : 12, // Slightly larger radius for beautiful bomb detailing
+                    radius: isBomb ? 18 : 12,
                     pulse: Math.random() * 10
                 });
             }
